@@ -1,0 +1,3 @@
+http://www.macromedia.com/support/documentation/cn/flashplayer/help/settings_manager05.html
+
+C:\WINDOWS\system32\Macromed\Flash\FlashPlayerTrust

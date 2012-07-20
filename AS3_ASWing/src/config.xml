@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configroot>
+	<http path2="http://127.0.0.1/huaao/root/aMonsterV2/service_lae.php" path="http://ser.tea51.cn/cMonsterV2/service.php" />
+	
+	<!-- 素材资源地址 http://117.27.139.44/client/ -->
+	<source path="" />
+	
+	<!-- 调试信息 0=关闭 1=打开 Shift+H -->
+	<tracedebug value="1"/>
+	
+	<!-- 版本号 -->
+	<version value="Ver.0.1" x="680" y="560" />
+	
+	<lang>cn.xml</lang>
+	
+	<broad><![CDATA[
+		<br/>敬爱的玩家：<textformat indent='24'><p>《怪兽村》于6月1号正式面向玩家内测，为了感谢大家的支持我们将不定期的送出内测大礼包，加入玩家群就有机会获哦。</p><br/><br/></textformat><textformat indent='300'><p>时代华奥互动传媒</p></textformat>
+	]]></broad>
+</configroot>

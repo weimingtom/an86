@@ -1,0 +1,26 @@
+告诉大家一个好消息，这个问题，我找到一个处理方案，而且验证通过。下面说说原理，大家看看，JS里面有个函数setInterval，可以利用js的帧频来控制flash的动画，这样当浏览器最小化的时候，js的帧频不会变，自然flash动画的帧频也不会变了。粘代码：
+ JS：
+ function startEntryFrame()//提供给flash调用，启动帧频
+         {
+                 setInterval(toFlash,42.6);//模拟实现 24帧/秒
+         }
+         function toFlash()//42.6ms循环调用
+         {
+               thisMovie('game_index').EnterFrame();//js调用flash的注册方法
+         }
+ flash:
+ 在初始化的时候，注册方法和调用js方法
+ private function addEnterFrame():void
+                 {
+ 
+                        ExternalInterface.addCallback("EnterFrame",enterFrame);
+                         ExternalInterface.call("startEntryFrame");
+                 }
+ public function enterFrame():void
+                 {
+                         CairngormEventDispatcher.getInstance().dispatchEvent(myevent);//触发器。每42.6ms触发一次                }
+ 
+private var myevent:CairngormEvent=new CairngormEvent(Event.ENTER_FRAME);
+ 在需要动画支持的地方或者计时器的地方监听事件
+ CairngormEventDispatcher.getInstance().addEventListener(Event.ENTER_FRAME,handler)
+ 在多个浏览器下还没测试，只要很好的支持js的浏览器，应该都没有问题

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="224" height="242">
+	<fx:Script>
+		<![CDATA[
+			import global.util.ServiceUtils;
+			import global.util.SocketServer;
+			private function button1_clickHandler(event:MouseEvent):void{
+				link_btn.enabled = false;
+				ServiceUtils.getInstance().LIST = ValueObjectList.LIST;
+				try{
+					SocketServer.connect(ip.text, int(port.text), onSuccess, onClose);
+				}catch(e:*){
+					cout.text += "Socket connect Error\n";
+				}
+			}
+			
+			private function onSuccess():void{
+				send_btn.enabled = true;
+				SocketServer.BackCall(SC10001.CMD, onBackSuccess);
+			}
+			
+			private function onClose():void{
+				link_btn.enabled = true;
+				send_btn.enabled = false;
+			}
+			
+			private function send_btn_clickHandler(event:MouseEvent):void {
+				var vo:CS10002 = new CS10002();
+				vo.name = "Anlei 586";
+				vo.desc = "Anlei is good boy!";
+				SocketServer.Send(vo);
+			}
+			
+			private function onBackSuccess(evt:SC10001):void
+			{
+				cout.text += evt.desc + "\n";
+				cout.text += "-----------------";
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Button id="link_btn" x="17" y="44" label="连接" click="button1_clickHandler(event)"/>
+	<s:Button id="send_btn" x="137" y="44" label="发送" click="send_btn_clickHandler(event)"
+			  enabled="false"/>
+	<s:TextArea id="cout" x="17" y="73"/>
+	<s:TextInput id="ip" x="17" y="15" text="127.0.0.1"/>
+	<s:TextInput id="port" x="157" y="15" width="50" text="8889"/>
+	<s:Label x="149" y="19" fontSize="14" fontWeight="bold" text=":"/>
+</s:WindowedApplication>
