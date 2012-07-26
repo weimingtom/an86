@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="220" height="234" minWidth="11" minHeight="11" creationComplete="windowedapplication1_creationCompleteHandler(event)">
+					   width="220" height="234" minWidth="11" minHeight="11" >
 	
 	<fx:Script>
 		<![CDATA[
@@ -46,15 +46,6 @@
 					cout.text += _item + "=" + evt[_item] + "\n";
 				}
 				cout.text += "-----------------";
-			}
-			
-			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
-			{
-				var byte:ByteArray = new ByteArray();
-				byte.writeDouble(12.34);
-				byte.position = 0;
-				var big:BigInteger = new BigInteger(byte);
-				trace(big);
 			}
 			
 		]]>
