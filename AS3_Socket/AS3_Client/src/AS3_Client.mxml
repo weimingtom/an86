@@ -2,12 +2,16 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="220" height="234" minWidth="11" minHeight="11">
+					   width="220" height="234" minWidth="11" minHeight="11" creationComplete="windowedapplication1_creationCompleteHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
+			import com.hurlant.math.BigInteger;
+			
 			import global.util.ServiceUtils;
 			import global.util.SocketServer;
+			
+			import mx.events.FlexEvent;
 			private function button1_clickHandler(event:MouseEvent):void{
 				link_btn.enabled = false;
 				ServiceUtils.getInstance().LIST = ValueObjectList.LIST;
@@ -16,11 +20,12 @@
 				}catch(e:*){
 					cout.text += "Socket connect Error\n";
 				}
+				
 			}
 			
 			private function onSuccess():void{
 				send_btn.enabled = true;
-				SocketServer.BackCall(SC10001.CMD, onBackSuccess);
+				SocketServer.BackCall(SC1001.CMD, onBackSuccess);
 			}
 			
 			private function onClose():void{
@@ -29,16 +34,27 @@
 			}
 			
 			private function send_btn_clickHandler(event:MouseEvent):void {
-				var vo:CS10002 = new CS10002();
+				/* var vo:CS10002 = new CS10002();
 				vo.name = "Anlei 586";
-				vo.desc = "Anlei is good boy!";
-				SocketServer.Send(vo);
+				vo.desc = "Anlei is good boy!"; */
+				SocketServer.Send(new CS1001());
 			}
 			
-			private function onBackSuccess(evt:SC10001):void
+			private function onBackSuccess(evt:SC1001):void
 			{
-				cout.text += evt.desc + "\n";
+				for(var _item:String in evt){
+					cout.text += _item + "=" + evt[_item] + "\n";
+				}
 				cout.text += "-----------------";
+			}
+			
+			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
+			{
+				var byte:ByteArray = new ByteArray();
+				byte.writeDouble(12.34);
+				byte.position = 0;
+				var big:BigInteger = new BigInteger(byte);
+				trace(big);
 			}
 			
 		]]>
@@ -48,7 +64,7 @@
 	<s:Button id="send_btn" x="137" y="44" label="发送" click="send_btn_clickHandler(event)"
 			  enabled="false"/>
 	<s:TextArea id="cout" x="17" y="73"/>
-	<s:TextInput id="ip" x="17" y="15" text="117.27.139.45"/>
+	<s:TextInput id="ip" x="17" y="15" text="192.168.1.120"/>
 	<s:TextInput id="port" x="157" y="15" width="50" text="20001"/>
 	<s:Label x="149" y="19" fontSize="14" fontWeight="bold" text=":"/>
 </s:WindowedApplication>
