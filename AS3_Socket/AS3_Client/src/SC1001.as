@@ -17,7 +17,7 @@ package
 		public function SC1001()
 		{
 			//registerField("UserID","",Descriptor.INT32,Descriptor.LABEL_REQUIRED,1);
-			//registerField("UserName","",Descriptor.STRING,Descriptor.LABEL_REPEATED,2);
+			//registerField("UserName","",Descriptor.STRING,Descriptor.LABEL_REQUIRED,2);
 			//registerField("StringList","",Descriptor.STRING,Descriptor.LABEL_REPEATED,3);
 			//registerField("IntList","",Descriptor.INT32,Descriptor.LABEL_REPEATED,4);
 			//registerField("NumList","",Descriptor.DOUBLE, Descriptor.LABEL_REPEATED,1);
@@ -39,12 +39,20 @@ package
 	}
 }
 /*
-class UserList{
-	public var data:Vector.<User> = new Vector.<User>();
+AS端SC的VO字段说明
+在构造函数里注册字段
+registerField("UserID",		"",	Descriptor.INT32,	Descriptor.LABEL_REQUIRED,	1);//int
+registerField("UserName",	"",	Descriptor.STRING,	Descriptor.LABEL_REQUIRED,	2);//String
+registerField("StringList",	"",	Descriptor.STRING,	Descriptor.LABEL_REPEATED,	3);//String Array
+registerField("IntList",	"",	Descriptor.INT32,	Descriptor.LABEL_REPEATED,	4);//int Array
+registerField("NumList",	"",	Descriptor.DOUBLE,	Descriptor.LABEL_REPEATED,	5);//Double Array
+registerField("Num",		"",	Descriptor.DOUBLE,	Descriptor.LABEL_REQUIRED,	6);//Number(Double)
+registerField("UserList",	"User",	Descriptor.MESSAGE,	Descriptor.LABEL_REPEATED,	7);//VO内嵌(Vector)必须要把内嵌的VO写入第二个参数中
+
+
+/////////下行必要
+public static const CMD:int = 1001;
+override public function toCmd():int{
+	return CMD;
 }
-class StringList{
-	public var data:Vector.<String> = new Vector.<String>();
-}
-class NumberList{
-	public var data:Vector.<Number> = new Vector.<Number>();
-}*/
+*/

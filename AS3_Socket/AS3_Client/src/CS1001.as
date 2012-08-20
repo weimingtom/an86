@@ -19,10 +19,19 @@ package
 		
 		public function CS1001()
 		{
-			UserList.push(new User());
-			UserList.push(new User());
+			var _u:User = new User();
+			_u.UID = 1000001;
+			_u.UN = "A";
+			
+			var _u1:User = new User();
+			_u1.UID = 1000002;
+			_u1.UN = "B";
+			
+			
+			UserList.push(_u);
+			UserList.push(_u1);
 			//registerField("UserID","",Descriptor.INT32,Descriptor.LABEL_REQUIRED,1);
-			//registerField("UserName","",Descriptor.STRING,Descriptor.LABEL_REPEATED,2);
+			//registerField("UserName","",Descriptor.STRING,Descriptor.LABEL_REQUIRED,2);
 			//registerField("StringList","",Descriptor.STRING,Descriptor.LABEL_REPEATED,3);
 			//registerField("IntList","",Descriptor.INT32,Descriptor.LABEL_REPEATED,4);
 			//registerField("NumList","",Descriptor.DOUBLE,Descriptor.LABEL_REPEATED,1);
@@ -35,3 +44,21 @@ package
 		}
 	}
 }
+/*
+AS端CS的VO字段说明
+在构造函数里注册字段
+registerField("UserID",		"",	Descriptor.INT32,	Descriptor.LABEL_REQUIRED,	1);//int
+registerField("UserName",	"",	Descriptor.STRING,	Descriptor.LABEL_REQUIRED,	2);//String
+registerField("StringList",	"",	Descriptor.STRING,	Descriptor.LABEL_REPEATED,	3);//String Array
+registerField("IntList",	"",	Descriptor.INT32,	Descriptor.LABEL_REPEATED,	4);//int Array
+registerField("NumList",	"",	Descriptor.DOUBLE,	Descriptor.LABEL_REPEATED,	5);//Double Array
+registerField("Num",		"",	Descriptor.DOUBLE,	Descriptor.LABEL_REQUIRED,	6);//Number(Double)
+registerField("UserList",	"",	Descriptor.MESSAGE,	Descriptor.LABEL_REPEATED,	7);//VO内嵌(Vector)
+
+
+/////////上行必要
+override public function toCmd():int{
+	return 1001;
+}
+
+*/
