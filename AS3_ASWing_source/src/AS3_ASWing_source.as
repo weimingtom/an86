@@ -184,6 +184,10 @@ package
 			
 			
 			
+			new JButton();
+			new JSlider();
+			new JAccordion();
+			
 			
 			
 			
