@@ -1,8 +1,6 @@
 ﻿package{
 	public class ERVO{
-		public static var id:int = 12;
-		public function toString():String{
-			return '100123';
-		}
+		public var a:int = 22;
+		//public var d:String = "a";
 	}
 }
