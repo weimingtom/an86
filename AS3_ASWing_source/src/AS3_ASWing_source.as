@@ -1,12 +1,14 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
 	import org.aswing.*;
 	import org.aswing.event.TreeSelectionEvent;
+	import org.aswing.geom.IntDimension;
 	import org.aswing.plaf.ComponentUI;
 	import org.aswing.skinbuilder.orange.OrangeLookAndFeel;
 	import org.aswing.tree.DefaultMutableTreeNode;
@@ -67,7 +69,9 @@ package
 			];
 			var cbb:JComboBox = new JComboBox();
 			cbb.setListData(list);
+			//cbb.getModel()['clear']();
 			cbb.setSelectedIndex(0);
+			cbb.getSelectedIndex();
 			cbb.setLocationXY(250, 100);
 			cbb.setSizeWH(250, 24);
 			//cbb.addActionListener(onSelected);
@@ -108,11 +112,12 @@ package
 			//label.getTextField().selectable = false;
 			label.setWordWrap(true);
 			_tf = label.getTextFormat();
-			_tf.align = TextFieldAutoSize.RIGHT;
+			//_tf.align = TextFieldAutoSize.RIGHT;
 			label.setTextFormat(_tf);
 			label.setDefaultTextFormat(_tf);
 			label.getUI();
-			label.getBackground()
+			label.getBackground();
+			label.pack();
 			
 			var jp3:JScrollPane = new JScrollPane();
 			jp3.setView(label);
@@ -167,9 +172,26 @@ package
 //			_tree.collapseRow(0);
 //			_tree.expandRow(0);
 			_tree.setRootVisible(false);
-			_tree.setSizeWH(150, 100);
-			_tree.setLocationXY(300, 200);
-			_panel.append(_tree);
+//			_tree.setSizeWH(100, 200);
+//			_tree.setLocationXY(500, 500);
+			_tree.setDragEnabled(true);
+			_tree.setDropTrigger(true);
+			
+			
+			
+			var jp4:JScrollPane = new JScrollPane();
+			jp4.setView(_tree);
+			//jp4.setViewport(_tree);
+			//jp4.setViewportView(_tree);
+			jp4.setSizeWH(120, 150);
+			jp4.setLocationXY(100, 0);
+			_panel.append(jp4);
+			jp4.doubleClickEnabled = true;
+			jp4.addEventListener(MouseEvent.DOUBLE_CLICK, function(e:MouseEvent):void{
+				jp4.setWidth(44);
+				jp4.setHeight(44);
+				jp4.validate();
+			});
 			
 			
 			var _check:JCheckBox = new JCheckBox();
@@ -188,6 +210,25 @@ package
 			new JSlider();
 			new JAccordion();
 			
+			
+			var tab_0:Component = new Component();
+			var tab_0_btn:JButton = new JButton("A");
+			tab_0_btn.setSizeWH(100, 24);
+			tab_0_btn.setLocationXY(30, 30);
+			tab_0.addChild(tab_0_btn);
+			
+			var _tab:JTabbedPane = new JTabbedPane();
+			_tab.setSizeWH(300, 200);
+			_tab.setLocationXY(140, 180);
+			_tab.appendTab(new JButton("Aaaa2"), "Anlei2",null,"大朋2");
+			_tab.appendTab(tab_0, "Tab_0",null,"大朋3");
+			_tab.appendTab(new JButton("Aaaa3"), "Anlei3",null,"大朋3");
+			_tab.setTabPlacement(JTabbedPane.LEFT);
+			_tab.setSelectedIndex(1, true);
+			_tab.setSelectedIndex(0, true);
+//			_tab.removeTabAt(
+			
+			_panel.append(_tab);
 			
 			
 			
