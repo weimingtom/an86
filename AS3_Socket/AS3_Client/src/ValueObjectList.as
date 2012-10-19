@@ -4,11 +4,9 @@ package
 	{
 		public static var LIST:XML =
 			<list>
-				<item id="SC10001" 							url="" />
-				<item id="SC1001" 							url="" />
-			//////////////////////////////////////
-				<item id="ItemActionaShopItemList" 					url="apps.bootsystem.view.shop.model" />
-			//////////////////////////////////////
+				<item id="31051" 			name="L31051_CS" 			url="Package" />
+				<item id="31052" 			name="L31052_SC"			url="Package" />
 			</list>;
+
 	}
 }

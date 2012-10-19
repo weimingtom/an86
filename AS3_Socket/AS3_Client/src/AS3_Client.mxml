@@ -6,6 +6,9 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import Package.L31051_CS;
+			import Package.L31052_SC;
+			
 			import anlei.util.ServiceUtils;
 			import anlei.util.SocketServer;
 			
@@ -22,7 +25,7 @@
 			
 			private function onSuccess():void{
 				send_btn.enabled = true;
-				SocketServer.BackCall(SC1001.CMD, onBackSuccess);
+				SocketServer.BackCall(L31052_SC.CMD, onBackSuccess);
 			}
 			
 			private function onClose():void{
@@ -31,13 +34,14 @@
 			}
 			
 			private function send_btn_clickHandler(event:MouseEvent):void {
-				/* var vo:CS10002 = new CS10002();
-				vo.name = "Anlei 586";
-				vo.desc = "Anlei is good boy!"; */
-				SocketServer.Send(new CS1001());
+				var vo:L31051_CS = new L31051_CS();
+				vo.targetUids = new Vector.<uint>();
+				vo.targetUids[0] = 12
+				vo.targetUids[1] = 123
+				SocketServer.Send(vo);
 			}
 			
-			private function onBackSuccess(evt:SC1001):void
+			private function onBackSuccess(evt:L31052_SC):void
 			{
 				for(var _item:String in evt){
 					cout.text += _item + "=" + evt[_item] + "\n";
@@ -52,7 +56,7 @@
 	<s:Button id="send_btn" x="137" y="44" label="发送" click="send_btn_clickHandler(event)"
 			  enabled="false"/>
 	<s:TextArea id="cout" x="17" y="73"/>
-	<s:TextInput id="ip" x="17" y="15" text="192.168.1.120"/>
-	<s:TextInput id="port" x="157" y="15" width="50" text="20001"/>
+	<s:TextInput id="ip" x="17" y="15" text="192.168.0.120"/>
+	<s:TextInput id="port" x="157" y="15" width="50" text="20002"/>
 	<s:Label x="149" y="19" fontSize="14" fontWeight="bold" text=":"/>
 </s:WindowedApplication>
