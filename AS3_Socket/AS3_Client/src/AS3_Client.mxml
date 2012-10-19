@@ -6,12 +6,9 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import com.hurlant.math.BigInteger;
+			import anlei.util.ServiceUtils;
+			import anlei.util.SocketServer;
 			
-			import global.util.ServiceUtils;
-			import global.util.SocketServer;
-			
-			import mx.events.FlexEvent;
 			private function button1_clickHandler(event:MouseEvent):void{
 				link_btn.enabled = false;
 				ServiceUtils.getInstance().LIST = ValueObjectList.LIST;

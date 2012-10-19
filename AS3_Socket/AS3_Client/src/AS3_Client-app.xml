@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/2.6">
+<application xmlns="http://ns.adobe.com/air/application/3.1">
 
 <!-- Adobe AIR Application Descriptor File Template.
 
 	Specifies parameters for identifying, installing, and launching AIR applications.
 
-	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/2.6
+	xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/3.1
 			The last segment of the namespace specifies the version 
 			of the AIR runtime required for this application to run.
 			
@@ -15,7 +15,7 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>AS3-Client</id>
+	<id>AS3.Client</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>AS3_Client</filename>
@@ -99,7 +99,7 @@
 
         <!-- <fullScreen></fullScreen> -->
 
-        <!-- The render mode for the app (either auto, cpu, or gpu). Optional. Mobile only. Default auto -->
+        <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->
 
         <!-- <renderMode></renderMode> -->
 
@@ -130,6 +130,7 @@
 		<image32x32></image32x32>
 		<image36x36></image36x36>
 		<image48x48></image48x48>
+		<image57x57></image57x57>
 		<image72x72></image72x72>
 		<image114x114></image114x114>
 		<image128x128></image128x128>
@@ -189,19 +190,28 @@
                 <string>YES</string>
             ]]>
         </InfoAdditions> -->
-        <!-- <requestedDisplayResolution></requestedDisplayResolution> -->
+        <!-- A list of plist key/value pairs to be added to the application Entitlements.plist -->
+		<!-- <Entitlements>
+            <![CDATA[
+                <key>keychain-access-groups</key>
+                <array>
+                    <string></string>
+                    <string></string>
+                </array>
+            ]]>
+        </Entitlements> -->
+	<!-- Display Resolution for the app (either "standard" or "high"). Optional. Default "standard" -->
+	<!-- <requestedDisplayResolution></requestedDisplayResolution> -->
 	<!-- </iPhone> -->
 
 	<!-- Specify Android specific tags that get passed to AndroidManifest.xml file. -->
-	<!--<android> 
-		<manifestAdditions>
+    <!--<android> -->
+    <!--	<manifestAdditions>
 		<![CDATA[
 			<manifest android:installLocation="auto">
 				<uses-permission android:name="android.permission.INTERNET"/>
 				<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 				<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-				<uses-configuration android:reqFiveWayNav="true"/>
-				<supports-screens android:normalScreens="true"/>
 				<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>
 				<application android:enabled="true">
 					<activity android:excludeFromRecents="false">
@@ -211,10 +221,12 @@
 						</intent-filter>
 					</activity>
 				</application>
-			</manifest>
+            </manifest>
 		]]>
-		</manifestAdditions> 
-	</android> -->
+        </manifestAdditions> -->
+	    <!-- Color depth for the app (either "32bit" or "16bit"). Optional. Default 16bit before namespace 3.0, 32bit after -->
+        <!-- <colorDepth></colorDepth> -->
+    <!-- </android> -->
 	<!-- End of the schema for adding the android specific tags in AndroidManifest.xml file -->
 
 </application>
