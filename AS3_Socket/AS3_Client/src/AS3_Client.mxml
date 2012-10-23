@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="612" height="454" minWidth="11" minHeight="11" >
+					   width="612" height="654" minWidth="11" minHeight="11" >
 	
 	<fx:Script>
 		<![CDATA[
@@ -14,6 +14,8 @@
 			import anlei.util.SocketServer;
 			
 			import com.google.protobuf.Message;
+			
+			private var userId:uint = 0;
 			
 			private function btn_link_clickHandler(event:MouseEvent):void{
 				btn_link.enabled = false;
@@ -56,6 +58,7 @@
 					text_key.enabled = true;
 					text_message.text = evt.toDump();
 				}else{
+					userId = evt.uid;
 					log("登入成功,uid:" + evt.uid)
 					text_message.text = evt.toDump();
 				}
@@ -83,10 +86,21 @@
 				text_log.text = str+"\n" + text_log.text;
 			}
 			
-			protected function install_clickHandler(event:MouseEvent):void
+			protected function l41011_clickHandler(event:MouseEvent):void
 			{
-				SocketServer.BackCall(L21002_SC.CMD, onBackSuccess);
-				var vo:L31021_CS = new L31021_CS();
+				SocketServer.BackCall(L41012_SC.CMD, onBackSuccess);
+				var vo:L41011_CS = new L41011_CS();
+				vo.sex = 1;
+				vo.heroId = 21001;
+				vo.nickname = "霸气屌丝男";
+				SocketServer.Send(vo);
+			}
+			
+			protected function l41021_clickHandler(event:MouseEvent):void
+			{
+				SocketServer.BackCall(L41022_SC.CMD, onBackSuccess);
+				var vo:L41021_CS = new L41021_CS();
+				vo.targetUid = userId;
 				SocketServer.Send(vo);
 			}
 			
@@ -95,12 +109,13 @@
 	
 	<s:Button id="btn_link" x="17" y="105" width="149" label="连接" click="btn_link_clickHandler(event)"/>
 	<s:Button id="btn_send" x="174" y="105" width="149" label="发送" enabled="false"/>
-	<s:TextArea id="text_message" x="174" y="134" width="426" height="292"/>
+	<s:TextArea id="text_message" x="174" y="134" width="426" height="499"/>
 	<s:TextInput id="text_ip" x="17" y="15" width="91" text="192.168.0.120"/>
 	<s:TextInput id="text_port" x="116" y="15" width="50" text="20001"/>
 	<s:TextInput id="text_username" x="17" y="45" width="91" text="alienoooo"/>
 	<s:TextInput id="text_sid" x="116" y="45" width="50" text="6"/>
 	<s:TextInput id="text_key" x="17" y="75" width="149" text="hMXU^5)s7?o*$lJp"/>
-	<s:TextArea id="text_log" x="17" y="134" width="149" height="292"/>
-	<s:Button id="install" x="174" y="16" label="初始化" click="install_clickHandler(event)"/>
+	<s:TextArea id="text_log" x="17" y="134" width="149" height="498"/>
+	<s:Button id="l41011" x="174" y="16" label="初始化" click="l41011_clickHandler(event)"/>
+	<s:Button id="l41021" x="174" y="45" label="读取用户" click="l41021_clickHandler(event)"/>
 </s:WindowedApplication>
