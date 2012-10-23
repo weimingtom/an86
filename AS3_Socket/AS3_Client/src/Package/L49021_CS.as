@@ -16,7 +16,7 @@ public class L49021_CS extends Message
 	public function L49021_CS()
 	{
 		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("targetName", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
+		registerField("targetName", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class L49021_CS extends Message
 	/**
 	 * 目标名字
 	 */
-	public var targetName:uint;
+	public var targetName:String;
 
 }
 }

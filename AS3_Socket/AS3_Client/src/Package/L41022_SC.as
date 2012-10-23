@@ -16,8 +16,8 @@ public class L41022_SC extends Message
 	public function L41022_SC()
 	{
 		registerField("ret", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("member", "", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 2);
-		registerField("heroies", "", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 3);
+		registerField("member", "Package.DMember", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 2);
+		registerField("heroies", "Package.DHeroies", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 3);
 	}
 
 	/**

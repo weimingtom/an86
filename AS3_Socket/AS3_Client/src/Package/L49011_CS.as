@@ -15,19 +15,19 @@ public class L49011_CS extends Message
 	 */
 	public function L49011_CS()
 	{
-		registerField("targetName", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 1);
-		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
+		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("targetName", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
 	}
-
-	/**
-	 * 目标用户名
-	 */
-	public var targetName:String;
 
 	/**
 	 * 目标用户ID
 	 */
 	public var targetUid:uint;
+
+	/**
+	 * 目标用户名
+	 */
+	public var targetName:String;
 
 }
 }

@@ -15,8 +15,8 @@ public class L50001_CS extends Message
 	 */
 	public function L50001_CS()
 	{
-		registerField("model", "", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 1);
-		registerField("models", "", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 2);
+		registerField("model", "Package.DMember", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 1);
+		registerField("models", "Package.DMember", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 2);
 	}
 
 	public var model:Package.DMember = new Package.DMember();
