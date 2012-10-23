@@ -2,61 +2,105 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="220" height="234" minWidth="11" minHeight="11" >
+					   width="612" height="454" minWidth="11" minHeight="11" >
 	
 	<fx:Script>
 		<![CDATA[
-			import Package.L31051_CS;
-			import Package.L31052_SC;
+			import Crypto.MD5;
+			
+			import Package.*;
 			
 			import anlei.util.ServiceUtils;
 			import anlei.util.SocketServer;
 			
-			private function button1_clickHandler(event:MouseEvent):void{
-				link_btn.enabled = false;
+			import com.google.protobuf.Message;
+			
+			private function btn_link_clickHandler(event:MouseEvent):void{
+				btn_link.enabled = false;
 				ServiceUtils.getInstance().LIST = ValueObjectList.LIST;
-				try{
-					SocketServer.connect(ip.text, int(port.text), onSuccess, onClose);
-				}catch(e:*){
-					cout.text += "Socket connect Error\n";
-				}
-				
+				SocketServer.connect(text_ip.text, int(text_port.text), onSuccess, onClose);
+				log("正在连接...")
 			}
 			
 			private function onSuccess():void{
-				send_btn.enabled = true;
-				SocketServer.BackCall(L31052_SC.CMD, onBackSuccess);
+				text_ip.enabled = false;
+				text_port.enabled = false;
+				text_username.enabled = false;
+				text_sid.enabled = false;
+				text_key.enabled = false;
+				SocketServer.BackCall(L21002_SC.CMD, onLoginBackCall);
+				
+				var vo:L21001_CS = new L21001_CS();
+				vo.agent = "default";
+				vo.sid = uint(text_sid.text);
+				vo.username = text_username.text;
+				vo.isadult = true;
+				vo.ts = 2350958827;//2050-01-01 00:00:00
+				
+				var sign:String = vo.agent + vo.sid + vo.username + (vo.isadult ? "1" : "0") + vo.ts + text_key.text;
+				vo.sign = MD5.hash(sign);
+				
+				SocketServer.Send(vo);
+				log("正在登入...")
+			}
+			
+			private function onLoginBackCall(evt:L21002_SC):void
+			{
+				if(evt.ret != 0){
+					log("登入失败!!!")
+					btn_link.enabled = true;
+					text_ip.enabled = true;
+					text_port.enabled = true;
+					text_username.enabled = true;
+					text_sid.enabled = true;
+					text_key.enabled = true;
+					text_message.text = evt.toDump();
+				}else{
+					log("登入成功,uid:" + evt.uid)
+					text_message.text = evt.toDump();
+				}
+				SocketServer.removeBackCall(L21002_SC.CMD, onLoginBackCall);
 			}
 			
 			private function onClose():void{
-				link_btn.enabled = true;
-				send_btn.enabled = false;
+				log("连接断开!!!")
+				btn_link.enabled = true;
+				text_ip.enabled = true;
+				text_port.enabled = true;
+				text_username.enabled = true;
+				text_sid.enabled = true;
+				text_key.enabled = true;
 			}
 			
-			private function send_btn_clickHandler(event:MouseEvent):void {
-				var vo:L31051_CS = new L31051_CS();
-				vo.targetUids = new Vector.<uint>();
-				vo.targetUids[0] = 12
-				vo.targetUids[1] = 123
-				SocketServer.Send(vo);
-			}
-			
-			private function onBackSuccess(evt:L31052_SC):void
+			private function onBackSuccess(evt:Message):void
 			{
-				for(var _item:String in evt){
-					cout.text += _item + "=" + evt[_item] + "\n";
-				}
-				cout.text += "-----------------";
+				log("接受消息:"+evt.toString())
+				text_message.text = evt.toDump();
+			}
+			
+			private function log(str:String):void
+			{
+				text_log.text = str+"\n" + text_log.text;
+			}
+			
+			protected function install_clickHandler(event:MouseEvent):void
+			{
+				SocketServer.BackCall(L21002_SC.CMD, onBackSuccess);
+				var vo:L31021_CS = new L31021_CS();
+				SocketServer.Send(vo);
 			}
 			
 		]]>
 	</fx:Script>
 	
-	<s:Button id="link_btn" x="17" y="44" label="连接" click="button1_clickHandler(event)"/>
-	<s:Button id="send_btn" x="137" y="44" label="发送" click="send_btn_clickHandler(event)"
-			  enabled="false"/>
-	<s:TextArea id="cout" x="17" y="73"/>
-	<s:TextInput id="ip" x="17" y="15" text="192.168.0.120"/>
-	<s:TextInput id="port" x="157" y="15" width="50" text="20002"/>
-	<s:Label x="149" y="19" fontSize="14" fontWeight="bold" text=":"/>
+	<s:Button id="btn_link" x="17" y="105" width="149" label="连接" click="btn_link_clickHandler(event)"/>
+	<s:Button id="btn_send" x="174" y="105" width="149" label="发送" enabled="false"/>
+	<s:TextArea id="text_message" x="174" y="134" width="426" height="292"/>
+	<s:TextInput id="text_ip" x="17" y="15" width="91" text="192.168.0.120"/>
+	<s:TextInput id="text_port" x="116" y="15" width="50" text="20001"/>
+	<s:TextInput id="text_username" x="17" y="45" width="91" text="alienoooo"/>
+	<s:TextInput id="text_sid" x="116" y="45" width="50" text="6"/>
+	<s:TextInput id="text_key" x="17" y="75" width="149" text="hMXU^5)s7?o*$lJp"/>
+	<s:TextArea id="text_log" x="17" y="134" width="149" height="292"/>
+	<s:Button id="install" x="174" y="16" label="初始化" click="install_clickHandler(event)"/>
 </s:WindowedApplication>
