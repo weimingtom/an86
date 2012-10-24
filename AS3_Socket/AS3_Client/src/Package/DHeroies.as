@@ -11,8 +11,10 @@ public class DHeroies extends Message
 		registerField("id", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
 		registerField("uid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
 		registerField("heroId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
-		registerField("addition", "", Descriptor.FLOAT, Descriptor.LABEL_REQUIRED, 4);
-		registerField("flag", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 5);
+		registerField("addition", "", Descriptor.DOUBLE, Descriptor.LABEL_REQUIRED, 4);
+		registerField("artifact", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 5);
+		registerField("site", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 6);
+		registerField("flag", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 7);
 	}
 
 	/**
@@ -34,6 +36,16 @@ public class DHeroies extends Message
 	 * 成长值加成
 	 */
 	public var addition:Number;
+
+	/**
+	 * 神器总经验,可提取,前端对表转换等级
+	 */
+	public var artifact:uint;
+
+	/**
+	 * 在阵法的位置
+	 */
+	public var site:uint;
 
 	/**
 	 * 标志,1主英雄,2副英雄,3其他
