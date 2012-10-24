@@ -15,13 +15,13 @@ public class L41021_CS extends Message
 	 */
 	public function L41021_CS()
 	{
-		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("targetUid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 	}
 
 	/**
 	 * 要读取的目标用户编号
 	 */
-	public var targetUid:uint;
+	public var targetUid:Number;
 
 }
 }

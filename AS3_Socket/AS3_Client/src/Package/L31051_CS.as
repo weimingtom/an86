@@ -15,13 +15,13 @@ public class L31051_CS extends Message
 	 */
 	public function L31051_CS()
 	{
-		registerField("targetUids", "", Descriptor.UINT32, Descriptor.LABEL_REPEATED, 1);
+		registerField("targetUids", "", Descriptor.INT64, Descriptor.LABEL_REPEATED, 1);
 	}
 
 	/**
 	 * 目标用户
 	 */
-	public var targetUids:Vector.<uint> = new Vector.<uint>();
+	public var targetUids:Vector.<Number> = new Vector.<Number>();
 
 }
 }

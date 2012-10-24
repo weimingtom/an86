@@ -15,13 +15,13 @@ public class L21004_SS extends Message
 	 */
 	public function L21004_SS()
 	{
-		registerField("uid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 	}
 
 	/**
 	 * 用户编号
 	 */
-	public var uid:uint;
+	public var uid:Number;
 
 }
 }

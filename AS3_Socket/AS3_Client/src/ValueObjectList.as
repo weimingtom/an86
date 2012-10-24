@@ -26,7 +26,7 @@ package
 				<item id="49012" name="L49012_SC" url="Package" />
 				<item id="49013" name="L49013_CS" url="Package" />
 				<item id="49014" name="L49014_SC" url="Package" />
-				<item id="49001" name="L49001_CS" url="Package" />
+				<item id="49002" name="L49002_SC" url="Package" />
 				<item id="49021" name="L49021_CS" url="Package" />
 				<item id="49022" name="L49022_SC" url="Package" />
 				<item id="49023" name="L49023_CS" url="Package" />
@@ -37,7 +37,9 @@ package
 				<item id="21003" name="L21003_SS" url="Package" />
 				<item id="41021" name="L41021_CS" url="Package" />
 				<item id="41022" name="L41022_SC" url="Package" />
+				<item id="49001" name="L49001_CS" url="Package" />
 			</list>
+
 ;
 
 	}

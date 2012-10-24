@@ -15,13 +15,13 @@ public class L31052_SC extends Message
 	 */
 	public function L31052_SC()
 	{
-		registerField("onlineUids", "", Descriptor.UINT32, Descriptor.LABEL_REPEATED, 1);
+		registerField("onlineUids", "", Descriptor.INT64, Descriptor.LABEL_REPEATED, 1);
 	}
 
 	/**
 	 * 是否在线
 	 */
-	public var onlineUids:Vector.<uint> = new Vector.<uint>();
+	public var onlineUids:Vector.<Number> = new Vector.<Number>();
 
 }
 }

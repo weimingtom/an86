@@ -1,21 +1,21 @@
 package Package
 {
 import com.google.protobuf.*;
-public class DFriends extends Message
+public class DGoodsConsum extends Message
 {
 	/**
 	 * 
 	 */
-	public function DFriends()
+	public function DGoodsConsum()
 	{
 		registerField("id", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 2);
-		registerField("friendUid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 3);
-		registerField("flag", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 4);
+		registerField("consumId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
+		registerField("count", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 4);
 	}
 
 	/**
-	 * 编号
+	 * 用户消耗品编号
 	 */
 	public var id:Number;
 
@@ -25,14 +25,14 @@ public class DFriends extends Message
 	public var uid:Number;
 
 	/**
-	 * 好友用户编号
+	 * 消耗品固有编号
 	 */
-	public var friendUid:Number;
+	public var consumId:uint;
 
 	/**
-	 * 标志位,0好友,1黑名单,2其他
+	 * 数量
 	 */
-	public var flag:uint;
+	public var count:uint;
 
 }
 }

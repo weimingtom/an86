@@ -15,14 +15,14 @@ public class L31041_CC extends Message
 	 */
 	public function L31041_CC()
 	{
-		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("targetUid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
 	}
 
 	/**
 	 * 目标用户编号
 	 */
-	public var targetUid:uint;
+	public var targetUid:Number;
 
 	/**
 	 * 通讯数据

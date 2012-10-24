@@ -16,7 +16,7 @@ public class L21002_SC extends Message
 	public function L21002_SC()
 	{
 		registerField("ret", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("uid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
+		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 2);
 		registerField("install", "", Descriptor.BOOL, Descriptor.LABEL_REQUIRED, 3);
 	}
 
@@ -28,7 +28,7 @@ public class L21002_SC extends Message
 	/**
 	 * 用户编号
 	 */
-	public var uid:uint;
+	public var uid:Number;
 
 	/**
 	 * 是否安装

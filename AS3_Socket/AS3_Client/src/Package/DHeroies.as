@@ -8,8 +8,8 @@ public class DHeroies extends Message
 	 */
 	public function DHeroies()
 	{
-		registerField("id", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("uid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
+		registerField("id", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
+		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 2);
 		registerField("heroId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
 		registerField("addition", "", Descriptor.DOUBLE, Descriptor.LABEL_REQUIRED, 4);
 		registerField("artifact", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 5);
@@ -20,12 +20,12 @@ public class DHeroies extends Message
 	/**
 	 * 用户英雄编号
 	 */
-	public var id:uint;
+	public var id:Number;
 
 	/**
 	 * 用户编号
 	 */
-	public var uid:uint;
+	public var uid:Number;
 
 	/**
 	 * 英雄编号

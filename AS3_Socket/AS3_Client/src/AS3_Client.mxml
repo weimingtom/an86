@@ -88,19 +88,72 @@
 			
 			protected function l41011_clickHandler(event:MouseEvent):void
 			{
-				SocketServer.BackCall(L41012_SC.CMD, onBackSuccess);
+				if(!SocketServer.hasBackCall(L41012_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L41012_SC.CMD, onBackSuccess);
+				}
 				var vo:L41011_CS = new L41011_CS();
 				vo.sex = 1;
-				vo.heroId = 21001;
+				vo.heroId = 290001;
 				vo.nickname = "霸气屌丝男";
 				SocketServer.Send(vo);
 			}
 			
 			protected function l41021_clickHandler(event:MouseEvent):void
 			{
-				SocketServer.BackCall(L41022_SC.CMD, onBackSuccess);
+				if(!SocketServer.hasBackCall(L41022_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L41022_SC.CMD, onBackSuccess);
+				}
 				var vo:L41021_CS = new L41021_CS();
 				vo.targetUid = userId;
+				SocketServer.Send(vo);
+			}
+			
+			protected function l49001_clickHandler(event:MouseEvent):void
+			{
+				if(!SocketServer.hasBackCall(L49002_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L49002_SC.CMD, onBackSuccess);
+				}
+				var vo:L49001_CS = new L49001_CS();
+				SocketServer.Send(vo);
+			}
+			
+			protected function l49011_clickHandler(event:MouseEvent):void
+			{
+				if(!SocketServer.hasBackCall(L49012_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L49012_SC.CMD, onBackSuccess);
+				}
+				var vo:L49011_CS = new L49011_CS();
+				vo.targetUid = 64;
+				SocketServer.Send(vo);
+			}
+			
+			protected function l49013_clickHandler(event:MouseEvent):void
+			{
+				if(!SocketServer.hasBackCall(L49014_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L49014_SC.CMD, onBackSuccess);
+				}
+				var vo:L49013_CS = new L49013_CS();
+				vo.targetUid = 64;
+				SocketServer.Send(vo);
+			}
+			
+			protected function l49021_clickHandler(event:MouseEvent):void
+			{
+				if(!SocketServer.hasBackCall(L49022_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L49022_SC.CMD, onBackSuccess);
+				}
+				var vo:L49021_CS = new L49021_CS();
+				vo.targetUid = 64;
+				SocketServer.Send(vo);
+			}
+			
+			protected function l49023_clickHandler(event:MouseEvent):void
+			{
+				if(!SocketServer.hasBackCall(L49024_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L49024_SC.CMD, onBackSuccess);
+				}
+				var vo:L49023_CS = new L49023_CS();
+				vo.targetUid = 64;
 				SocketServer.Send(vo);
 			}
 			
@@ -108,7 +161,6 @@
 	</fx:Script>
 	
 	<s:Button id="btn_link" x="17" y="105" width="149" label="连接" click="btn_link_clickHandler(event)"/>
-	<s:Button id="btn_send" x="174" y="105" width="149" label="发送" enabled="false"/>
 	<s:TextArea id="text_message" x="174" y="134" width="426" height="499"/>
 	<s:TextInput id="text_ip" x="17" y="15" width="91" text="192.168.0.120"/>
 	<s:TextInput id="text_port" x="116" y="15" width="50" text="20001"/>
@@ -118,4 +170,9 @@
 	<s:TextArea id="text_log" x="17" y="134" width="149" height="498"/>
 	<s:Button id="l41011" x="174" y="16" label="初始化" click="l41011_clickHandler(event)"/>
 	<s:Button id="l41021" x="174" y="45" label="读取用户" click="l41021_clickHandler(event)"/>
+	<s:Button id="l49001" x="174" y="74" label="读取好友" click="l49001_clickHandler(event)"/>
+	<s:Button id="l49011" x="252" y="16" label="添加好友" click="l49011_clickHandler(event)"/>
+	<s:Button id="l49013" x="252" y="45" label="删除好友" click="l49013_clickHandler(event)"/>
+	<s:Button id="l49021" x="252" y="74" label="添加仇人" click="l49021_clickHandler(event)"/>
+	<s:Button id="l49023" x="252" y="103" label="删除仇人" click="l49023_clickHandler(event)"/>
 </s:WindowedApplication>

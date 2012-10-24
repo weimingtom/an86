@@ -8,7 +8,7 @@ public class DAccount extends Message
 	 */
 	public function DAccount()
 	{
-		registerField("uid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 		registerField("sid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
 		registerField("username", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 3);
 		registerField("install", "", Descriptor.BOOL, Descriptor.LABEL_REQUIRED, 4);
@@ -18,7 +18,7 @@ public class DAccount extends Message
 	/**
 	 * 用户编号
 	 */
-	public var uid:uint;
+	public var uid:Number;
 
 	/**
 	 * 服务器编号

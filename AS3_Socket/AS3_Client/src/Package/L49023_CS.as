@@ -15,13 +15,13 @@ public class L49023_CS extends Message
 	 */
 	public function L49023_CS()
 	{
-		registerField("targetUid", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("targetUid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 	}
 
 	/**
 	 * 目标用户
 	 */
-	public var targetUid:uint;
+	public var targetUid:Number;
 
 }
 }
