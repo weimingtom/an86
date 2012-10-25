@@ -16,18 +16,12 @@ public class L31011_CS extends Message
 	public function L31011_CS()
 	{
 		registerField("channelId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
 	}
 
 	/**
 	 * 频道编号
 	 */
 	public var channelId:uint;
-
-	/**
-	 * 需要广播的数据
-	 */
-	public var data:String;
 
 }
 }

@@ -16,8 +16,8 @@ public class L49002_SC extends Message
 	public function L49002_SC()
 	{
 		registerField("ret", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("friend", "Package.DFriends", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 2);
-		registerField("enemy", "Package.DFriends", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 3);
+		registerField("friendList", "Package.DFriends", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 2);
+		registerField("enemyList", "Package.DFriends", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 3);
 	}
 
 	/**
@@ -28,12 +28,12 @@ public class L49002_SC extends Message
 	/**
 	 * 好友
 	 */
-	public var friend:Vector.<Package.DFriends> = new Vector.<Package.DFriends>();
+	public var friendList:Vector.<Package.DFriends> = new Vector.<Package.DFriends>();
 
 	/**
 	 * 仇人
 	 */
-	public var enemy:Vector.<Package.DFriends> = new Vector.<Package.DFriends>();
+	public var enemyList:Vector.<Package.DFriends> = new Vector.<Package.DFriends>();
 
 }
 }

@@ -16,7 +16,7 @@ public class L31013_SC extends Message
 	public function L31013_SC()
 	{
 		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
-		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
+		registerField("cmemo", "Package.CMemo", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 2);
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class L31013_SC extends Message
 	/**
 	 * 附带数据
 	 */
-	public var data:String;
+	public var cmemo:Package.CMemo = new Package.CMemo();
 
 }
 }

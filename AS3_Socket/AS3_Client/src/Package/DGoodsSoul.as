@@ -1,23 +1,23 @@
 package Package
 {
 import com.google.protobuf.*;
-public class DGoodsEquipment extends Message
+public class DGoodsSoul extends Message
 {
 	/**
 	 * 
 	 */
-	public function DGoodsEquipment()
+	public function DGoodsSoul()
 	{
 		registerField("id", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 		registerField("uid", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 2);
-		registerField("equipmentId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
+		registerField("soulId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
 		registerField("userHeroId", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 4);
-		registerField("strengthen", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 5);
+		registerField("experience", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 5);
 		registerField("expired", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 6);
 	}
 
 	/**
-	 * 用户装备编号
+	 * 用户生魂编号
 	 */
 	public var id:Number;
 
@@ -27,19 +27,19 @@ public class DGoodsEquipment extends Message
 	public var uid:Number;
 
 	/**
-	 * 装备固有编号
+	 * 神魂固有编号
 	 */
-	public var equipmentId:uint;
+	public var soulId:uint;
 
 	/**
-	 * 穿在英雄Id身上,没穿为0
+	 * 用户英雄编号,穿在那个英雄上,没有为0
 	 */
 	public var userHeroId:Number;
 
 	/**
-	 * 强化等级
+	 * 神魂经验,前端根据等级表转化为等级
 	 */
-	public var strengthen:uint;
+	public var experience:uint;
 
 	/**
 	 * 过期时间

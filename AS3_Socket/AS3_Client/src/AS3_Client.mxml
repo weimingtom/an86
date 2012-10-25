@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="612" height="654" minWidth="11" minHeight="11" >
+					   width="792" height="654" minWidth="11" minHeight="11" >
 	
 	<fx:Script>
 		<![CDATA[
@@ -61,6 +61,16 @@
 					userId = evt.uid;
 					log("登入成功,uid:" + evt.uid)
 					text_message.text = evt.toDump();
+					
+					if(!SocketServer.hasBackCall(L31003_SC.CMD, onBackSuccess)){
+						SocketServer.BackCall(L31003_SC.CMD, onBackSuccess);
+					}
+					if(!SocketServer.hasBackCall(L31041_CC.CMD, onBackSuccess)){
+						SocketServer.BackCall(L31041_CC.CMD, onBackSuccess);
+					}
+					if(!SocketServer.hasBackCall(L31031_CC.CMD, onBackSuccess)){
+						SocketServer.BackCall(L31031_CC.CMD, onBackSuccess);
+					}
 				}
 				SocketServer.removeBackCall(L21002_SC.CMD, onLoginBackCall);
 			}
@@ -157,22 +167,95 @@
 				SocketServer.Send(vo);
 			}
 			
+			protected function l31011_1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31011_2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31011_3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31011_0_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31001_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31002_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31031_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31041_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function l31051_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
 		]]>
 	</fx:Script>
 	
 	<s:Button id="btn_link" x="17" y="105" width="149" label="连接" click="btn_link_clickHandler(event)"/>
-	<s:TextArea id="text_message" x="174" y="134" width="426" height="499"/>
+	<s:TextArea id="text_message" x="174" y="199" width="426" height="434"/>
 	<s:TextInput id="text_ip" x="17" y="15" width="91" text="192.168.0.120"/>
 	<s:TextInput id="text_port" x="116" y="15" width="50" text="20001"/>
 	<s:TextInput id="text_username" x="17" y="45" width="91" text="alienoooo"/>
 	<s:TextInput id="text_sid" x="116" y="45" width="50" text="6"/>
 	<s:TextInput id="text_key" x="17" y="75" width="149" text="hMXU^5)s7?o*$lJp"/>
-	<s:TextArea id="text_log" x="17" y="134" width="149" height="498"/>
-	<s:Button id="l41011" x="174" y="16" label="初始化" click="l41011_clickHandler(event)"/>
-	<s:Button id="l41021" x="174" y="45" label="读取用户" click="l41021_clickHandler(event)"/>
-	<s:Button id="l49001" x="174" y="74" label="读取好友" click="l49001_clickHandler(event)"/>
-	<s:Button id="l49011" x="252" y="16" label="添加好友" click="l49011_clickHandler(event)"/>
-	<s:Button id="l49013" x="252" y="45" label="删除好友" click="l49013_clickHandler(event)"/>
-	<s:Button id="l49021" x="252" y="74" label="添加仇人" click="l49021_clickHandler(event)"/>
-	<s:Button id="l49023" x="252" y="103" label="删除仇人" click="l49023_clickHandler(event)"/>
+	<s:TextArea id="text_log" x="17" y="199" width="149" height="433"/>
+	<mx:TabNavigator x="174" y="12" width="426" height="179">
+		<s:NavigatorContent width="100%" height="100%" label="用户">
+			<s:Button id="l49011" x="87" y="10" label="添加好友" click="l49011_clickHandler(event)"/>
+			<s:Button id="l49013" x="87" y="39" label="删除好友" click="l49013_clickHandler(event)"/>
+			<s:Button id="l49021" x="87" y="68" label="添加仇人" click="l49021_clickHandler(event)"/>
+			<s:Button id="l49023" x="87" y="97" label="删除仇人" click="l49023_clickHandler(event)"/>
+			<s:Button id="l49001" x="9" y="10" label="读取好友" click="l49001_clickHandler(event)"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="频道">
+			<s:Button id="l31011_1" x="10" y="10" label="进入频道[1001]"
+					  click="l31011_1_clickHandler(event)"/>
+			<s:Button id="l31011_3" x="10" y="68" label="进入频道[1003]"
+					  click="l31011_3_clickHandler(event)"/>
+			<s:Button id="l31011_0" x="10" y="96" width="103" label="退出频道"
+					  click="l31011_0_clickHandler(event)"/>
+			<s:Button id="l31011_2" x="10" y="39" label="进入频道[1002]"
+					  click="l31011_2_clickHandler(event)"/>
+			<s:Button id="l31001" x="121" y="10" label="记录信息" click="l31001_clickHandler(event)"/>
+			<s:Button id="l31002" x="121" y="39" label="记录坐标" click="l31002_clickHandler(event)"/>
+			<s:Button id="l31031" x="121" y="68" label="广播" click="l31031_clickHandler(event)"/>
+			<s:Button id="l31041" x="121" y="96" label="点对点" click="l31041_clickHandler(event)"/>
+			<s:Button id="l31051" x="199" y="10" label="PING" click="l31051_clickHandler(event)"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	<s:Button id="l41011" x="17" y="134" width="149" label="初始化" click="l41011_clickHandler(event)"/>
+	<s:Button id="l41021" x="17" y="163" width="149" label="读取用户" click="l41021_clickHandler(event)"/>
 </s:WindowedApplication>

@@ -38,7 +38,25 @@ package
 				<item id="41021" name="L41021_CS" url="Package" />
 				<item id="41022" name="L41022_SC" url="Package" />
 				<item id="49001" name="L49001_CS" url="Package" />
+				<item id="0" name="DHeroiesHave" url="Package" />
+				<item id="0" name="DGoodsConsum" url="Package" />
+				<item id="0" name="DGoodsEquipment" url="Package" />
+				<item id="0" name="DGoodsFragment" url="Package" />
+				<item id="0" name="DGoodsGemstone" url="Package" />
+				<item id="0" name="DGoodsMaterial" url="Package" />
+				<item id="0" name="DGoodsSoul" url="Package" />
+				<item id="42001" name="L42001_CS" url="Package" />
+				<item id="42002" name="L42002_SC" url="Package" />
+				<item id="42011" name="L42011_CS" url="Package" />
+				<item id="42012" name="L42012_SC" url="Package" />
+				<item id="42013" name="L42013_CS" url="Package" />
+				<item id="42014" name="L42014_SC" url="Package" />
+				<item id="31001" name="L31001_CS" url="Package" />
+				<item id="31002" name="L31002_CS" url="Package" />
+				<item id="31003" name="L31003_SC" url="Package" />
+				<item id="0" name="CMemo" url="Package" />
 			</list>
+
 
 ;
 

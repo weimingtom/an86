@@ -16,12 +16,18 @@ public class L31012_SC extends Message
 	public function L31012_SC()
 	{
 		registerField("ret", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("informations", "Package.CMemo", Descriptor.MESSAGE, Descriptor.LABEL_REPEATED, 2);
 	}
 
 	/**
 	 * 返回值
 	 */
 	public var ret:uint;
+
+	/**
+	 * 服务器上临时数据数组
+	 */
+	public var informations:Vector.<Package.CMemo> = new Vector.<Package.CMemo>();
 
 }
 }

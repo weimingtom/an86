@@ -11,6 +11,7 @@ public class DGoodsFragment extends Message
 		registerField("id", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
 		registerField("fragmentId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
 		registerField("count", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 3);
+		registerField("expired", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 4);
 	}
 
 	/**
@@ -27,6 +28,11 @@ public class DGoodsFragment extends Message
 	 * 数量
 	 */
 	public var count:uint;
+
+	/**
+	 * 过期
+	 */
+	public var expired:uint;
 
 }
 }
