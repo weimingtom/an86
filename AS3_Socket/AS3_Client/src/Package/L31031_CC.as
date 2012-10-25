@@ -15,14 +15,14 @@ public class L31031_CC extends Message
 	 */
 	public function L31031_CC()
 	{
-		registerField("channelId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
+		registerField("world", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
 		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
 	}
 
 	/**
-	 * 频道编号,0为世界频道
+	 * 0频道,1世界
 	 */
-	public var channelId:uint;
+	public var world:uint;
 
 	/**
 	 * 广播数据

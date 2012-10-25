@@ -169,56 +169,87 @@
 			
 			protected function l31011_1_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(!SocketServer.hasBackCall(L31012_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L31012_SC.CMD, onBackSuccess);
+				}
+				var vo:L31011_CS = new L31011_CS();
+				vo.channelId = 1001;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31011_2_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(!SocketServer.hasBackCall(L31012_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L31012_SC.CMD, onBackSuccess);
+				}
+				var vo:L31011_CS = new L31011_CS();
+				vo.channelId = 1002;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31011_3_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(!SocketServer.hasBackCall(L31012_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L31012_SC.CMD, onBackSuccess);
+				}
+				var vo:L31011_CS = new L31011_CS();
+				vo.channelId = 1003;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31011_0_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(!SocketServer.hasBackCall(L31022_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L31022_SC.CMD, onBackSuccess);
+				}
+				var vo:L31021_CS = new L31021_CS();
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31001_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				var vo:L31001_CS = new L31001_CS();
+				vo.information = "information=" + Math.random() * 9999;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31002_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				var vo:L31002_CS = new L31002_CS();
+				vo.coordinate = "coordinate=" + Math.random() * 9999;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31031_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				var vo:L31031_CC = new L31031_CC();
+				vo.world = 0;
+				vo.data = "breacost=" + Math.random() * 9999;
+				SocketServer.Send(vo);
+			}
+			
+			protected function l31031_1_clickHandler(event:MouseEvent):void
+			{
+				var vo:L31031_CC = new L31031_CC();
+				vo.world = 1;
+				vo.data = "breacost=" + Math.random() * 9999;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31041_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				var vo:L31041_CC = new L31041_CC();
+				vo.targetUid = 63;
+				SocketServer.Send(vo);
 			}
 			
 			protected function l31051_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				
+				if(!SocketServer.hasBackCall(L31052_SC.CMD, onBackSuccess)){
+					SocketServer.BackCall(L31052_SC.CMD, onBackSuccess);
+				}
+				var vo:L31051_CS = new L31051_CS();
+				SocketServer.Send(vo);
 			}
 			
 		]]>
@@ -251,9 +282,10 @@
 					  click="l31011_2_clickHandler(event)"/>
 			<s:Button id="l31001" x="121" y="10" label="记录信息" click="l31001_clickHandler(event)"/>
 			<s:Button id="l31002" x="121" y="39" label="记录坐标" click="l31002_clickHandler(event)"/>
-			<s:Button id="l31031" x="121" y="68" label="广播" click="l31031_clickHandler(event)"/>
-			<s:Button id="l31041" x="121" y="96" label="点对点" click="l31041_clickHandler(event)"/>
+			<s:Button id="l31031" x="121" y="68" label="广播当前" click="l31031_clickHandler(event)"/>
+			<s:Button id="l31041" x="203" y="39" label="点对点" click="l31041_clickHandler(event)"/>
 			<s:Button id="l31051" x="199" y="10" label="PING" click="l31051_clickHandler(event)"/>
+			<s:Button id="l31031_1" x="121" y="96" label="广播世界" click="l31031_1_clickHandler(event)"/>
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 	<s:Button id="l41011" x="17" y="134" width="149" label="初始化" click="l41011_clickHandler(event)"/>
