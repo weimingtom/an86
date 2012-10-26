@@ -18,6 +18,7 @@ public class L41022_SC extends Message
 		registerField("ret", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
 		registerField("member", "Package.DMember", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 2);
 		registerField("heroies", "Package.DHeroies", Descriptor.MESSAGE, Descriptor.LABEL_REQUIRED, 3);
+		registerField("location", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 4);
 	}
 
 	/**
@@ -34,6 +35,11 @@ public class L41022_SC extends Message
 	 * 主英雄Heroies模型
 	 */
 	public var heroies:Package.DHeroies = new Package.DHeroies();
+
+	/**
+	 * 所在地图位置,刚出身为0,前端给默认值
+	 */
+	public var location:uint;
 
 }
 }

@@ -65,6 +65,9 @@
 					if(!SocketServer.hasBackCall(L31003_SC.CMD, onBackSuccess)){
 						SocketServer.BackCall(L31003_SC.CMD, onBackSuccess);
 					}
+					if(!SocketServer.hasBackCall(L31013_SC.CMD, onBackSuccess)){
+						SocketServer.BackCall(L31013_SC.CMD, onBackSuccess);
+					}
 					if(!SocketServer.hasBackCall(L31041_CC.CMD, onBackSuccess)){
 						SocketServer.BackCall(L31041_CC.CMD, onBackSuccess);
 					}
@@ -239,7 +242,7 @@
 			protected function l31041_clickHandler(event:MouseEvent):void
 			{
 				var vo:L31041_CC = new L31041_CC();
-				vo.targetUid = 63;
+				vo.targetUid = 64;
 				SocketServer.Send(vo);
 			}
 			
@@ -249,6 +252,10 @@
 					SocketServer.BackCall(L31052_SC.CMD, onBackSuccess);
 				}
 				var vo:L31051_CS = new L31051_CS();
+				var targetUids:Vector.<Number> = new Vector.<Number>();
+				targetUids[0] = 63;
+				targetUids[1] = 64;
+				vo.targetUids = targetUids;
 				SocketServer.Send(vo);
 			}
 			
@@ -286,6 +293,8 @@
 			<s:Button id="l31041" x="203" y="39" label="点对点" click="l31041_clickHandler(event)"/>
 			<s:Button id="l31051" x="199" y="10" label="PING" click="l31051_clickHandler(event)"/>
 			<s:Button id="l31031_1" x="121" y="96" label="广播世界" click="l31031_1_clickHandler(event)"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="英雄">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 	<s:Button id="l41011" x="17" y="134" width="149" label="初始化" click="l41011_clickHandler(event)"/>
