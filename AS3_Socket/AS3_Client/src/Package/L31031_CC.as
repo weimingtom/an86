@@ -16,13 +16,19 @@ public class L31031_CC extends Message
 	public function L31031_CC()
 	{
 		registerField("world", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
-		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 2);
+		registerField("type", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 2);
+		registerField("data", "", Descriptor.STRING, Descriptor.LABEL_REQUIRED, 3);
 	}
 
 	/**
 	 * 0频道,1世界
 	 */
 	public var world:uint;
+
+	/**
+	 * 前端自定义类型
+	 */
+	public var type:uint;
 
 	/**
 	 * 广播数据
