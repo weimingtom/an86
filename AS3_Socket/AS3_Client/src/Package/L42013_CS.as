@@ -15,13 +15,13 @@ public class L42013_CS extends Message
 	 */
 	public function L42013_CS()
 	{
-		registerField("userHeroId", "", Descriptor.INT64, Descriptor.LABEL_REQUIRED, 1);
+		registerField("heroId", "", Descriptor.UINT32, Descriptor.LABEL_REQUIRED, 1);
 	}
 
 	/**
 	 * 解雇的用户英雄编号
 	 */
-	public var userHeroId:Number;
+	public var heroId:uint;
 
 }
 }
