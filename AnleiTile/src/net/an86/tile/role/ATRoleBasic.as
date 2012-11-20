@@ -20,6 +20,8 @@ package net.an86.tile.role
 		public var cartoon:MyCartoonContainer;
 		
 		private var _isCtrl:Boolean = true;
+		/**是否是NPC*/
+		public var isNpc:Boolean = true;
 		
 		private var upleft:Boolean;
 		private var downleft:Boolean;
@@ -39,7 +41,9 @@ package net.an86.tile.role
 		public function ATRoleBasic($isCtrl:Boolean = true, _tileWidth:int = 32, _tileHeight:int = 32)
 		{
 			isCtrl = $isCtrl;
+			isNpc = false;
 			cartoon = new MyCartoonContainer(_tileWidth, _tileHeight);
+			cartoon.setGapTime(160);
 			addChild(cartoon);
 		}
 		
@@ -159,59 +163,6 @@ package net.an86.tile.role
 				}
 			}
 			
-			/*
-			
-			var moveOb:Object = new Object();
-					if (getMyCorners(x + keyOb.dirx * speed, y + keyOb.diry * speed) == true) {
-						moveOb = keyOb;
-					}else{
-						//we have hit the wall, place near it
-						if(keyOb.dirx < 0){
-							x = xtile * ATile.WH;
-						}else if(keyOb.dirx > 0){
-							xtile = Math.floor((x + speed) / ATile.WH);
-							x = (xtile + 1) * ATile.WH - WH;
-						}else if(keyOb.diry < 0){
-							y = ytile * ATile.WH;
-						}else if(keyOb.diry > 0){
-							ytile = Math.floor((y + speed) / ATile.WH);
-							y = (ytile + 1) * ATile.WH - WH;
-						}
-						moveOb.dirx = 0;
-						moveOb.diry = 0;
-						moveOb.sprNum = keyOb.sprNum;
-						//try to move hero around the wall tiles
-						if(keyOb.dirx != 0){
-							var ytc:int = Math.floor((y + WH/2) / ATile.WH);
-							if(ATile.getWalk(ATGame.world.currentMapData[xtile + keyOb.dirx][ytc])){
-								//align vertically
-								var centerY:int = ytc * ATile.WH + (ATile.WH - WH) / 2;
-								if(y > centerY){
-									//move up
-									y--;
-								}else if(y < centerY){
-									//move down
-									y++;
-								}
-							}
-						}else{
-							var xtc:int = Math.floor((x + WH/2) / ATile.WH);
-							if(ATile.getWalk(ATGame.world.currentMapData[xtc, ytile + keyOb.diry])){
-								//align horisontal
-								var centerX:int = xtc * ATile.WH + (ATile.WH - WH) / 2;
-								if(x > centerX){
-									//move left
-									x--;
-								}else if(x < centerX){
-									x++;
-								}
-							}
-						}
-					}
-			
-			*/
-					
-					
 		}
 		
 		private function addKeydown():void{
@@ -227,7 +178,6 @@ package net.an86.tile.role
 		}
 		
 		private function onKeyup(event:KeyboardEvent):void {
-			//cartoon.stopRow(cartoon.currPlayRow, 1);
 			switch (event.keyCode) {
 				case Keyboard.LEFT :
 					left=false;
@@ -258,11 +208,13 @@ package net.an86.tile.role
 				case Keyboard.DOWN :
 					down=true;
 					break;
-				default :
+				case Keyboard.SPACE:
+					DisposeEvent.invate(cartoon.currPlayRow, xtile, ytile);
 					break;
 			}
 		}
 		
+		/**是否被玩家控制*/
 		public function get isCtrl():Boolean { return _isCtrl; }
 		public function set isCtrl(value:Boolean):void {
 			_isCtrl = value;

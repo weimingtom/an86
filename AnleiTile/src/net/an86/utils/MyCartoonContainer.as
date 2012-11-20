@@ -73,8 +73,8 @@ package net.an86.utils
 				}
 				orderArr.push(_arr);
 			}
-			onTimer();
-			stopRow(0, 1);
+			//onTimer();
+			playRow(0);
 		}
 		/**添加个完整播放完这段动画后执行的方法*/
 		public function addListenerEnd($onFN:Function):void{

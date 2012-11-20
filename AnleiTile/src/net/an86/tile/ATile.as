@@ -6,9 +6,9 @@ package net.an86.tile
 
 	public class ATile
 	{
-		[Embed(source="assets/tiles/TileA5.png")]
-		private static const TileA5:Class;
-		public static const tileSource:BitmapData = new TileA5().bitmapData;
+		//[Embed(source="assets/tiles/TileA5.png")]
+		//private static const TileA5:Class;
+		public static const tileSource:BitmapData = new Tile_0(0, 0);
 		
 		public static var tileW:Number = 32;
 		public static var tileH:Number = 32;

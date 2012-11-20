@@ -14,6 +14,13 @@ package net.an86.tile
 		}
 		
 		public function clear():void{
+			for (var i:int = 0; i < ATGame.npcList.length; i++) 
+			{
+				if(ATGame.gameContainer.contains(ATGame.npcList[i])){
+					ATGame.gameContainer.removeChild(ATGame.npcList[i]);
+				}
+			}
+			
 			ATGame.gameContainer.graphics.clear();
 		}
 		

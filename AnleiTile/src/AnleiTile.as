@@ -6,11 +6,11 @@ package
 	
 	import net.an86.tile.ATGame;
 	import net.an86.tile.ATMapConfig;
+	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
 	import net.an86.utils.ApplicationStats;
-	import net.an86.utils.MyImage;
 	
-	[SWF(width="600",height="600",frameRate="30",backgroundColor="#CCCCCC")]
+	[SWF(width="300",height="300",frameRate="30",backgroundColor="#CCCCCC")]
 	public class AnleiTile extends Sprite
 	{
 		
@@ -21,25 +21,28 @@ package
 			
 			var _sp:Sprite = new Sprite();
 			_sp.graphics.beginFill(0x00CCFF, 0.5);
-			_sp.graphics.drawRect(0, 0, 600, 600);
+			_sp.graphics.drawRect(0, 0, 300, 300);
 			_sp.graphics.endFill();
 			addChild(_sp);
-			
-			ApplicationStats.getInstance().init(this);
-			ApplicationStats.getInstance().visible = true;
-			addChild(ApplicationStats.getInstance());
 			
 			ATGame.init(this);
 			//
 			var role:ATRoleBasic = new ATRoleBasic();
-			role.cartoon.setGapTime(100);
+			role.setBitmapData(new Role_0(0, 0));
 			ATGame.addRole(role);
+			ATGame.setPos(role, 4, 5);
+			ATGame.change(ATMapConfig.getMap(1001));
 			
-			var img:MyImage = new MyImage('assets/char/role.png', function():void{
-				role.setBitmapData(img.bitmapData);
-				ATGame.setPos(role, 4, 5);
-				ATGame.change(ATMapConfig.getMap(1001));
-			});
+			var npc:ATNpcBasic = new ATNpcBasic();
+			npc.setBitmapData(new Role_1(0, 0));
+			ATGame.addNpc(npc, 3, 2);
+			
+			
+			//////////////
+			ApplicationStats.getInstance().init(this);
+			ApplicationStats.getInstance().visible = true;
+			addChild(ApplicationStats.getInstance());
+			//////////////
 			
 		}
 	}

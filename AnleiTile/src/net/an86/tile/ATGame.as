@@ -4,8 +4,8 @@ package net.an86.tile
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.utils.ByteArray;
 	
+	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
 
 	public class ATGame
@@ -17,19 +17,19 @@ package net.an86.tile
 		public static var centerx:int;
 		public static var centery:int;
 		/////////////////////////////
-		//private static var bgBitmap:Bitmap = new Bitmap(new BitmapData();
 		public static var gameContainer:Sprite = new Sprite();
 		public static var world:ATWorld;
 		public static var role:ATRoleBasic;
 		
+		public static var npcList:Vector.<ATNpcBasic> = new Vector.<ATNpcBasic>();
+		
 		public function ATGame(){}
 		
 		public static function init(root:Sprite):void{
-			centerx = root.stage.width/2;
-			centery = root.stage.height/2;
+			centerx = root.stage.stageWidth/2;
+			centery = root.stage.stageHeight/2;
 			
 			root.addChild(gameContainer);
-			//gameContainer.addChild(bgBitmap);
 			world = new ATWorld();
 		}
 		
@@ -70,6 +70,15 @@ package net.an86.tile
 				role = $obj;
 			}
 			gameContainer.addChild(role);
+		}
+		
+		public static function addNpc($obj:ATNpcBasic, $i:int = -1, $j:int = -1):void{
+			gameContainer.addChild($obj);
+			$obj.xtile = $j;
+			$obj.ytile = $i;
+			if($j != -1) $obj.x = $j * ATile.tileW + $obj.width / 2;
+			if($i != -1) $obj.y = $i * ATile.tileH + $obj.height/ 2;
+			npcList.push($obj);
 		}
 		
 		/**
