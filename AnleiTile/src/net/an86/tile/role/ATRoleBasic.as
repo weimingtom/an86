@@ -165,13 +165,13 @@ package net.an86.tile.role
 			
 		}
 		
-		private function addKeydown():void{
+		public function addKeydown():void{
 			this.addEventListener(Event.ENTER_FRAME, onEnter);
 			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
 			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyup);
 		}
 		
-		private function removeKeydown():void{
+		public function removeKeydown():void{
 			this.removeEventListener(Event.ENTER_FRAME, onEnter);
 			ATGame.gameContainer.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
 			ATGame.gameContainer.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyup);

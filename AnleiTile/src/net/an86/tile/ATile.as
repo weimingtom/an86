@@ -8,7 +8,7 @@ package net.an86.tile
 	{
 		//[Embed(source="assets/tiles/TileA5.png")]
 		//private static const TileA5:Class;
-		public static const tileSource:BitmapData = new Tile_0(0, 0);
+		public static const tileSource:BitmapData = new TileA(0, 0);
 		
 		public static var tileW:Number = 32;
 		public static var tileH:Number = 32;

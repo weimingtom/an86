@@ -17,6 +17,7 @@ package net.an86.tile
 		public static var centerx:int;
 		public static var centery:int;
 		/////////////////////////////
+		public static var root:Sprite;
 		public static var gameContainer:Sprite = new Sprite();
 		public static var world:ATWorld;
 		public static var role:ATRoleBasic;
@@ -25,7 +26,8 @@ package net.an86.tile
 		
 		public function ATGame(){}
 		
-		public static function init(root:Sprite):void{
+		public static function init($root:Sprite):void{
+			root = $root;
 			centerx = root.stage.stageWidth/2;
 			centery = root.stage.stageHeight/2;
 			
@@ -78,6 +80,7 @@ package net.an86.tile
 			$obj.ytile = $i;
 			if($j != -1) $obj.x = $j * ATile.tileW + $obj.width / 2;
 			if($i != -1) $obj.y = $i * ATile.tileH + $obj.height/ 2;
+			$obj.setTileNoWalke();
 			npcList.push($obj);
 		}
 		

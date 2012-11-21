@@ -3,11 +3,13 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.MouseEvent;
 	
 	import net.an86.tile.ATGame;
 	import net.an86.tile.ATMapConfig;
 	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
+	import net.an86.ui.alert.Alert;
 	import net.an86.utils.ApplicationStats;
 	
 	[SWF(width="300",height="300",frameRate="30",backgroundColor="#CCCCCC")]
@@ -24,8 +26,14 @@ package
 			_sp.graphics.drawRect(0, 0, 300, 300);
 			_sp.graphics.endFill();
 			addChild(_sp);
-			
+			this.addEventListener(MouseEvent.CLICK, onStart_click);
+		}
+		
+		private function onStart_click(event:MouseEvent):void
+		{
+			this.removeEventListener(MouseEvent.CLICK, onStart_click);
 			ATGame.init(this);
+			//Alert.show('Anlei\n8349\naskflsldkfsldf', 100, 200);
 			//
 			var role:ATRoleBasic = new ATRoleBasic();
 			role.setBitmapData(new Role_0(0, 0));
@@ -35,13 +43,13 @@ package
 			
 			var npc:ATNpcBasic = new ATNpcBasic();
 			npc.setBitmapData(new Role_1(0, 0));
-			ATGame.addNpc(npc, 3, 2);
+			ATGame.addNpc(npc, 6, 6);
 			
 			
 			//////////////
-			ApplicationStats.getInstance().init(this);
+			/*ApplicationStats.getInstance().init(this);
 			ApplicationStats.getInstance().visible = true;
-			addChild(ApplicationStats.getInstance());
+			addChild(ApplicationStats.getInstance());*/
 			//////////////
 			
 		}
