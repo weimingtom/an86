@@ -5,8 +5,11 @@ package net.an86.tile.role
 
 	public class ATNpcBasic extends ATRoleBasic
 	{
-		public function ATNpcBasic()
+		public var id:int;
+		
+		public function ATNpcBasic(nid:int)
 		{
+			id = nid;
 			super(false, 32, 32);
 			this.isNpc = true;
 		}

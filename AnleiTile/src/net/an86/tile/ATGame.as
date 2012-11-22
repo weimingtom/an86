@@ -5,6 +5,7 @@ package net.an86.tile
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import net.an86.tile.configs.ATConfigVO;
 	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
 
@@ -35,8 +36,10 @@ package net.an86.tile
 			world = new ATWorld();
 		}
 		
-		public static function change($map:Array):void{
-			world.create($map);
+		public static function change($config:ATConfigVO):void{
+			world.createMap($config.map);
+			world.createDoor($config.door);
+			world.createNpc($config.npc);
 			if(role){
 				role.reset();
 				addRole(role);
@@ -76,8 +79,8 @@ package net.an86.tile
 		
 		public static function addNpc($obj:ATNpcBasic, $i:int = -1, $j:int = -1):void{
 			gameContainer.addChild($obj);
-			$obj.xtile = $j;
-			$obj.ytile = $i;
+			$obj.xtile = $i;
+			$obj.ytile = $j;
 			if($j != -1) $obj.x = $j * ATile.tileW + $obj.width / 2;
 			if($i != -1) $obj.y = $i * ATile.tileH + $obj.height/ 2;
 			$obj.setTileNoWalke();

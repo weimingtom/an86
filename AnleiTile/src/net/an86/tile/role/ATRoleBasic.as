@@ -6,8 +6,8 @@ package net.an86.tile.role
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
+	import net.an86.tile.ATConfig;
 	import net.an86.tile.ATGame;
-	import net.an86.tile.ATMapConfig;
 	import net.an86.tile.ATWorld;
 	import net.an86.tile.ATile;
 	import net.an86.utils.MyCartoonContainer;
@@ -15,8 +15,6 @@ package net.an86.tile.role
 	
 	public class ATRoleBasic extends Sprite
 	{
-		public static var WH:Number = 32;
-		
 		public var cartoon:MyCartoonContainer;
 		
 		private var _isCtrl:Boolean = true;
@@ -113,23 +111,21 @@ package net.an86.tile.role
 			xtile = int(x/ATile.tileW);
 			ytile = int(y/ATile.tileH);
 			
-			var _id:String = ATGame.world.currentMapData[ytile][xtile];
-			if(_id && _id.indexOf('=') != -1){
-				var _arr:Array = ATWorld.splitJump(_id);
-				_id = _arr[0];
-				
-				var _i:int = _arr[1];
-				var _j:int = _arr[2];
-				if(ATGame.role != null){
-					xtile = _j;
-					ytile = _i;
-					ATGame.setPos(this, _i, _j);
+			var _cmarr:Array = ATGame.world.currentMapData;
+			if(_cmarr[0].length > xtile && _cmarr.length > ytile){
+				var _id:String = _cmarr[ytile][xtile];
+				var _arr:Array = ATWorld.splitJump(xtile, ytile);
+				if(_arr){
+					_id = _arr[0];
+					var _i:int = _arr[1];
+					var _j:int = _arr[2];
+					if(ATGame.role != null){
+						xtile = _j;
+						ytile = _i;
+						ATGame.setPos(this, _i, _j);
+					}
+					ATGame.change(ATConfig.getConfig(int(_id)));
 				}
-			}
-			//_id大于1000说明是门ID，则跳转地图
-			if(int(_id) > ATile.MAP_SP){
-				ATGame.change(ATMapConfig.getMap(int(_id)));
-				
 			}
 			
 			ATGame.gameContainer.x = ATGame.centerx-x;

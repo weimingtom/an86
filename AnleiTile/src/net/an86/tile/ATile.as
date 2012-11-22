@@ -6,20 +6,15 @@ package net.an86.tile
 
 	public class ATile
 	{
-		//[Embed(source="assets/tiles/TileA5.png")]
-		//private static const TileA5:Class;
 		public static const tileSource:BitmapData = new TileA(0, 0);
 		
 		public static var tileW:Number = 32;
 		public static var tileH:Number = 32;
-		public static var WH:Number = 32;
 		
-		/**大于1000说明是门ID，则跳转地图*/
-		public static const MAP_SP:int = 1000;
 		/**可行通过走的地砖ID*/
 		public static var walks:Array = [1];
 		/**可行通过走的门ID*/		
-		public static var doors:Array = [1001, 1002, 1003];
+		public static var doors:Array = [[0,4,3,0,1,1], [0,4,3,0,1,1], [0,4,3,0,1,1]];
 		/**可否行走*/
 		public var walkable:Boolean = true;
 		
@@ -60,10 +55,9 @@ package net.an86.tile
 		public function set id(value:String):void {
 			_id = value;
 			walkable = getWalk(int(id));
-			var _doorId:int = int(id) > MAP_SP ? 3 : int(id);
 			
 			if(_rect == null){	
-				_rect = new Rectangle(tileW*_doorId, 0, tileW, tileH);
+				_rect = new Rectangle(tileW*int(id), 0, tileW, tileH);
 			}
 			if(_dest == null){
 				_dest = new Point();

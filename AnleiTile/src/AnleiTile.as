@@ -5,12 +5,9 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.MouseEvent;
 	
+	import net.an86.tile.ATConfig;
 	import net.an86.tile.ATGame;
-	import net.an86.tile.ATMapConfig;
-	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
-	import net.an86.ui.alert.Alert;
-	import net.an86.utils.ApplicationStats;
 	
 	[SWF(width="300",height="300",frameRate="30",backgroundColor="#CCCCCC")]
 	public class AnleiTile extends Sprite
@@ -39,13 +36,13 @@ package
 			role.setBitmapData(new Role_0(0, 0));
 			ATGame.addRole(role);
 			ATGame.setPos(role, 4, 5);
-			ATGame.change(ATMapConfig.getMap(1001));
-			
-			var npc:ATNpcBasic = new ATNpcBasic();
+			ATGame.change(ATConfig.getConfig(1001));
+			/*
+			var npc:ATNpcBasic = new ATNpcBasic(1001);
 			npc.setBitmapData(new Role_1(0, 0));
 			ATGame.addNpc(npc, 6, 6);
 			
-			
+			*/
 			//////////////
 			/*ApplicationStats.getInstance().init(this);
 			ApplicationStats.getInstance().visible = true;
