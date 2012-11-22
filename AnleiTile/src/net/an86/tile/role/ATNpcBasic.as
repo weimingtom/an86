@@ -14,9 +14,14 @@ package net.an86.tile.role
 			this.isNpc = true;
 		}
 		
+		public function dispose():void{
+			this.cartoon.dispose();
+			this.cartoon = null;
+		}
+		
 		/**把当前NPC所在格子设成不可行走*/
 		public function setTileNoWalke():void{
-			ATile(ATGame.world.tiles[xtile+'_'+ytile]).walkable = false;
+			ATile(ATGame.world.tiles[ytile+'_'+xtile]).walkable = false;
 		}
 	}
 }

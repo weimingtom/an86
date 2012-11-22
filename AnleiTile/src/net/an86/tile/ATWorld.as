@@ -20,17 +20,19 @@ package net.an86.tile
 			for (var i:int = 0; i < ATGame.npcList.length; i++) 
 			{
 				if(ATGame.gameContainer.contains(ATGame.npcList[i])){
+					ATGame.npcList[i].dispose();
 					ATGame.gameContainer.removeChild(ATGame.npcList[i]);
 				}
 			}
+			ATGame.npcList.splice(0, ATGame.npcList.length);
 			
 			ATGame.gameContainer.graphics.clear();
+			ATile.doors = [];
 		}
 		
 		public function createMap($map:Array):void{
-			ATile.doors = [];
-			currentMapData = $map;
 			clear();
+			currentMapData = $map;
 			var mapWidth:int = $map[0].length;
 			var mapHeight:int = $map.length;
 			for (var i:int = 0; i < mapHeight; ++i) {
@@ -84,7 +86,7 @@ package net.an86.tile
 				var _cls:Class = ApplicationDomain.currentDomain.getDefinition('Role_'+int($npc[i][2])) as Class;
 				var npc:ATNpcBasic = new ATNpcBasic($npc[i][2]);
 				npc.setBitmapData(new _cls(0, 0));
-				ATGame.addNpc(npc, int($npc[i][0]), int($npc[i][1]));
+				ATGame.addNpc(npc, int($npc[i][1]), int($npc[i][0]));
 			}
 		}
 		

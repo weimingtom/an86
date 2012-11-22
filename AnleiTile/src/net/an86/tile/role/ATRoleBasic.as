@@ -26,10 +26,10 @@ package net.an86.tile.role
 		private var upright:Boolean;
 		private var downright:Boolean;
 		
-		private var up:Boolean=false;
-		private var down:Boolean=false;
-		private var left:Boolean=false;
-		private var right:Boolean = false;
+		private var up_key:Boolean=false;
+		private var down_key:Boolean=false;
+		private var left_key:Boolean=false;
+		private var right_key:Boolean = false;
 		
 		public var speed:int = 4;
 		public var xtile:int;
@@ -51,6 +51,7 @@ package net.an86.tile.role
 			cartoon.y = -cartoon.height/2;
 		}
 		
+		/**防止切换地图时顺移到别处*/
 		public function reset():void{
 			upleft = false;
 			downleft = false;
@@ -134,25 +135,25 @@ package net.an86.tile.role
 		}
 		
 		private function onEnter(event:Event):void {
-			if(right){
+			if(right_key){
 				moveChar(1, 0);
 				if(cartoon.currPlayRow != 2){
 					cartoon.playRow(2);
 				}
 			}else 
-			if(left){
+			if(left_key){
 				moveChar(-1, 0);
 				if(cartoon.currPlayRow != 1){
 					cartoon.playRow(1);
 				}
 			}else 
-			if(up){
+			if(up_key){
 				moveChar(0, -1);
 				if(cartoon.currPlayRow != 3){
 					cartoon.playRow(3);
 				}
 			}else 
-			if(down){
+			if(down_key){
 				moveChar(0, 1);
 				if(cartoon.currPlayRow != 0){
 					cartoon.playRow(0);
@@ -162,6 +163,10 @@ package net.an86.tile.role
 		}
 		
 		public function addKeydown():void{
+			up_key = false;
+			down_key = false;
+			left_key = false;
+			right_key = false;
 			this.addEventListener(Event.ENTER_FRAME, onEnter);
 			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
 			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyup);
@@ -176,16 +181,16 @@ package net.an86.tile.role
 		private function onKeyup(event:KeyboardEvent):void {
 			switch (event.keyCode) {
 				case Keyboard.LEFT :
-					left=false;
+					left_key=false;
 					break;
 				case Keyboard.RIGHT :
-					right=false;
+					right_key=false;
 					break;
 				case Keyboard.UP :
-					up=false;
+					up_key=false;
 					break;
 				case Keyboard.DOWN :
-					down=false;
+					down_key=false;
 					break;
 			}
 		}
@@ -193,16 +198,16 @@ package net.an86.tile.role
 			var keyPressed:Boolean = false;
 			switch (event.keyCode) {
 				case Keyboard.LEFT :
-					left = true;
+					left_key = true;
 					break;
 				case Keyboard.RIGHT :
-					right=true;
+					right_key=true;
 					break;
 				case Keyboard.UP :
-					up=true;
+					up_key=true;
 					break;
 				case Keyboard.DOWN :
-					down=true;
+					down_key=true;
 					break;
 				case Keyboard.SPACE:
 					DisposeEvent.invate(cartoon.currPlayRow, xtile, ytile);
