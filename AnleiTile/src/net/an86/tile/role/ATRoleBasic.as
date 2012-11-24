@@ -3,8 +3,6 @@ package net.an86.tile.role
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
 	
 	import net.an86.tile.ATConfig;
 	import net.an86.tile.ATGame;
@@ -21,18 +19,23 @@ package net.an86.tile.role
 		/**是否是NPC*/
 		public var isNpc:Boolean = true;
 		
+		/**前方可行走的标记*/
 		private var upleft:Boolean;
 		private var downleft:Boolean;
 		private var upright:Boolean;
 		private var downright:Boolean;
 		
-		private var up_key:Boolean=false;
-		private var down_key:Boolean=false;
-		private var left_key:Boolean=false;
-		private var right_key:Boolean = false;
+		/**移动方向标记*/
+		public var up_key:Boolean=false;
+		public var down_key:Boolean=false;
+		public var left_key:Boolean=false;
+		public var right_key:Boolean = false;
 		
+		/**移动速度*/
 		public var speed:int = 4;
+		/**目前在哪个格子X坐标上*/		
 		public var xtile:int;
+		/**目前在哪个格子Y坐标上*/
 		public var ytile:int;
 		
 		
@@ -135,6 +138,7 @@ package net.an86.tile.role
 		}
 		
 		private function onEnter(event:Event):void {
+			if(!isCtrl) return;
 			if(right_key){
 				moveChar(1, 0);
 				if(cartoon.currPlayRow != 2){
@@ -162,65 +166,20 @@ package net.an86.tile.role
 			
 		}
 		
-		public function addKeydown():void{
-			up_key = false;
-			down_key = false;
-			left_key = false;
-			right_key = false;
-			this.addEventListener(Event.ENTER_FRAME, onEnter);
-			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
-			ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyup);
-		}
-		
-		public function removeKeydown():void{
-			this.removeEventListener(Event.ENTER_FRAME, onEnter);
-			ATGame.gameContainer.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
-			ATGame.gameContainer.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyup);
-		}
-		
-		private function onKeyup(event:KeyboardEvent):void {
-			switch (event.keyCode) {
-				case Keyboard.LEFT :
-					left_key=false;
-					break;
-				case Keyboard.RIGHT :
-					right_key=false;
-					break;
-				case Keyboard.UP :
-					up_key=false;
-					break;
-				case Keyboard.DOWN :
-					down_key=false;
-					break;
-			}
-		}
-		private function onKeydown(event:KeyboardEvent):void {
-			var keyPressed:Boolean = false;
-			switch (event.keyCode) {
-				case Keyboard.LEFT :
-					left_key = true;
-					break;
-				case Keyboard.RIGHT :
-					right_key=true;
-					break;
-				case Keyboard.UP :
-					up_key=true;
-					break;
-				case Keyboard.DOWN :
-					down_key=true;
-					break;
-				case Keyboard.SPACE:
-					DisposeEvent.invate(cartoon.currPlayRow, xtile, ytile);
-					break;
-			}
-		}
-		
 		/**是否被玩家控制*/
 		public function get isCtrl():Boolean { return _isCtrl; }
 		public function set isCtrl(value:Boolean):void {
 			_isCtrl = value;
-			if(isCtrl) addKeydown();
-			else removeKeydown();
+			if(isCtrl){
+				if(!this.hasEventListener(Event.ENTER_FRAME)){
+					this.addEventListener(Event.ENTER_FRAME, onEnter);
+				}
+			}else{
+				up_key = false;
+				down_key = false;
+				left_key = false;
+				right_key = false;
+			}
 		}
 
 	}

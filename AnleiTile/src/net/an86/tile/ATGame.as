@@ -41,7 +41,7 @@ package net.an86.tile
 			world.createDoor($config.door);
 			world.createNpc($config.npc);
 			if(role){
-				role.reset();
+				//role.reset();
 				addRole(role);
 			}
 		}

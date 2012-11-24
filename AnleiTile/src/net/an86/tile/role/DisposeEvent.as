@@ -36,9 +36,10 @@ package net.an86.tile.role
 			{
 				var _npc:ATNpcBasic = ATGame.npcList[i];
 				if(xtile == _npc.xtile && ytile == _npc.ytile){
-					ATGame.role.removeKeydown();
+					ATGame.role.isCtrl = false;
 					Alert.show('Anlei\n8349我是中\naskflsldkfsldf');
-					ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
+					trace("A");
+					//ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
 					//NPC面向主角
 					var _away:int;
 					switch(away){
@@ -66,7 +67,7 @@ package net.an86.tile.role
 		{
 			if(e.keyCode == Keyboard.SPACE){
 				Alert.hide();
-				ATGame.role.addKeydown();
+				ATGame.role.isCtrl = true;
 			}
 		}
 	}

@@ -49,6 +49,7 @@ package
 			addChild(ApplicationStats.getInstance());*/
 			//////////////
 			
+			new KeyCtrl(stage);
 		}
 	}
 }
