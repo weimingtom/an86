@@ -1,5 +1,7 @@
 package net.an86.tile.role
 {
+	import com.D5Power.mission.MissionData;
+	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
@@ -36,10 +38,12 @@ package net.an86.tile.role
 			{
 				var _npc:ATNpcBasic = ATGame.npcList[i];
 				if(xtile == _npc.xtile && ytile == _npc.ytile){
+					
+					var list:Vector.<MissionData> = _npc.missionConfig.getList(ATGame.userdata);
+					//(_perception.Scene as D5Scene).missionCallBack(to.missionConfig.npcname,to.missionConfig.say,to.missionConfig.event,list,to);
+					Alert.show(_npc.missionConfig.npcname + "\n" + _npc.missionConfig.say + "\n" + _npc.missionConfig.event);
+					
 					ATGame.role.isCtrl = false;
-					Alert.show('Anlei\n8349我是中\naskflsldkfsldf');
-					trace("A");
-					//ATGame.gameContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
 					//NPC面向主角
 					var _away:int;
 					switch(away){

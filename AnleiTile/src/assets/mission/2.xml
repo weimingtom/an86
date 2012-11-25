@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<npcname>客栈掌柜</npcname>
+	
+	<nomission>
+		<info>客官您要打尖还是住店？</info>
+	</nomission>
+	
+	<mission>
+		<id>2</id>
+		<type>1</type>
+		<name>寻回包裹</name>
+		<info>咦！你不是从悬崖上掉下来被算命先生救回来的那位客观么？您运气真是好啊。哦，这是您的包裹。</info>
+		<need/>
+		<give type='1' value='2' num='-1'/>
+		<give type='1' value='3' num='1'/>
+	</mission>
+	
+	<mission>
+		<id>3</id>
+		<type>0</type>
+		<name>掌柜照顾</name>
+		<info>什么？你不记得自己是谁，也不记得自己是哪里人了？真是可怜啊！这样吧，如果你愿意，就先在这里给我当伙计住下来，不过可不能吃闲饭啊。可以的话，先去帮我到客栈外面的墙上，摘2个蒜头来。</info>
+		<need/>
+		<give type='1' value='3' num='-1'/>
+		<give type='1' value='4' num='1'/>
+	</mission>
+	
+	<mission>
+		<id>4</id>
+		<type>1</type>
+		<name>掌柜照顾</name>
+		<info>我要你帮忙摘的蒜头你摘来了么？</info>
+		<need type='0' value='1' num='2'/>
+		<give type='1' value='4' num='-1'/>
+	</mission>
+</data>

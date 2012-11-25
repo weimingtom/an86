@@ -5,7 +5,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.MouseEvent;
 	
-	import net.an86.tile.ATConfig;
+	import net.an86.tile.ATSceneConfig;
 	import net.an86.tile.ATGame;
 	import net.an86.tile.role.ATRoleBasic;
 	
@@ -36,7 +36,7 @@ package
 			role.setBitmapData(new Role_0(0, 0));
 			ATGame.addRole(role);
 			ATGame.setPos(role, 4, 5);
-			ATGame.change(ATConfig.getConfig(1001));
+			ATGame.change(ATSceneConfig.getConfig(1001));
 			/*
 			var npc:ATNpcBasic = new ATNpcBasic(1001);
 			npc.setBitmapData(new Role_1(0, 0));

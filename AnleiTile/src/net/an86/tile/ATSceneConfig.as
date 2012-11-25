@@ -3,7 +3,7 @@ package net.an86.tile
 	import net.an86.tile.configs.ATConfigVO;
 
 	/**地图配置表*/
-	public class ATConfig
+	public class ATSceneConfig
 	{
 		/**获取地图，门，NPC配置数组*/
 		public static function getConfig(mid:int):ATConfigVO{
@@ -58,9 +58,9 @@ package net.an86.tile
 13,3,3,1,3,1003
 				</door>
 				<npc>
-1,2,0|
-6,7,1|
-8,8,2
+1,2,1|
+6,7,2|
+2,11,3
 				</npc>
 			</item>
 			<item id="1002">
@@ -76,7 +76,7 @@ package net.an86.tile
 7,3,3,1,4,1001
 				</door>
 				<npc>
-1,1,0
+1,1,4
 				</npc>
 			</item>
 			<item id="1003">
@@ -92,7 +92,7 @@ package net.an86.tile
 0,3,3,12,2,1001
 				</door>
 				<npc>
-1,1,0
+1,1,5
 				</npc>
 			</item>
 		</config>;

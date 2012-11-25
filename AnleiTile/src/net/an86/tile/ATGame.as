@@ -1,5 +1,9 @@
 package net.an86.tile
 {
+	import anlei.db.AccessDB;
+	
+	import com.D5Power.utils.CharacterData;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -11,6 +15,8 @@ package net.an86.tile
 
 	public class ATGame
 	{
+		public static var userdata:CharacterData;
+		
 		private static const visx:int = 3;
 		private static const visy:int = 3;
 		public static const halfvisx:int = int(visx/2);
@@ -32,6 +38,9 @@ package net.an86.tile
 			centerx = root.stage.stageWidth/2;
 			centery = root.stage.stageHeight/2;
 			
+			var _cls:Class = ATMissionConfig.DATA_ZIP;
+			AccessDB.getInstance().zip.setBytes(new _cls());
+			userdata = new CharacterData();
 			root.addChild(gameContainer);
 			world = new ATWorld();
 		}

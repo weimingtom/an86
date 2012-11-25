@@ -4,7 +4,7 @@ package net.an86.ui.alert
 	import flash.display.Sprite;
 	import flash.text.TextFieldAutoSize;
 	
-	import net.an86.utils.MyTextField;
+	import ui.component.MyTextField;
 
 	public class AlertFace
 	{

@@ -1,5 +1,7 @@
 package net.an86.tile
 {
+	import anlei.db.AccessDB;
+	
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 	
@@ -83,9 +85,12 @@ package net.an86.tile
 			_temp = Role_8;
 			
 			for (var i:int = 0; i < $npc.length; i++) {
-				var _cls:Class = ApplicationDomain.currentDomain.getDefinition('Role_'+int($npc[i][2])) as Class;
+				var _nid:int = int($npc[i][2]);
+				var _cls:Class = ApplicationDomain.currentDomain.getDefinition('Role_'+_nid) as Class;
 				var npc:ATNpcBasic = new ATNpcBasic($npc[i][2]);
 				npc.setBitmapData(new _cls(0, 0));
+				var _xml:XML = AccessDB.getInstance().zip.getXML(_nid.toString());
+				npc.parseNpcMissionXML(_xml);
 				ATGame.addNpc(npc, int($npc[i][1]), int($npc[i][0]));
 			}
 		}

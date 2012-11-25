@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<npcname>算命先生</npcname>
+
+	<nomission>
+		<info>铁口直断，不灵免钱！</info>
+	</nomission>
+	
+	<mission>
+		<id>1</id>
+		<type>0</type>
+		<name>客栈初醒</name>
+		<info>年轻人，你命真是大啊，我看到你从悬崖上掉下来，被树枝挂住，才不至丧命。奇怪的是你身上竟然连伤都没有。你随身的衣物上占满了泥浆，我让掌柜去帮你浆洗了，你可以去楼下找他要回来。</info>
+		<need/>
+		<give type='1' value='1' num='-1'/>
+		<give type='1' value='2' num='1'/>
+	</mission>
+	
+	
+</data>

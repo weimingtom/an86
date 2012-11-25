@@ -4,11 +4,12 @@ package net.an86.tile.role
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	import net.an86.tile.ATConfig;
 	import net.an86.tile.ATGame;
+	import net.an86.tile.ATSceneConfig;
 	import net.an86.tile.ATWorld;
 	import net.an86.tile.ATile;
-	import net.an86.utils.MyCartoonContainer;
+	
+	import ui.component.MyCartoonContainer;
 
 	
 	public class ATRoleBasic extends Sprite
@@ -128,7 +129,7 @@ package net.an86.tile.role
 						ytile = _i;
 						ATGame.setPos(this, _i, _j);
 					}
-					ATGame.change(ATConfig.getConfig(int(_id)));
+					ATGame.change(ATSceneConfig.getConfig(int(_id)));
 				}
 			}
 			

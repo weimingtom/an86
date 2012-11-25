@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<npcname>总镖头</npcname>
+	<nomission>
+		<info>这位兄弟，你要找活干么？</info>
+		<event type='baobiao' value='0'/>
+	</nomission>
+</data>
