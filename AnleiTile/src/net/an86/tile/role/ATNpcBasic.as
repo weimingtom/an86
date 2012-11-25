@@ -20,6 +20,7 @@ package net.an86.tile.role
 		public function dispose():void{
 			this.cartoon.dispose();
 			this.cartoon = null;
+			_misConf = null;
 		}
 		
 		/**把当前NPC所在格子设成不可行走*/
