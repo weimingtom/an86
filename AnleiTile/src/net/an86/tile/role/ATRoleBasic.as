@@ -5,7 +5,7 @@ package net.an86.tile.role
 	import flash.events.Event;
 	
 	import net.an86.tile.ATGame;
-	import net.an86.tile.ATSceneConfig;
+	import net.an86.utils.ATSceneConfig;
 	import net.an86.tile.ATWorld;
 	import net.an86.tile.ATile;
 	

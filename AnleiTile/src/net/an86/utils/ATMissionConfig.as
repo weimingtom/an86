@@ -1,4 +1,4 @@
-package net.an86.tile
+package net.an86.utils
 {
 	public class ATMissionConfig
 	{

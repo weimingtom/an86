@@ -1,4 +1,4 @@
-package
+package net.an86.utils
 {
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -11,12 +11,16 @@ package
 	
 	import net.an86.tile.ATGame;
 	import net.an86.tile.role.DisposeEvent;
+	import net.an86.utils.menu.IMenu;
 
 	public class KeyCtrl
 	{
 		private var away_mc:MovieClip;
 		private var a_btn:SimpleButton;
 		private var stage:Stage;
+		
+		public var currentMenu:IMenu;
+		
 		public function KeyCtrl($stage:Stage)
 		{
 			stage = $stage;

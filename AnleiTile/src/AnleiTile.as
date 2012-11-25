@@ -5,9 +5,9 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.MouseEvent;
 	
-	import net.an86.tile.ATSceneConfig;
 	import net.an86.tile.ATGame;
 	import net.an86.tile.role.ATRoleBasic;
+	import net.an86.utils.ATSceneConfig;
 	
 	[SWF(width="300",height="300",frameRate="30",backgroundColor="#CCCCCC")]
 	public class AnleiTile extends Sprite
@@ -49,7 +49,6 @@ package
 			addChild(ApplicationStats.getInstance());*/
 			//////////////
 			
-			new KeyCtrl(stage);
 		}
 	}
 }

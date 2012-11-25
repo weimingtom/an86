@@ -12,6 +12,8 @@ package net.an86.tile
 	import net.an86.tile.configs.ATConfigVO;
 	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.tile.role.ATRoleBasic;
+	import net.an86.utils.ATMissionConfig;
+	import net.an86.utils.KeyCtrl;
 
 	public class ATGame
 	{
@@ -31,12 +33,17 @@ package net.an86.tile
 		
 		public static var npcList:Vector.<ATNpcBasic> = new Vector.<ATNpcBasic>();
 		
+		public static var keyCtrl:KeyCtrl;
+		
 		public function ATGame(){}
 		
 		public static function init($root:Sprite):void{
 			root = $root;
 			centerx = root.stage.stageWidth/2;
 			centery = root.stage.stageHeight/2;
+			
+			
+			keyCtrl = new KeyCtrl(root.stage);
 			
 			var _cls:Class = ATMissionConfig.DATA_ZIP;
 			AccessDB.getInstance().zip.setBytes(new _cls());

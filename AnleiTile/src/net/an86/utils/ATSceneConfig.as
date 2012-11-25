@@ -1,4 +1,4 @@
-package net.an86.tile
+package net.an86.utils
 {
 	import net.an86.tile.configs.ATConfigVO;
 
