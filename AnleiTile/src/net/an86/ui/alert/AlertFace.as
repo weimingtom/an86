@@ -4,6 +4,8 @@ package net.an86.ui.alert
 	import flash.display.Sprite;
 	import flash.text.TextFieldAutoSize;
 	
+	import net.an86.tile.ATGame;
+	
 	import ui.component.MyTextField;
 
 	public class AlertFace
@@ -35,8 +37,23 @@ package net.an86.ui.alert
 		}
 		
 		public function setText(value:String):BitmapData{
+			txt.wordWrap = false;
 			txt.text = value;
 			
+			var _w:int = txt.width;
+			var _h:int = txt.height;
+			var _sw:int = ATGame.gameContainer.stage.stageWidth;
+			var _sh:int = ATGame.gameContainer.stage.stageHeight;
+			if(_w > _sw){
+				_w = _sw - 2;
+				txt.width = _w;
+				txt.wordWrap = true;
+			}
+			if(_h > _sh){
+				_h = _sh - 2;
+				txt.height = _h;
+				txt.wordWrap = true;
+			}
 			bg.graphics.clear();
 			bg.graphics.beginFill(0x0, 0.5);
 			bg.graphics.drawRect(0, 0, txt.width + OFFX*2, txt.height + OFFY);
