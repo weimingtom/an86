@@ -17,6 +17,7 @@ package net.an86.utils
 	{
 		private var away_mc:MovieClip;
 		private var a_btn:SimpleButton;
+		private var b_btn:SimpleButton;
 		private var stage:Stage;
 		
 		public var currentMenu:IMenu;
@@ -26,14 +27,20 @@ package net.an86.utils
 			stage = $stage;
 			away_mc = new Key_Away_mc();
 			a_btn = new Key_A_btn();
+			b_btn = new Key_B_btn();
+			
 			away_mc.x = 10;
 			away_mc.y = stage.stageHeight - away_mc.height - 10;
 			
 			a_btn.x = stage.stageWidth - a_btn.width - 10;
 			a_btn.y = stage.stageHeight - a_btn.height - 10;
 			
+			b_btn.x = a_btn.x;
+			b_btn.y = a_btn.y - b_btn.height - 10;
+			
 			away_mc.addEventListener(MouseEvent.MOUSE_DOWN, onAwayKeydown);
 			a_btn.addEventListener(MouseEvent.MOUSE_DOWN, onAClick);
+			b_btn.addEventListener(MouseEvent.MOUSE_DOWN, onBClick);
 			
 			stage.addEventListener(MouseEvent.MOUSE_UP, onAwayKeyup);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
@@ -45,6 +52,10 @@ package net.an86.utils
 		
 		private function onAClick(event:MouseEvent):void {
 			invateA();
+		}
+		
+		private function onBClick(event:MouseEvent):void {
+			invateB();
 		}
 		
 		private function onAwayKeydown(event:MouseEvent):void {
@@ -78,13 +89,12 @@ package net.an86.utils
 				case 'right_btn':
 					releaseUpKey(Keyboard.RIGHT);
 					break;
-				default:
-					trace("B");
+				/*case 'a_btn':
 					ATGame.role.left_key=false;
 					ATGame.role.right_key=false;
 					ATGame.role.up_key=false;
 					ATGame.role.down_key=false;
-					break;
+					break;*/
 			}
 		}
 		
@@ -95,6 +105,9 @@ package net.an86.utils
 			if(!stage.contains(a_btn)){
 				stage.addChild(a_btn);
 			}
+			if(!stage.contains(b_btn)){
+				stage.addChild(b_btn);
+			}
 		}
 		
 		private function onMouseLeave(event:Event):void {
@@ -104,6 +117,9 @@ package net.an86.utils
 			}
 			if(stage.contains(a_btn)){
 				stage.removeChild(a_btn);
+			}
+			if(stage.contains(b_btn)){
+				stage.removeChild(b_btn);
 			}
 		}
 		
@@ -128,24 +144,37 @@ package net.an86.utils
 			switch (code) {
 				case Keyboard.LEFT :
 					ATGame.role.left_key = true;
+					currentMenu.left();
 					break;
 				case Keyboard.RIGHT :
 					ATGame.role.right_key=true;
+					currentMenu.right();
 					break;
 				case Keyboard.UP :
 					ATGame.role.up_key=true;
+					currentMenu.up();
 					break;
 				case Keyboard.DOWN :
 					ATGame.role.down_key=true;
+					currentMenu.down();
 					break;
 				case Keyboard.SPACE:
 					invateA();
+					currentMenu.A();
+					break;
+				case Keyboard.CONTROL:
+					invateB();
+					currentMenu.B();
 					break;
 			}
 		}
 		
 		private function invateA():void{
 			DisposeEvent.invate(ATGame.role.cartoon.currPlayRow, ATGame.role.xtile, ATGame.role.ytile);
+		}
+		
+		private function invateB():void{
+			
 		}
 		
 		private function onKeyup(event:KeyboardEvent):void {

@@ -8,5 +8,6 @@ package net.an86.utils.menu
 		function right():void;
 		
 		function A():void;
+		function B():void;
 	}
 }
