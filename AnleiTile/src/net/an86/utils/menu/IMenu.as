@@ -9,5 +9,8 @@ package net.an86.utils.menu
 		
 		function A():void;
 		function B():void;
+		
+		function removePop():void;
+		function pop():void;
 	}
 }

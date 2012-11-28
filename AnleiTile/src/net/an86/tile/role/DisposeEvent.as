@@ -7,6 +7,8 @@ package net.an86.tile.role
 	
 	import net.an86.tile.ATGame;
 	import net.an86.ui.alert.Alert;
+	import net.an86.utils.menu.ATMenu;
+	import net.an86.utils.menu.ATMenuConfig;
 
 	public class DisposeEvent
 	{
@@ -42,6 +44,12 @@ package net.an86.tile.role
 					var list:Vector.<MissionData> = _npc.missionConfig.getList(ATGame.userdata);
 					//(_perception.Scene as D5Scene).missionCallBack(to.missionConfig.npcname,to.missionConfig.say,to.missionConfig.event,list,to);
 					Alert.show(_npc.missionConfig.npcname + "\n" + _npc.missionConfig.say + "\n" + _npc.missionConfig.event);
+					
+					switch(_npc.missionConfig.event.type){
+						case "shop":
+							new ATMenu(ATMenuConfig['xml' + _npc.missionConfig.event.value]).pop();
+							break;
+					}
 					
 					ATGame.role.isCtrl = false;
 					//NPC面向主角

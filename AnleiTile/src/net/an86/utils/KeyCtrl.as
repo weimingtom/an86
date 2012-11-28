@@ -144,27 +144,39 @@ package net.an86.utils
 			switch (code) {
 				case Keyboard.LEFT :
 					ATGame.role.left_key = true;
-					currentMenu.left();
+					if(currentMenu){
+						currentMenu.left();
+					}
 					break;
 				case Keyboard.RIGHT :
 					ATGame.role.right_key=true;
-					currentMenu.right();
+					if(currentMenu){
+						currentMenu.right();
+					}
 					break;
 				case Keyboard.UP :
 					ATGame.role.up_key=true;
-					currentMenu.up();
+					if(currentMenu){
+						currentMenu.up();
+					}
 					break;
 				case Keyboard.DOWN :
 					ATGame.role.down_key=true;
-					currentMenu.down();
+					if(currentMenu){
+						currentMenu.down();
+					}
 					break;
 				case Keyboard.SPACE:
 					invateA();
-					currentMenu.A();
+					if(currentMenu){
+						currentMenu.A();
+					}
 					break;
 				case Keyboard.CONTROL:
 					invateB();
-					currentMenu.B();
+					if(currentMenu){
+						currentMenu.B();
+					}
 					break;
 			}
 		}

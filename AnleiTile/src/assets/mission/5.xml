@@ -2,7 +2,7 @@
 <data>
 	<npcname>总镖头</npcname>
 	<nomission>
-		<info>这位兄弟，你要找活干么？</info>
-		<event type='baobiao' value='0'/>
+		<info>买东西吗？</info>
+		<event type='shop' value='1'/>
 	</nomission>
 </data>

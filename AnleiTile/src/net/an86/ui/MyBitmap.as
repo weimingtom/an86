@@ -13,10 +13,17 @@ package net.an86.ui
 			sp = new Sprite();
 		}
 		
-		public function fill():void{
+		public function draw():void{
 			if(sp.width <= 0 || sp.height <= 0) return;
 			var bd:BitmapData = new BitmapData(sp.width, sp.height, true, 0x0);
+			bd.draw(sp);
 			this.bitmapData = bd;
+		}
+		
+		
+		public function dispose():void{
+			sp = null;
+			this.bitmapData.dispose();
 		}
 	}
 }

@@ -20,27 +20,38 @@ package net.an86.utils.menu
 			_icon.x = 10;
 			_icon.y = 10;
 			
-			_txt.width = 50;
+			_txt.width = 60;
 			_txt.height= 20;
-			_txt.x = 20 + 10;
+			_txt.x = 30;
 			_txt.y = 10;
 			
 			this.sp.graphics.clear();
-			this.sp.graphics.beginFill(0x0, 0.5);
-			this.sp.graphics.drawRect(0, 0, 90 + 20);
+			this.sp.graphics.beginFill(0x0, 1);
+			this.sp.graphics.drawRect(0, 0, 90, 40);
 			this.sp.graphics.endFill();
 			
+		}
+		
+		override public function dispose():void{
+			super.dispose();
+			
+			_data = null;
+			_icon = null;
+			_txt.dispose();
+			_txt = null;
 		}
 
 		public function get data():ItemData { return _data; }
 		public function set data(value:ItemData):void {
 			_data = value;
-			_txt.text = value.name;
-			_icon.bitmapData = new icon(0, 0);
-			
-			this.sp.addChild(_icon);
-			this.sp.addChild(_txt);
-			this.fill();
+			if(value){
+				_txt.text = value.label;
+				_icon.bitmapData = new icon(0, 0);
+				
+				this.sp.addChild(_icon);
+				this.sp.addChild(_txt);
+				this.draw();
+			}
 		}
 
 	}
