@@ -1,4 +1,4 @@
-package net.an86.utils.menu
+package net.an86.ui.menu
 {
 	import flash.display.BitmapData;
 	
@@ -8,7 +8,7 @@ package net.an86.utils.menu
 	
 	public class ATMenuItem extends MyBitmap
 	{
-		private var _data:ItemData;
+		private var _data:ATMenuItemData;
 		
 		private var _icon:MyBitmap = new MyBitmap();
 		
@@ -41,11 +41,11 @@ package net.an86.utils.menu
 			_txt = null;
 		}
 
-		public function get data():ItemData { return _data; }
-		public function set data(value:ItemData):void {
+		public function get data():ATMenuItemData { return _data; }
+		public function set data(value:ATMenuItemData):void {
 			_data = value;
 			if(value){
-				_txt.text = value.label;
+				_txt.text = value.name;
 				_icon.bitmapData = new icon(0, 0);
 				
 				this.sp.addChild(_icon);

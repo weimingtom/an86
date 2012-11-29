@@ -124,7 +124,7 @@ package net.an86.tile.role
 					_id = _arr[0];
 					var _i:int = _arr[1];
 					var _j:int = _arr[2];
-					if(ATGame.role != null){
+					if(ATGame.roleList[0] != null){
 						xtile = _j;
 						ytile = _i;
 						ATGame.setPos(this, _i, _j);

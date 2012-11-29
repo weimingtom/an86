@@ -1,16 +1,14 @@
-package net.an86.tile.role
+package net.an86.tile.role.utils
 {
 	import com.D5Power.mission.MissionData;
 	
-	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
-	
 	import net.an86.tile.ATGame;
+	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.ui.alert.Alert;
-	import net.an86.utils.menu.ATMenu;
-	import net.an86.utils.menu.ATMenuConfig;
+	import net.an86.ui.menu.ATMenu;
+	import net.an86.tile.menu.ATMenuConfig;
 
-	public class DisposeEvent
+	public class IntaveEvent
 	{
 		/**
 		 * 处发事件，如：对话
@@ -43,15 +41,15 @@ package net.an86.tile.role
 					
 					var list:Vector.<MissionData> = _npc.missionConfig.getList(ATGame.userdata);
 					//(_perception.Scene as D5Scene).missionCallBack(to.missionConfig.npcname,to.missionConfig.say,to.missionConfig.event,list,to);
-					Alert.show(_npc.missionConfig.npcname + "\n" + _npc.missionConfig.say + "\n" + _npc.missionConfig.event);
-					
-					switch(_npc.missionConfig.event.type){
-						case "shop":
-							new ATMenu(ATMenuConfig['xml' + _npc.missionConfig.event.value]).pop();
-							break;
+					Alert.show('<font color="#FF0000">'+_npc.missionConfig.npcname + ":</font>\n    " + _npc.missionConfig.say);
+					//
+					//
+					//
+					if(_npc.missionConfig.event.type){
+						DisposeMEvent.dispose(_npc.missionConfig.event);
 					}
+					ATGame.roleList[0].isCtrl = false;
 					
-					ATGame.role.isCtrl = false;
 					//NPC面向主角
 					var _away:int;
 					switch(away){
@@ -75,12 +73,5 @@ package net.an86.tile.role
 			
 		}
 		
-		private static function onKeydown(e:KeyboardEvent):void
-		{
-			if(e.keyCode == Keyboard.SPACE){
-				Alert.hide();
-				ATGame.role.isCtrl = true;
-			}
-		}
 	}
 }

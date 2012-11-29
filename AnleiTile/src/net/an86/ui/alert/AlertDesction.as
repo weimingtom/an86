@@ -4,8 +4,8 @@ package net.an86.ui.alert
 	
 	import net.an86.tile.ATGame;
 
-	/**对话框*/
-	public class Alert
+	/**显示描述*/
+	public class AlertDesction
 	{
 		private static var bitmap:Bitmap;
 		private static var face:AlertFace;
@@ -21,8 +21,8 @@ package net.an86.ui.alert
 				bitmap.bitmapData.dispose();
 			}
 			bitmap.bitmapData = face.setText(text);
-			bitmap.x = ATGame.centerx-bitmap.width/2;
-			bitmap.y = ATGame.root.stage.stageHeight-bitmap.height - 2;
+			bitmap.x = 10;
+			bitmap.y = 10;
 			ATGame.root.addChild(bitmap);
 		}
 		
@@ -30,15 +30,6 @@ package net.an86.ui.alert
 			if(ATGame.root.contains(bitmap)){
 				ATGame.root.removeChild(bitmap);
 			}
-		}
-
-		/**获取对话框是否显示*/
-		public static function get isShow():Boolean {
-			var _isShow:Boolean = false;
-			if(bitmap && ATGame.root.contains(bitmap)){
-				_isShow = true;
-			}
-			return _isShow;
 		}
 
 	}

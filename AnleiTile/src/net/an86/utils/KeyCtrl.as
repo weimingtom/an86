@@ -10,8 +10,9 @@ package net.an86.utils
 	import flash.ui.Keyboard;
 	
 	import net.an86.tile.ATGame;
-	import net.an86.tile.role.DisposeEvent;
-	import net.an86.utils.menu.IMenu;
+	import net.an86.tile.role.utils.IntaveEvent;
+	import net.an86.ui.alert.Alert;
+	import net.an86.ui.menu.IMenu;
 
 	public class KeyCtrl
 	{
@@ -21,6 +22,11 @@ package net.an86.utils
 		private var stage:Stage;
 		
 		public var currentMenu:IMenu;
+		
+		
+		private var bag_btn:SimpleButton;
+		private var peo_btn:SimpleButton;
+		private var sys_btn:SimpleButton;
 		
 		public function KeyCtrl($stage:Stage)
 		{
@@ -48,6 +54,31 @@ package net.an86.utils
 			
 			stage.addEventListener(MouseEvent.MOUSE_OVER, onAddKey);
 			stage.addEventListener(Event.MOUSE_LEAVE, onMouseLeave);
+			
+			//////////////////////顶部按钮，人物，背包，系统
+			bag_btn = new Bag_btn();
+			peo_btn = new Peo_btn();
+			sys_btn = new Sys_btn();
+			
+			peo_btn.x = bag_btn.width + 10;
+			sys_btn.x = peo_btn.width + 10;
+			
+			stage.addChild(bag_btn);
+			stage.addChild(peo_btn);
+			stage.addChild(sys_btn);
+			
+			bag_btn.addEventListener(MouseEvent.CLICK, onBag_click);
+			peo_btn.addEventListener(MouseEvent.CLICK, onPeo_click);
+			sys_btn.addEventListener(MouseEvent.CLICK, onSys_click);
+		}
+		private function onBag_click(event:MouseEvent):void {
+			
+		}
+		private function onPeo_click(event:MouseEvent):void {
+			
+		}
+		private function onSys_click(event:MouseEvent):void {
+			
 		}
 		
 		private function onAClick(event:MouseEvent):void {
@@ -90,10 +121,10 @@ package net.an86.utils
 					releaseUpKey(Keyboard.RIGHT);
 					break;
 				/*case 'a_btn':
-					ATGame.role.left_key=false;
-					ATGame.role.right_key=false;
-					ATGame.role.up_key=false;
-					ATGame.role.down_key=false;
+					ATGame.roleList[0].left_key=false;
+					ATGame.roleList[0].right_key=false;
+					ATGame.roleList[0].up_key=false;
+					ATGame.roleList[0].down_key=false;
 					break;*/
 			}
 		}
@@ -126,16 +157,16 @@ package net.an86.utils
 		private function releaseUpKey(code:int):void{
 			switch (code) {
 				case Keyboard.LEFT :
-					ATGame.role.left_key=false;
+					ATGame.roleList[0].left_key=false;
 					break;
 				case Keyboard.RIGHT :
-					ATGame.role.right_key=false;
+					ATGame.roleList[0].right_key=false;
 					break;
 				case Keyboard.UP :
-					ATGame.role.up_key=false;
+					ATGame.roleList[0].up_key=false;
 					break;
 				case Keyboard.DOWN :
-					ATGame.role.down_key=false;
+					ATGame.roleList[0].down_key=false;
 					break;
 			}
 		}
@@ -143,25 +174,25 @@ package net.an86.utils
 		private function pressDownKey(code:int):void{
 			switch (code) {
 				case Keyboard.LEFT :
-					ATGame.role.left_key = true;
+					ATGame.roleList[0].left_key = true;
 					if(currentMenu){
 						currentMenu.left();
 					}
 					break;
 				case Keyboard.RIGHT :
-					ATGame.role.right_key=true;
+					ATGame.roleList[0].right_key=true;
 					if(currentMenu){
 						currentMenu.right();
 					}
 					break;
 				case Keyboard.UP :
-					ATGame.role.up_key=true;
+					ATGame.roleList[0].up_key=true;
 					if(currentMenu){
 						currentMenu.up();
 					}
 					break;
 				case Keyboard.DOWN :
-					ATGame.role.down_key=true;
+					ATGame.roleList[0].down_key=true;
 					if(currentMenu){
 						currentMenu.down();
 					}
@@ -182,11 +213,22 @@ package net.an86.utils
 		}
 		
 		private function invateA():void{
-			DisposeEvent.invate(ATGame.role.cartoon.currPlayRow, ATGame.role.xtile, ATGame.role.ytile);
+			if(!Alert.isShow || currentMenu == null){
+				IntaveEvent.invate(ATGame.roleList[0].cartoon.currPlayRow, ATGame.roleList[0].xtile, ATGame.roleList[0].ytile);
+			}
+			if(currentMenu){
+				currentMenu.A();
+			}
 		}
 		
 		private function invateB():void{
-			
+			if(currentMenu){
+				currentMenu.B();
+			}
+			if(!currentMenu && Alert.isShow){
+				Alert.hide();
+				ATGame.roleList[0].isCtrl = true;
+			}
 		}
 		
 		private function onKeyup(event:KeyboardEvent):void {

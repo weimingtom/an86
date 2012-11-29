@@ -38,7 +38,7 @@ package net.an86.ui.alert
 		
 		public function setText(value:String):BitmapData{
 			txt.wordWrap = false;
-			txt.text = value;
+			txt.htmlText = value;
 			
 			var _w:int = txt.width;
 			var _h:int = txt.height;

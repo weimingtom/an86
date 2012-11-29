@@ -29,8 +29,8 @@ package net.an86.tile
 		public static var root:Sprite;
 		public static var gameContainer:Sprite = new Sprite();
 		public static var world:ATWorld;
-		public static var role:ATRoleBasic;
 		
+		public static var roleList:Vector.<ATRoleBasic> = new Vector.<ATRoleBasic>();
 		public static var npcList:Vector.<ATNpcBasic> = new Vector.<ATNpcBasic>();
 		
 		public static var keyCtrl:KeyCtrl;
@@ -56,9 +56,9 @@ package net.an86.tile
 			world.createMap($config.map);
 			world.createDoor($config.door);
 			world.createNpc($config.npc);
-			if(role){
+			if(roleList[0]){
 				//role.reset();
-				addRole(role);
+				addRole(roleList[0]);
 			}
 		}
 		
@@ -88,9 +88,9 @@ package net.an86.tile
 		 */
 		public static function addRole($obj:ATRoleBasic):void{
 			if($obj.isCtrl){
-				role = $obj;
+				roleList[0] = $obj;
 			}
-			gameContainer.addChild(role);
+			gameContainer.addChild(roleList[0]);
 		}
 		
 		public static function addNpc($obj:ATNpcBasic, $i:int = -1, $j:int = -1):void{
@@ -109,14 +109,14 @@ package net.an86.tile
 		 * @param $j	场景格子的第几列
 		 */
 		public static function setPos($dod:DisplayObject, $i:int = -1, $j:int = -1):void {
-			if(role && $dod == role) {
-				role.xtile = $j;
-				role.ytile = $i;
+			if(roleList[0] && $dod == roleList[0]) {
+				roleList[0].xtile = $j;
+				roleList[0].ytile = $i;
 			}
 			if($j != -1) $dod.x = $j*ATile.tileW+$dod.width/2;
 			if($i != -1) $dod.y = $i*ATile.tileH+$dod.height/2;
-			gameContainer.x = ATGame.centerx-(role.xtile*gameContainer.width)-gameContainer.width/2;
-			gameContainer.y = ATGame.centery-(role.ytile*gameContainer.height)-gameContainer.height/2;
+			gameContainer.x = ATGame.centerx-(roleList[0].xtile*gameContainer.width)-gameContainer.width/2;
+			gameContainer.y = ATGame.centery-(roleList[0].ytile*gameContainer.height)-gameContainer.height/2;
 		}
 	}
 }

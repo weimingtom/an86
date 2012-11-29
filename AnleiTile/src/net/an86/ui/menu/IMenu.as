@@ -1,4 +1,4 @@
-package net.an86.utils.menu
+package net.an86.ui.menu
 {
 	public interface IMenu
 	{
