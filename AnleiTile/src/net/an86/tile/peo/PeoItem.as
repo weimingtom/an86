@@ -114,7 +114,7 @@ package net.an86.tile.peo
 			dp_bit.clear();
 			ahp_bit.clear();
 			if(face_bit.bitmapData){
-				face_bit.bitmapData.dispose();
+				face_bit.bitmapData = null;
 			}
 		}
 

@@ -73,7 +73,7 @@ package net.an86.tile.peo
 		
 		private function fill():void{
 			item.clear();
-			list.splice(0, list.length - 1);
+			list.splice(0, list.length);
 			selectedIndex = 0;
 			list.push(item.at_bit);
 			list.push(item.dp_bit);

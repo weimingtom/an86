@@ -13,7 +13,7 @@ package net.an86.utils
 			_temp = Role_6;
 			_temp = Role_7;
 			_temp = Role_8;
-			_temp = RoleFace_1;
+			_temp = RoleFace_0;
 			
 		}
 	}

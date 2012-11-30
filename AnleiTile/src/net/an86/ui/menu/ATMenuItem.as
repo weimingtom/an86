@@ -14,22 +14,27 @@ package net.an86.ui.menu
 		
 		private var _txt:MyTextField = new MyTextField();
 		
+		private var bg:BitmapData = new ItemBG(0, 0);
+		
 		public function ATMenuItem()
 		{
 			super();
 			_icon.x = 5;
 			_icon.y = 5;
-			_txt.border = true;
+			//_txt.border = true;
 			_txt.width = 60;
 			_txt.height= 20;
-			_txt.x = 30;
+			_txt.x = 25;
 			_txt.y = 3;
-			
+			/*
 			this.sp.graphics.clear();
 			this.sp.graphics.beginFill(0x0, 1);
 			this.sp.graphics.drawRect(0, 0, 90, 25);
 			this.sp.graphics.endFill();
-			
+			*/
+			this.sp.graphics.beginBitmapFill(bg);
+			this.sp.graphics.drawRect(0, 0, bg.width, bg.height);
+			this.sp.graphics.endFill();
 		}
 		
 		override public function dispose():void{

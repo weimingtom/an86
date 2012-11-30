@@ -1,5 +1,7 @@
 package
 {
+	import anlei.debug.ApplicationStats;
+	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -67,9 +69,9 @@ package
 			
 			*/
 			//////////////
-			/*ApplicationStats.getInstance().init(this);
-			ApplicationStats.getInstance().visible = true;
-			addChild(ApplicationStats.getInstance());*/
+			ApplicationStats.getInstance().init(this);
+			ApplicationStats.getInstance().visible = false;
+			addChild(ApplicationStats.getInstance());
 			//////////////
 			
 		}

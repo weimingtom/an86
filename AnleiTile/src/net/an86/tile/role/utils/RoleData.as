@@ -4,7 +4,7 @@ package net.an86.tile.role.utils
 
 	public class RoleData
 	{
-		public var id:int = 1;
+		public var id:int = 0;
 		/**攻*/
 		public var equip_at:ATMenuItemData = new ATMenuItemData();
 		/**防御*/
