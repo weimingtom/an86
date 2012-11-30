@@ -27,7 +27,7 @@ package net.an86.ui.menu
 		private var _data:XML;
 		
 		/**选中item所要的发光滤镜*/
-		private var selectedFilter:Array;
+		private static var selectedFilter:Array;
 		
 		/**位图文本*/
 		private var page_txt:MyBitmapText;
@@ -83,6 +83,7 @@ package net.an86.ui.menu
 				}
 				fill();
 			}else{
+				LEN = 6;
 				clear(true);
 				list.splice(0, list.length);
 			}

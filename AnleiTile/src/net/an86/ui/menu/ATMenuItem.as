@@ -17,17 +17,17 @@ package net.an86.ui.menu
 		public function ATMenuItem()
 		{
 			super();
-			_icon.x = 10;
-			_icon.y = 10;
-			
+			_icon.x = 5;
+			_icon.y = 5;
+			_txt.border = true;
 			_txt.width = 60;
 			_txt.height= 20;
 			_txt.x = 30;
-			_txt.y = 10;
+			_txt.y = 3;
 			
 			this.sp.graphics.clear();
 			this.sp.graphics.beginFill(0x0, 1);
-			this.sp.graphics.drawRect(0, 0, 90, 40);
+			this.sp.graphics.drawRect(0, 0, 90, 25);
 			this.sp.graphics.endFill();
 			
 		}
@@ -45,13 +45,21 @@ package net.an86.ui.menu
 		public function set data(value:ATMenuItemData):void {
 			_data = value;
 			if(value){
-				_txt.text = value.name;
-				_icon.bitmapData = new icon(0, 0);
-				
+				if(value.name){
+					_txt.text = value.name;
+					_icon.bitmapData = new icon(0, 0);
+				}
 				this.sp.addChild(_icon);
 				this.sp.addChild(_txt);
 				this.draw();
 			}
+		}
+		
+		public function clear():void{
+			if(_txt){
+				_txt.text = '';
+			}
+			this.draw();
 		}
 
 	}

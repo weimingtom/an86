@@ -10,10 +10,13 @@ package net.an86.tile.role
 	import net.an86.tile.ATile;
 	
 	import ui.component.MyCartoonContainer;
+	import net.an86.tile.role.utils.RoleData;
 
 	
 	public class ATRoleBasic extends Sprite
 	{
+		public var roleData:RoleData = new RoleData();
+		
 		public var cartoon:MyCartoonContainer;
 		
 		private var _isCtrl:Boolean = true;

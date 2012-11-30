@@ -26,5 +26,10 @@ package net.an86.ui
 			bitmap.bitmapData = getBitmapData();
 			return bitmap;
 		}
+		
+		public function clear():void{
+			text = '';
+			fillBitmap();
+		}
 	}
 }

@@ -33,6 +33,19 @@ package net.an86.ui.menu
 			type_desc = _arr[1];
 		}
 
+		public function clone($vo:ATMenuItemData):ATMenuItemData{
+			if(!$vo){
+				$vo = new ATMenuItemData();
+			}
+			$vo.id = id;
+			$vo.price = price;
+			$vo.name = name;
+			$vo.data = data;
+			$vo.desc = desc;
+			$vo.type_desc = type_desc;
+			$vo.type_type = type_type;
+			return $vo;
+		}
 		
 	}
 }

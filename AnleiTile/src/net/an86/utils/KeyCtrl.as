@@ -10,6 +10,7 @@ package net.an86.utils
 	import flash.ui.Keyboard;
 	
 	import net.an86.tile.ATGame;
+	import net.an86.tile.peo.PeoManager;
 	import net.an86.tile.role.utils.IntaveEvent;
 	import net.an86.ui.alert.Alert;
 	import net.an86.ui.menu.IMenu;
@@ -61,7 +62,7 @@ package net.an86.utils
 			sys_btn = new Sys_btn();
 			
 			peo_btn.x = bag_btn.width + 10;
-			sys_btn.x = peo_btn.width + 10;
+			sys_btn.x = peo_btn.x + peo_btn.width + 10;
 			
 			stage.addChild(bag_btn);
 			stage.addChild(peo_btn);
@@ -75,7 +76,7 @@ package net.an86.utils
 			
 		}
 		private function onPeo_click(event:MouseEvent):void {
-			
+			PeoManager.getInstance().pop();
 		}
 		private function onSys_click(event:MouseEvent):void {
 			

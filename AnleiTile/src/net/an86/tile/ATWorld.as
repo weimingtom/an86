@@ -74,16 +74,6 @@ package net.an86.tile
 			$npc[i][1]=列(ytile)
 			$npc[i][2]=NPCID
 			*/
-			var _temp:Class = Role_0;
-			_temp = Role_1;
-			_temp = Role_2;
-			_temp = Role_3;
-			_temp = Role_4;
-			_temp = Role_5;
-			_temp = Role_6;
-			_temp = Role_7;
-			_temp = Role_8;
-			
 			for (var i:int = 0; i < $npc.length; i++) {
 				var _nid:int = int($npc[i][2]);
 				var _cls:Class = ApplicationDomain.currentDomain.getDefinition('Role_'+_nid) as Class;
