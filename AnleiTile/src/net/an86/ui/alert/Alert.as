@@ -1,5 +1,7 @@
 package net.an86.ui.alert
 {
+	import com.greensock.TweenLite;
+	
 	import flash.display.Bitmap;
 	
 	import net.an86.tile.ATGame;
@@ -9,8 +11,12 @@ package net.an86.ui.alert
 	{
 		private static var bitmap:Bitmap;
 		private static var face:AlertFace;
+		public static var reText:String;
 		
-		public static function show(text:String):void{
+		public static function show($text:String, isTween:Boolean = false):void{
+			if(!isTween){
+				reText = $text;
+			}
 			if(!face){
 				face = new AlertFace();
 			}
@@ -20,10 +26,14 @@ package net.an86.ui.alert
 			if(bitmap.bitmapData){
 				bitmap.bitmapData.dispose();
 			}
-			bitmap.bitmapData = face.setText(text);
+			bitmap.bitmapData = face.setText($text);
 			bitmap.x = ATGame.centerx-bitmap.width/2;
 			bitmap.y = ATGame.root.stage.stageHeight-bitmap.height - 2;
 			ATGame.root.addChild(bitmap);
+			
+			if(isTween){
+				TweenLite.delayedCall(3, onTweenShow);
+			}
 		}
 		
 		public static function hide():void{
@@ -31,7 +41,9 @@ package net.an86.ui.alert
 				ATGame.root.removeChild(bitmap);
 			}
 		}
-
+		
+		private static function onTweenShow():void {show(reText); }
+		
 		/**获取对话框是否显示*/
 		public static function get isShow():Boolean {
 			var _isShow:Boolean = false;

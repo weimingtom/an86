@@ -4,13 +4,13 @@ package net.an86.ui.alert
 	
 	import net.an86.tile.ATGame;
 
-	/**显示描述*/
-	public class AlertDesction
+	/**显示金钱*/
+	public class AlertGold
 	{
 		private static var bitmap:Bitmap;
 		private static var face:AlertFace;
 		
-		public static function show(text:String, x:int = -1, y:int = -1):void{
+		public static function show(text:String):void{
 			if(!face){
 				face = new AlertFace();
 			}
@@ -21,8 +21,8 @@ package net.an86.ui.alert
 				bitmap.bitmapData.dispose();
 			}
 			bitmap.bitmapData = face.setText(text);
-			bitmap.x = x == -1 ? 10 : x;
-			bitmap.y = y == -1 ? 10 : y;
+			bitmap.x = ATGame.root.stage.stageWidth - bitmap.width - 10;
+			bitmap.y = 10;
 			ATGame.root.addChild(bitmap);
 		}
 		

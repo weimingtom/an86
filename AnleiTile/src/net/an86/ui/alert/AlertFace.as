@@ -10,7 +10,7 @@ package net.an86.ui.alert
 
 	public class AlertFace
 	{
-		private static const OFFX:int = 30;
+		private static const OFFX:int = 20;
 		private static const OFFY:int = 20;
 		private var bg:Sprite;
 		private var txt:MyTextField;
@@ -34,6 +34,14 @@ package net.an86.ui.alert
 			//txt.border = true;
 			txt.isStroke = true;
 			txt.autoSize = TextFieldAutoSize.LEFT;
+		}
+		
+		public function getText():String {
+			var _str:String = 'null';
+			if(txt && txt.text){
+				_str = txt.text;
+			}
+			return _str;
 		}
 		
 		public function setText(value:String):BitmapData{

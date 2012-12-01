@@ -4,6 +4,8 @@ package net.an86.tile.peo
 	import anlei.util.PublicProperty;
 	
 	import net.an86.tile.ATGame;
+	import net.an86.ui.alert.AlertDesction;
+	import net.an86.ui.menu.ATMenu;
 	import net.an86.ui.menu.ATMenuItem;
 	import net.an86.ui.menu.IMenu;
 
@@ -24,8 +26,6 @@ package net.an86.tile.peo
 		public static var LEN:int = 1;
 		public static var ITEM_LEN:int = 3;
 		
-		/**选中item所要的发光滤镜*/
-		private static var selectedFilter:Array;
 		/**当前选中的Item的索引*/
 		private var selectedIndex:int = 0;
 		/**当前选中的Item*/
@@ -35,7 +35,6 @@ package net.an86.tile.peo
 		private var list:Vector.<ATMenuItem> = new Vector.<ATMenuItem>();
 		
 		private function inits():void {
-			selectedFilter = [PublicProperty.OEffect(0xFF0000, true)];
 			nbpage = new NBPage();
 		}
 		
@@ -51,6 +50,7 @@ package net.an86.tile.peo
 				item.role = ATGame.roleList[0];
 				ATGame.keyCtrl.currentMenu = this;
 				ATGame.roleList[0].isCtrl = false;
+				AlertDesction.show('可卸下装备', item.x + item.width - 100, item.y - 50 );
 			}else{
 				removePop();
 				return;
@@ -69,6 +69,7 @@ package net.an86.tile.peo
 				ATGame.keyCtrl.currentMenu = null;
 			}
 			ATGame.roleList[0].isCtrl = true;
+			AlertDesction.hide();
 		}
 		
 		private function fill():void{
@@ -101,7 +102,7 @@ package net.an86.tile.peo
 				selectedItem.filters = null;
 			}
 			selectedItem = list[selectedIndex];
-			selectedItem.filters = selectedFilter;
+			selectedItem.filters = ATMenu.selectedFilter;
 		}
 		
 		public function left():void{

@@ -12,7 +12,7 @@ package
 	import net.an86.utils.ATSceneConfig;
 	import net.an86.utils.ImportClass;
 	
-	[SWF(width="300",height="300",frameRate="30",backgroundColor="#CCCCCC")]
+	[SWF(width="400",height="300",frameRate="30",backgroundColor="#CCCCCC")]
 	public class AnleiTile extends Sprite
 	{
 		

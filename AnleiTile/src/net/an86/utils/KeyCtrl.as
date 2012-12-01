@@ -200,25 +200,18 @@ package net.an86.utils
 					break;
 				case Keyboard.SPACE:
 					invateA();
-					if(currentMenu){
-						currentMenu.A();
-					}
 					break;
 				case Keyboard.CONTROL:
 					invateB();
-					if(currentMenu){
-						currentMenu.B();
-					}
 					break;
 			}
 		}
 		
 		private function invateA():void{
-			if(!Alert.isShow || currentMenu == null){
-				IntaveEvent.invate(ATGame.roleList[0].cartoon.currPlayRow, ATGame.roleList[0].xtile, ATGame.roleList[0].ytile);
-			}
 			if(currentMenu){
 				currentMenu.A();
+			}else if(!Alert.isShow || currentMenu == null){
+				IntaveEvent.invate(ATGame.roleList[0].cartoon.currPlayRow, ATGame.roleList[0].xtile, ATGame.roleList[0].ytile);
 			}
 		}
 		
@@ -238,6 +231,6 @@ package net.an86.utils
 		private function onKeydown(event:KeyboardEvent):void {
 			pressDownKey(event.keyCode);
 		}
-		
+
 	}
 }

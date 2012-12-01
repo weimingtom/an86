@@ -2,6 +2,7 @@
 <data>
 	<npcname>说书客</npcname>
 	<nomission>
-		<info>……</info>
+		<info>这里是防具店</info>
+		<event type='shop' value='2'/>
 	</nomission>
 </data>

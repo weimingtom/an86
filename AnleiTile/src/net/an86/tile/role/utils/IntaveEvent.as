@@ -41,7 +41,7 @@ package net.an86.tile.role.utils
 					
 					var list:Vector.<MissionData> = _npc.missionConfig.getList(ATGame.userdata);
 					//(_perception.Scene as D5Scene).missionCallBack(to.missionConfig.npcname,to.missionConfig.say,to.missionConfig.event,list,to);
-					Alert.show('<font color="#FF0000">'+_npc.missionConfig.npcname + ":</font>\n    " + _npc.missionConfig.say);
+					Alert.show('<font color="#00FF00">'+_npc.missionConfig.npcname + ":</font>\n    " + _npc.missionConfig.say);
 					//
 					//
 					//

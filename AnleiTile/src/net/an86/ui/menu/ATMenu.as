@@ -4,6 +4,7 @@ package net.an86.ui.menu
 	import anlei.util.PublicProperty;
 	
 	import flash.display.Sprite;
+	import flash.filters.GlowFilter;
 	import flash.text.TextFieldAutoSize;
 	
 	import net.an86.tile.ATGame;
@@ -11,8 +12,13 @@ package net.an86.ui.menu
 
 	public class ATMenu extends Sprite implements IMenu
 	{
+		/**选中item所要的发光滤镜*/
+		public static const selectedFilter:Array = [new GlowFilter(0xFF6600, 1, 2, 2, 10, 1, true), new GlowFilter(0xFF0000, 1, 10, 10, 2)];
+		
+		private static const OFFXY:int = 10;
+		
 		/**一页显示几条*/
-		public static var LEN:int = 5;
+		private var LEN:int = 5;
 		
 		/**当前选中的Item的索引*/
 		private var selectedIndex:int = 0;
@@ -26,9 +32,6 @@ package net.an86.ui.menu
 		private var list:Vector.<ATMenuItem> = new Vector.<ATMenuItem>();
 		private var _data:XML;
 		
-		/**选中item所要的发光滤镜*/
-		private static var selectedFilter:Array;
-		
 		/**位图文本*/
 		private var page_txt:MyBitmapText;
 		
@@ -41,16 +44,21 @@ package net.an86.ui.menu
 		/**item样式*/
 		protected var ITEM_CLASS:Class = null;
 		
+		/**按确定(A)时所执行的方法*/
+		public var okFn:Function = null;
+		/**按取消(B)时所执行的方法*/
+		public var cancelFn:Function = null;
+		
 		public function ATMenu($data:XML)
 		{
 			nbpage = new NBPage();
 			page_txt = new MyBitmapText();
-			page_txt.border = true;
+			//page_txt.border = true;
 			page_txt.width = 90;
 			page_txt.align = TextFieldAutoSize.CENTER;
 			
-			selectedFilter = [PublicProperty.OEffect(0xFF0000, true)];
 			data = $data;
+			
 		}
 
 		public function get data():XML { return _data; }
@@ -108,14 +116,24 @@ package net.an86.ui.menu
 			for(var i:int = selectedIndex, j:int = 0 ; i < nbpage.currPage * LEN + 1, j < LEN; i++, j++){
 				if(i < list.length){
 					this.addChild(list[i]);
-					list[i].y = j * list[i].height;
+					list[i].x = OFFXY;
+					list[i].y = j * (list[i].height + 3) + OFFXY;
+				}else{
+					break;
 				}
 			}
 			if(isPage){
 				page_txt.text = nbpage.currPage + '/' + nbpage.totalPage;
 				this.addChild(page_txt.fillBitmap());
-				page_txt.bitmap.y = j * list[j].height;
+				page_txt.bitmap.x = OFFXY;
+				page_txt.bitmap.y = j * (list[0].height + 3) + OFFXY;
 			}
+			
+			graphics.clear();
+			graphics.beginFill(0x0, 0.5);
+			graphics.drawRect(0, 0, page_txt.width + OFFXY*2, this.height + OFFXY*2);
+			graphics.endFill();
+			
 			setSelected();
 		}
 		
@@ -177,6 +195,7 @@ package net.an86.ui.menu
 		
 		public function B():void{
 			removePop();
+			if(cancelFn != null) cancelFn();
 		}
 		
 		public function pop():void{
@@ -185,8 +204,8 @@ package net.an86.ui.menu
 			fill();
 			
 			ATGame.root.addChild(this);
-			x = ATGame.centery-width /2;
-			y = ATGame.centery-height/2;
+			x = ATGame.centerx-width/2;
+			y = ATGame.centery-height/2 - OFFXY;
 			ATGame.keyCtrl.currentMenu = this;
 		}
 		public function removePop():void{
