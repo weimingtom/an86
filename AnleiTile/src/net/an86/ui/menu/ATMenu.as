@@ -17,15 +17,15 @@ package net.an86.ui.menu
 		
 		private static const OFFXY:int = 10;
 		
+		private static const INIT_LEN:int = 5;
 		/**一页显示几条*/
-		private var LEN:int = 5;
+		private var LEN:int = INIT_LEN;
 		
-		/**当前选中的Item的索引*/
-		private var selectedIndex:int = 0;
+		private var _selectedIndex:int = 0;
 		/**当前选中的Item*/
 		protected var selectedItem:ATMenuItem;
 		
-		private var nbpage:NBPage;
+		public var nbpage:NBPage;
 		public var currPage:int = 1;
 		
 		/**按xml生成所有item*/
@@ -49,7 +49,7 @@ package net.an86.ui.menu
 		/**按取消(B)时所执行的方法*/
 		public var cancelFn:Function = null;
 		
-		public function ATMenu($data:XML)
+		public function ATMenu($data:XML = null)
 		{
 			nbpage = new NBPage();
 			page_txt = new MyBitmapText();
@@ -57,7 +57,7 @@ package net.an86.ui.menu
 			page_txt.width = 90;
 			page_txt.align = TextFieldAutoSize.CENTER;
 			
-			data = $data;
+			if($data) data = $data;
 			
 		}
 
@@ -80,24 +80,28 @@ package net.an86.ui.menu
 					_vo.name = data.children()[i].name;
 					_vo.price = data.children()[i].price;
 					_vo.type = data.children()[i].type;
-					_vo.data = data.children()[i].data;
-					_vo.exec();
-					
+					//_vo.data = data.children()[i].data;
 					if(data.children()[i].hasOwnProperty('data') && data.children()[i].data){
 						_vo.data = data.children()[i].data;
 					}
+					_vo.exec();
+					
 					_tile.data = _vo;
 					list.push(_tile);
 				}
 				fill();
 			}else{
-				LEN = 6;
-				clear(true);
-				list.splice(0, list.length);
+				clear();
 			}
 		}
 		
-		private function clear(isDispose:Boolean = false):void{
+		private function clear():void{
+			LEN = INIT_LEN;
+			clearView(true);
+			list.splice(0, list.length);
+		}
+		
+		private function clearView(isDispose:Boolean = false):void{
 			if(list.length <= 0) return;
 			for(var i:int = 0 ; i < list.length; i++){
 				if(this.contains(list[i])){
@@ -109,10 +113,8 @@ package net.an86.ui.menu
 			}
 		}
 
-		private function fill():void{
-			clear();
-			if(list.length <= 0) return;
-			selectedIndex = (nbpage.currPage - 1) * LEN;
+		private function flushFill():int{
+			clearView();
 			for(var i:int = selectedIndex, j:int = 0 ; i < nbpage.currPage * LEN + 1, j < LEN; i++, j++){
 				if(i < list.length){
 					this.addChild(list[i]);
@@ -122,6 +124,13 @@ package net.an86.ui.menu
 					break;
 				}
 			}
+			return j;
+		}
+		
+		public function fill():void{
+			if(list.length <= 0) return;
+			selectedIndex = (nbpage.currPage - 1) * LEN;
+			var j:int = flushFill();
 			if(isPage){
 				page_txt.text = nbpage.currPage + '/' + nbpage.totalPage;
 				this.addChild(page_txt.fillBitmap());
@@ -151,11 +160,17 @@ package net.an86.ui.menu
 			currPage = nbpage.currPage;
 		}
 		
-		private function setSelected():void{
+		public function setSelected():void{
 			if(selectedItem != null){
 				selectedItem.filters = null;
 			}
-			selectedItem = list[selectedIndex];
+			var _index:int = 0;
+			if(selectedIndex < list.length) {
+				_index = selectedIndex;
+			}else{
+				_index = selectedIndex = LEN-1;
+			}
+			selectedItem = list[_index];
 			selectedItem.filters = selectedFilter;
 			if(selecting != null){
 				selecting();
@@ -168,7 +183,7 @@ package net.an86.ui.menu
 		public function right():void{
 			nextPage();
 		}
-		public function up():void{
+		private function up_fn():void{
 			selectedIndex--;
 			if(selectedIndex < LEN*currPage-LEN){
 				selectedIndex = LEN*currPage-1;
@@ -176,9 +191,12 @@ package net.an86.ui.menu
 			if(selectedIndex > list.length){
 				selectedIndex = list.length - 1;
 			}
+		}
+		public function up():void{
+			up_fn();
 			setSelected();
 		}
-		public function down():void{
+		private function down_fn():void{
 			selectedIndex++;
 			if(selectedIndex >= LEN*currPage){
 				selectedIndex = LEN*currPage-LEN;
@@ -186,6 +204,9 @@ package net.an86.ui.menu
 			if(selectedIndex >= list.length){
 				selectedIndex = LEN*currPage-LEN;
 			}
+		}
+		public function down():void{
+			down_fn();
 			setSelected();
 		}
 		
@@ -227,6 +248,41 @@ package net.an86.ui.menu
 					this.removeChild(page_txt.fillBitmap());
 				}
 			}
+		}
+
+		public function setDataList(value:Vector.<ATMenuItemData>):void {
+			clear();
+			if(value){
+				var _len:int = value.length;
+				if(_len < LEN){
+					LEN = _len;
+				}
+				nbpage.totalPage = Math.ceil(_len/LEN);
+				if(nbpage.totalPage == 0) nbpage.totalPage = 1;
+				for (var i:int = 0; i < _len; i++) 
+				{
+					var _tile:ATMenuItem = new ATMenuItem();
+					var _vo:ATMenuItemData = value[i];
+					_vo.exec();
+					_tile.data = _vo;
+					list.push(_tile);
+				}
+				fill();
+			}
+		}
+
+		/**当前选中的Item的索引*/
+		public function get selectedIndex():int
+		{
+			return _selectedIndex;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set selectedIndex(value:int):void
+		{
+			_selectedIndex = value;
 		}
 
 

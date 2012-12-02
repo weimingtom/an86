@@ -10,6 +10,7 @@ package net.an86.utils
 	import flash.ui.Keyboard;
 	
 	import net.an86.tile.ATGame;
+	import net.an86.tile.bag.BagManager;
 	import net.an86.tile.peo.PeoManager;
 	import net.an86.tile.role.utils.IntaveEvent;
 	import net.an86.ui.alert.Alert;
@@ -73,7 +74,7 @@ package net.an86.utils
 			sys_btn.addEventListener(MouseEvent.CLICK, onSys_click);
 		}
 		private function onBag_click(event:MouseEvent):void {
-			
+			BagManager.getInstance().pop();
 		}
 		private function onPeo_click(event:MouseEvent):void {
 			PeoManager.getInstance().pop();

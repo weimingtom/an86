@@ -6,7 +6,7 @@ package net.an86.tile.role.utils
 	import net.an86.tile.role.ATNpcBasic;
 	import net.an86.ui.alert.Alert;
 	import net.an86.ui.menu.ATMenu;
-	import net.an86.tile.menu.ATMenuConfig;
+	import net.an86.tile.shop.ATShopConfig;
 
 	public class IntaveEvent
 	{

@@ -3,6 +3,7 @@ package net.an86.ui.alert
 	import flash.display.Bitmap;
 	
 	import net.an86.tile.ATGame;
+	import net.an86.tile.ATSaveConfig;
 
 	/**显示金钱*/
 	public class AlertGold
@@ -32,5 +33,11 @@ package net.an86.ui.alert
 			}
 		}
 
+		////////////////////////////
+		
+		/**在右上解显示金钱*/
+		public static function showGold():void{
+			show("金钱:" + ATSaveConfig.glod.toString());
+		}
 	}
 }

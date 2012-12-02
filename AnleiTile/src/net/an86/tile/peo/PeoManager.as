@@ -66,10 +66,10 @@ package net.an86.tile.peo
 		public function removePop():void{
 			if(ATGame.root.contains(item)){
 				ATGame.root.removeChild(item);
-				ATGame.keyCtrl.currentMenu = null;
 			}
 			ATGame.roleList[0].isCtrl = true;
 			AlertDesction.hide();
+			ATGame.keyCtrl.currentMenu = null;
 		}
 		
 		private function fill():void{

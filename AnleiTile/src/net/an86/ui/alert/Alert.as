@@ -12,6 +12,7 @@ package net.an86.ui.alert
 		private static var bitmap:Bitmap;
 		private static var face:AlertFace;
 		public static var reText:String;
+		private static var tween:TweenLite;
 		
 		public static function show($text:String, isTween:Boolean = false):void{
 			if(!isTween){
@@ -32,7 +33,8 @@ package net.an86.ui.alert
 			ATGame.root.addChild(bitmap);
 			
 			if(isTween){
-				TweenLite.delayedCall(3, onTweenShow);
+				if(tween) tween.kill();
+				tween = TweenLite.delayedCall(3, onTweenShow);
 			}
 		}
 		
@@ -42,7 +44,11 @@ package net.an86.ui.alert
 			}
 		}
 		
-		private static function onTweenShow():void {show(reText); }
+		private static function onTweenShow():void {
+			if(isShow){
+				show(reText);
+			}
+		}
 		
 		/**获取对话框是否显示*/
 		public static function get isShow():Boolean {
