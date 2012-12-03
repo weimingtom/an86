@@ -8,6 +8,7 @@ package net.an86.ui.menu
 	import flash.text.TextFieldAutoSize;
 	
 	import net.an86.tile.ATGame;
+	import net.an86.tile.ATSaveConfig;
 	import net.an86.ui.MyBitmapText;
 
 	public class ATMenu extends Sprite implements IMenu
@@ -127,9 +128,13 @@ package net.an86.ui.menu
 			return j;
 		}
 		
-		public function fill():void{
+		public function fill($si:int = -1):void{
 			if(list.length <= 0) return;
-			selectedIndex = (nbpage.currPage - 1) * LEN;
+			if($si == -1){
+				selectedIndex = (nbpage.currPage - 1) * LEN;
+			}else{
+				selectedIndex = $si;
+			}
 			var j:int = flushFill();
 			if(isPage){
 				page_txt.text = nbpage.currPage + '/' + nbpage.totalPage;
@@ -185,6 +190,7 @@ package net.an86.ui.menu
 		}
 		private function up_fn():void{
 			selectedIndex--;
+			trace(selectedIndex);
 			if(selectedIndex < LEN*currPage-LEN){
 				selectedIndex = LEN*currPage-1;
 			}
@@ -198,6 +204,7 @@ package net.an86.ui.menu
 		}
 		private function down_fn():void{
 			selectedIndex++;
+			trace(selectedIndex);
 			if(selectedIndex >= LEN*currPage){
 				selectedIndex = LEN*currPage-LEN;
 			}
@@ -271,17 +278,22 @@ package net.an86.ui.menu
 			}
 		}
 
-		/**当前选中的Item的索引*/
-		public function get selectedIndex():int
-		{
-			return _selectedIndex;
+		public function del($index:int, $isPop:Boolean):void{
+			var _cp:int = nbpage.currPage;
+			var _sdd:int = selectedIndex;
+			ATSaveConfig.bagItemList.splice($index, 1);
+			if($isPop) pop();
+			nbpage.currPage = currPage = _cp;
+			if(nbpage.currPage != _cp){
+				pop();
+			}
+			selectedIndex = _sdd;
+			setSelected();
 		}
-
-		/**
-		 * @private
-		 */
-		public function set selectedIndex(value:int):void
-		{
+		
+		/**当前选中的Item的索引*/
+		public function get selectedIndex():int { return _selectedIndex; }
+		public function set selectedIndex(value:int):void {
 			_selectedIndex = value;
 		}
 

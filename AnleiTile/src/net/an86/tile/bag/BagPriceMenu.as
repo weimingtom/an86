@@ -45,14 +45,7 @@ package net.an86.tile.bag
 					}
 					var _index:int = ATSaveConfig.indexOf_bag(this.itemData.id);
 					if(_index != -1){
-						var _cp:int = BagManager.getInstance().nbpage.currPage;
-						var _sdd:int = BagManager.getInstance().selectedIndex;
-						ATSaveConfig.bagItemList.splice(_index, 1);
-						BagManager.getInstance().pop();
-						BagManager.getInstance().nbpage.currPage = BagManager.getInstance().currPage = _cp;
-						//BagManager.getInstance().fill();
-						BagManager.getInstance().selectedIndex = _sdd;
-						BagManager.getInstance().setSelected();
+						BagManager.getInstance().del(_index, true);
 						///////////
 						ATSaveConfig.glod += this.selectedItem.data.price;
 						if(ATSaveConfig.bagItemList.length <= 0){
@@ -64,6 +57,11 @@ package net.an86.tile.bag
 							Alert.show('出售成功!', true);
 						}
 					}
+					this.B();
+					break;
+				case 2:
+					///暂不弹出英雄列表，只有一个英雄
+					
 					this.B();
 					break;
 				case 3:
