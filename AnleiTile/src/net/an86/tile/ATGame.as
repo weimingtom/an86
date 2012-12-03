@@ -89,8 +89,8 @@ package net.an86.tile
 		public static function addRole($obj:ATRoleBasic):void{
 			if($obj.isCtrl){
 				roleList[0] = $obj;
-				roleList[1] = $obj;
-				roleList[2] = $obj;
+				/*roleList[1] = $obj;
+				roleList[2] = $obj;*/
 			}
 			gameContainer.addChild(roleList[0]);
 		}

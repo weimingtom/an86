@@ -20,6 +20,16 @@ package net.an86.ui.menu
 		{
 			
 		}
+		
+		public function clear():void{
+			id = 0;
+			price = 0;
+			name = '';
+			data = null;
+			desc = '';
+			type_desc = '';
+			type_type = '';
+		}
 
 		public function exec():void {
 			
@@ -42,8 +52,8 @@ package net.an86.ui.menu
 			$vo.name = name;
 			$vo.data = data;
 			$vo.desc = desc;
-			$vo.type_desc = type_desc;
-			$vo.type_type = type_type;
+			if(type) $vo.type = type;
+			$vo.exec();
 			return $vo;
 		}
 		

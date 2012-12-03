@@ -32,7 +32,7 @@ package net.an86.ui.alert
 			bitmap.y = ATGame.root.stage.stageHeight-bitmap.height - 2;
 			ATGame.root.addChild(bitmap);
 			
-			if(isTween){
+			if(isTween && reText){
 				if(tween) tween.kill();
 				tween = TweenLite.delayedCall(3, onTweenShow);
 			}
@@ -42,6 +42,7 @@ package net.an86.ui.alert
 			if(ATGame.root.contains(bitmap)){
 				ATGame.root.removeChild(bitmap);
 			}
+			reText = '';
 		}
 		
 		private static function onTweenShow():void {

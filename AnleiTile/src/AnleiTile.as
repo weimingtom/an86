@@ -44,23 +44,27 @@ package
 			ATGame.setPos(role, 4, 5);
 			ATGame.change(ATSceneConfig.getConfig(1001));
 			
+			/*
 			role.roleData.equip_at.id = 2;
 			role.roleData.equip_at.name = '水果刀';
 			role.roleData.equip_at.data = 7;
 			role.roleData.equip_at.price = 50;
 			role.roleData.equip_at.type = 'zb,at';
+			role.roleData.equip_at.exec();
 			
 			role.roleData.equip_dp.id = 13;
 			role.roleData.equip_dp.name = '旅人之服';
 			role.roleData.equip_dp.data = 3;
 			role.roleData.equip_dp.price = 100;
 			role.roleData.equip_dp.type = 'zb,dp';
-			/*
+			role.roleData.equip_dp.exec();
+			
 			role.roleData.equip_ahp.id = 24;
 			role.roleData.equip_ahp.name = '祈祷戒指';
 			role.roleData.equip_ahp.data = 40;
 			role.roleData.equip_ahp.price = 1000;
 			role.roleData.equip_ahp.type = 'zb,ahp';
+			role.roleData.equip_dp.exec();
 			*/
 			/*
 			var npc:ATNpcBasic = new ATNpcBasic(1001);

@@ -65,9 +65,10 @@ package net.an86.tile.peo
 		public function get role():ATRoleBasic { return _role; }
 		public function set role(value:ATRoleBasic):void {
 			_role = value;
+			HeroData.get(role);
 			
 			name_txt.text = "Lv"+ role.roleData.level + ' ' + role.roleData.name;
-			info_txt.text = "Exp:\t" + role.roleData.exp + '/' + role.roleData.exp + '\n'
+			info_txt.text = "Exp:\t" + role.roleData.exp + '/' + role.roleData.maxExp + '\n'
 				+ "HP:\t" + role.roleData.hp + '\n'
 				+ '攻击:\t' + role.roleData.at + '\n'
 				+ '防御:\t' + role.roleData.dp + '\n';

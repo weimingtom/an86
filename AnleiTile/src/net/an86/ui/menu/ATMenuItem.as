@@ -64,6 +64,9 @@ package net.an86.ui.menu
 			if(_txt){
 				_txt.text = '';
 			}
+			if(sp.contains(_icon)){
+				sp.removeChild(_icon);
+			}
 			this.draw();
 		}
 

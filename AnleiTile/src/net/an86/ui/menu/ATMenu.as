@@ -277,11 +277,14 @@ package net.an86.ui.menu
 				fill();
 			}
 		}
-
-		public function del($index:int, $isPop:Boolean):void{
+		private function changeList($index:int, $isPop:Boolean, $data:ATMenuItemData = null):void{
 			var _cp:int = nbpage.currPage;
 			var _sdd:int = selectedIndex;
-			ATSaveConfig.bagItemList.splice($index, 1);
+			if(!$data){
+				ATSaveConfig.bagItemList.splice($index, 1);
+			}else{
+				ATSaveConfig.bagItemList.push($data);
+			}
 			if($isPop) pop();
 			nbpage.currPage = currPage = _cp;
 			if(nbpage.currPage != _cp){
@@ -289,6 +292,13 @@ package net.an86.ui.menu
 			}
 			selectedIndex = _sdd;
 			setSelected();
+		}
+
+		public function del($index:int, $isPop:Boolean):void{
+			changeList($index, $isPop);
+		}
+		public function add($data:ATMenuItemData, $isPop:Boolean):void{
+			changeList(-1, $isPop, $data);
 		}
 		
 		/**当前选中的Item的索引*/
