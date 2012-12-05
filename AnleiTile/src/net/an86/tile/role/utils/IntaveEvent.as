@@ -33,6 +33,7 @@ package net.an86.tile.role.utils
 					ytile--;
 					break;
 			}
+			trace(int(ATGame.world.currentMapData[ytile][xtile]));
 			///前向是否是NPC
 			for (var i:int = 0; i < ATGame.npcList.length; i++) 
 			{
