@@ -246,10 +246,10 @@ package net.an86.tile.role
 		}
 		
 		private function checkUpLadder():Boolean {
-			var downY:int = Math.floor((y+height/2-1)/ATile.tileH);
-			var upY:int = Math.floor((y-height/2)/ATile.tileH);
-			var upLadder:Boolean = ATile(ATGame.world.tiles[upY+"_"+xtile]).ladder;
-			var downLadder:Boolean = ATile(ATGame.world.tiles[downY+"_"+xtile]).ladder;
+			var _downY:int = Math.floor((y+height/2-1)/ATile.tileH);
+			var _upY:int = Math.floor((y-height/2)/ATile.tileH);
+			var upLadder:Boolean = ATile(ATGame.world.tiles[_upY+"_"+xtile]).ladder;
+			var downLadder:Boolean = ATile(ATGame.world.tiles[_downY+"_"+xtile]).ladder;
 			if (upLadder || downLadder) {
 				return true;
 			} else {
@@ -258,8 +258,8 @@ package net.an86.tile.role
 			return false;
 		}
 		private function checkDownLadder():Boolean {
-			var downY:int = Math.floor((roleData.speed+y+height/2)/ATile.tileH);
-			var downLadder:Boolean = ATile(ATGame.world.tiles[downY+"_"+xtile]).ladder;
+			var _downY:int = Math.floor((roleData.speed+y+height/2)/ATile.tileH);
+			var downLadder:Boolean = ATile(ATGame.world.tiles[_downY+"_"+xtile]).ladder;
 			if (downLadder) {
 				return true;
 			} else {
@@ -269,9 +269,22 @@ package net.an86.tile.role
 		}
 		
 		private function checkRightPole():Boolean {
-			var rightX:int = Math.floor((roleData.speed+x+width/2)/ATile.tileW);
-			var rightPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+rightX]).pole;
-			if (rightPole) {
+			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileW);
+			var _leftY:int = Math.floor((x-width/2)/ATile.tileW);
+			var leftPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_leftY]).pole;
+			var rightPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_rightY]).pole;
+			if (rightPole || leftPole) {
+				return true;
+			} else {
+				fall();
+			}
+			return false;
+		}
+		
+		private function checkLeftPole():Boolean {
+			var _leftX:int = Math.floor((roleData.speed+x+width/2)/ATile.tileW);
+			var leftPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_leftX]).pole;
+			if (leftPole) {
 				return true;
 			} else {
 				fall();
@@ -314,6 +327,8 @@ package net.an86.tile.role
 		}
 		
 		public function fall():void {
+			roleData.climb = false;
+			roleData.pole  = false;
 			if (!roleData.jump) {
 				getMyCorners(x, y+1);
 				//if (downleft && downright) {
@@ -370,11 +385,13 @@ package net.an86.tile.role
 				}
 				//moveChar(-1, 0, 0);
 			}else if(up_key){
-				if (!roleData.jump && checkUpLadder()) {
-					climbLadder(-1);
-				}
-				if(cartoon.currPlayRow != 3){
-					cartoon.playRow(3);
+				if(!roleData.pole){
+					if (!roleData.jump && checkUpLadder()) {
+						climbLadder(-1);
+					}
+					if(cartoon.currPlayRow != 3){
+						cartoon.playRow(3);
+					}
 				}
 				//moveChar(0, -1, 0);
 			}else if(down_key){
@@ -387,10 +404,11 @@ package net.an86.tile.role
 					if(cartoon.currPlayRow != 0){
 						cartoon.playRow(0);
 					}
+					roleData.pole = false;
 				}
 				//moveChar(0, 1, 0);
 			}
-			if (roleData.jump) {
+			if (roleData.jump && !roleData.pole) {
 				jump();
 			}
 		}
