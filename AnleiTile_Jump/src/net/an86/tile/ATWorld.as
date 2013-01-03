@@ -65,13 +65,15 @@ package net.an86.tile
 			var char:ATRoleBasic = ATGame.roleList[0];
 			for (var i:int = char.ytile-ATGame.halfvisy; i <= char.ytile+ATGame.halfvisy+1; ++i) {
 				for (var j:int = char.xtile-ATGame.halfvisx; j <= char.xtile+ATGame.halfvisx+1; ++j) {
-					var _tile:ATile = _ary[addi++];
 					/*if(_tile == null){
 						_tile = new ATile();
 						tiles[i+'_'+j] = _tile;
 					}*/
-					var _id:String = int(currentMapData[i][j]).toString();
-					_tile.id = _id;
+					var _tile:ATile = _ary[addi++];
+					if(i >= 0 && j >= 0 && i <= currentMapData.length-1 && j <= currentMapData[0].length-1){
+						var _id:String = int(currentMapData[i][j]).toString();
+						_tile.id = _id;
+					}
 					_tile.x = j*ATile.tileW
 					_tile.y = i*ATile.tileH;
 				}
@@ -79,7 +81,7 @@ package net.an86.tile
 			return;
 		}
 		
-		public function changeTile(xold:String, yold:String, xnew:int, ynew:int):void {
+		public function changeTile(xold:int, yold:int, xnew:int, ynew:int):void {
 			var nameold:String = yold+"_"+xold;
 			var namenew:String = ynew+"_"+xnew;
 			var map:Array = currentMapData;

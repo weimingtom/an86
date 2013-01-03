@@ -13,8 +13,8 @@ package net.an86.tile
 	public class ATGame
 	{
 		
-		private static const visx:int = 11;
-		private static const visy:int = 11;
+		private static const visx:int = 13;
+		private static const visy:int = 15;
 		public static const halfvisx:int = int(visx/2);
 		public static const halfvisy:int = int(visy/2);
 		public static var centerx:int;

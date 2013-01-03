@@ -30,6 +30,8 @@ package net.an86.utils
 			a_btn.y = stage.stageHeight - a_btn.height - 10;
 			
 			away_mc.addEventListener(MouseEvent.MOUSE_DOWN, onAwayKeydown);
+			a_btn.addEventListener(MouseEvent.MOUSE_DOWN, onADown);
+			a_btn.addEventListener(MouseEvent.MOUSE_UP, onAUp);
 			
 			stage.addEventListener(MouseEvent.MOUSE_UP, onAwayKeyup);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeydown);
@@ -39,6 +41,14 @@ package net.an86.utils
 			stage.addEventListener(Event.MOUSE_LEAVE, onMouseLeave);
 			
 			
+		}
+		
+		private function onADown(event:MouseEvent):void {
+			ATGame.roleList[0].space_key=true;
+		}
+		
+		private function onAUp(event:MouseEvent):void {
+			ATGame.roleList[0].space_key=false;
 		}
 		
 		

@@ -35,6 +35,8 @@ package net.an86.tile.role.utils
 		
 		public var xstep:Number = 0;
 		public var ystep:Number = 0;
+		/////////
+		public var climb:Boolean = false;
 		
 		public function RoleData()
 		{

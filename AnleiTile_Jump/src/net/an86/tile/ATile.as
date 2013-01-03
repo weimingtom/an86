@@ -13,13 +13,14 @@ package net.an86.tile
 		public static var tileH:Number = 32;
 		
 		/**可行通过走的地砖ID*/
-		public static var walks:Array = [1, 3, 4];
+		public static var walks:Array = [1, 3, 4, 2];
 		/**可行通过走的门ID*/		
 		public static var doors:Array = [[0,4,3,0,1,1], [0,4,3,0,1,1], [0,4,3,0,1,1]];
 		/**可否行走*/
 		public var walkable:Boolean = true;
 		/**是否是云层*/
 		public var cloud:Boolean = false;
+		public var ladder:Boolean = false;
 		
 		private var _id:String='';
 
@@ -57,10 +58,15 @@ package net.an86.tile
 			_id = value;
 			var tid:int = int(id);
 			walkable = getWalk(tid);
+			
+			cloud = false;
 			if(tid == 3 || tid == 4){
 				cloud = true;
-			}else{
-				cloud = false;
+			}
+			
+			ladder = false;
+			if(tid == 2 || tid == 5){
+				ladder = true;
 			}
 			
 			if(_rect == null){
@@ -75,7 +81,7 @@ package net.an86.tile
 				bitmapData.dispose();
 			}
 			bitmapData = new BitmapData(tileW, tileH, true, 0x0);
-			if(cloud){
+			if(cloud || ladder){
 				bitmapData.copyPixels(tileSource, new Rectangle(tileW, 0, tileW, tileH), _dest);
 			}
 			bitmapData.copyPixels(tileSource, _rect, _dest, null, null, true);

@@ -166,6 +166,8 @@ package net.an86.tile.role
 				} else {
 					y = (ytile+1)*ATile.tileH-height/2;
 					roleData.jump = false;
+					//trace("jump stop");
+					//ATGame.world.flushMapTiles();
 				}
 			}
 			getMyCorners (x+speed*dirx, y);
@@ -185,46 +187,94 @@ package net.an86.tile.role
 					x = (xtile+1)*ATile.tileW-width/2;
 				}
 			}
-			xtile = int(x/ATile.tileW);
-			ytile = int(y/ATile.tileH);
+			updateChar(dirx, diry);
+//			xtile = int(x/ATile.tileW);
+//			ytile = int(y/ATile.tileH);
 			
+			scrollScreen();
+		}
+		
+		private function scrollScreen():void{
 			ATGame.gameContainer.x = ATGame.centerx-x;
 			ATGame.gameContainer.y = ATGame.centery-y;
 			/////////////////////////
+			var xnew:int;
+			var xold:int;
+			var ynew:int;
+			var yold:int;
+			var i:int;
 			if (roleData.xstep < x - ATile.tileW) {
-				var xnew = xtile+ATGame.halfvisx+1;
-				var xold = xtile-ATGame.halfvisx-1;
-				for (var i = ytile-ATGame.halfvisy-1; i<=ytile+ATGame.halfvisy+1; ++i) {
+				xnew = xtile+ATGame.halfvisx+1;
+				xold = xtile-ATGame.halfvisx-1;
+				for (i = ytile-ATGame.halfvisy-1; i<=ytile+ATGame.halfvisy+1; ++i) {
 					ATGame.world.changeTile(xold, i, xnew, i);
 				}
-				//ATGame.world.flushMapTiles();
 				roleData.xstep = roleData.xstep+ATile.tileW;
 			} else if (roleData.xstep>x) {
-				var xold = xtile+ATGame.halfvisx+1;
-				var xnew = xtile-ATGame.halfvisx-1;
-				for (var i = ytile-ATGame.halfvisy-1; i<=ytile+ATGame.halfvisy+1; ++i) {
+				xold = xtile+ATGame.halfvisx+1;
+				xnew = xtile-ATGame.halfvisx-1;
+				for (i = ytile-ATGame.halfvisy-1; i<=ytile+ATGame.halfvisy+1; ++i) {
 					ATGame.world.changeTile(xold, i, xnew, i);
 				}
-				//ATGame.world.flushMapTiles();
 				roleData.xstep = roleData.xstep-ATile.tileW;
 			}
 			if (roleData.ystep<y-ATile.tileH) {
-				var ynew = ytile+ATGame.halfvisy+1;
-				var yold = ytile-ATGame.halfvisy-1;
-				for (var i = xtile-ATGame.halfvisx-1; i<=xtile+ATGame.halfvisx+1; ++i) {
+				ynew = ytile+ATGame.halfvisy+1;
+				yold = ytile-ATGame.halfvisy-1;
+				for (i = xtile-ATGame.halfvisx-1; i<=xtile+ATGame.halfvisx+1; ++i) {
 					ATGame.world.changeTile(i, yold, i, ynew);
 				}
-				//ATGame.world.flushMapTiles();
 				roleData.ystep = roleData.ystep+ATile.tileH;
 			} else if (roleData.ystep>y) {
-				var yold = ytile+ATGame.halfvisy+1;
-				var ynew = ytile-ATGame.halfvisy-1;
-				for (var i = xtile-ATGame.halfvisx-1; i<=xtile+ATGame.halfvisx+1; ++i) {
+				yold = ytile+ATGame.halfvisy+1;
+				ynew = ytile-ATGame.halfvisy-1;
+				for (i = xtile-ATGame.halfvisx-1; i<=xtile+ATGame.halfvisx+1; ++i) {
 					ATGame.world.changeTile(i, yold, i, ynew);
 				}
-				//ATGame.world.flushMapTiles();
 				roleData.ystep = roleData.ystep-ATile.tileH;
 			}
+		}
+		
+		private function updateChar (dirx:int, diry:int):void {
+			//ob.clip.gotoAndStop(dirx + diry * 2 + 3);
+			xtile = Math.floor(x / ATile.tileW);
+			ytile = Math.floor(y / ATile.tileH);
+			/*if (ATGame.world.tiles[ytile + "_" + xtile].door && ob == _root.char)
+			{
+				changeMap (ob);
+			}*/
+		}
+		
+		private function checkUpLadder():Boolean {
+			var downY:int = Math.floor((y+height/2-1)/ATile.tileH);
+			var upY:int = Math.floor((y-height/2)/ATile.tileH);
+			var upLadder:Boolean = ATile(ATGame.world.tiles[upY+"_"+xtile]).ladder;
+			var downLadder:Boolean = ATile(ATGame.world.tiles[downY+"_"+xtile]).ladder;
+			if (upLadder || downLadder) {
+				return true;
+			} else {
+				fall();
+			}
+			return false;
+		}
+		private function checkDownLadder():Boolean {
+			var downY:int = Math.floor((roleData.speed+y+height/2)/ATile.tileH);
+			var downLadder:Boolean = ATile(ATGame.world.tiles[downY+"_"+xtile]).ladder;
+			if (downLadder) {
+				return true;
+			} else {
+				fall();
+			}
+			return false;
+		}
+		private function climb(diry:int):Boolean {
+			roleData.climb = true;
+			roleData.jump = false;
+			y += roleData.speed*diry;
+			x = (xtile*ATile.tileW)+ATile.tileW/2;
+			scrollScreen();
+			updateChar(0, diry);
+			return true;
 		}
 		private function jump():Boolean {
 			roleData.jumpspeed = roleData.jumpspeed + roleData.gravity;
@@ -258,24 +308,39 @@ package net.an86.tile.role
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
 			}else if(right_key){
-				moveChar(1, 0, 0);
+				getMyCorners (x - roleData.speed, y);
+				if (!roleData.climb || /*downleft && upleft && */upright && downright) {
+					moveChar(1, 0, 0);
+				}
+				//moveChar(1, 0, 0);
 				if(cartoon.currPlayRow != 2){
 					cartoon.playRow(2);
 				}
 			}else  if(left_key){
-				moveChar(-1, 0, 0);
+				getMyCorners (x - roleData.speed, y);
+				if (!roleData.climb || downleft && upleft /*&& upright && downright*/) {
+					moveChar(-1, 0, 0);
+				}
+				//moveChar(-1, 0, 0);
 				if(cartoon.currPlayRow != 1){
 					cartoon.playRow(1);
 				}
 			}else if(up_key){
-				moveChar(0, -1, 0);
+				if (!roleData.jump && checkUpLadder()) {
+					climb(-1);
+				}
+				//moveChar(0, -1, 0);
 				if(cartoon.currPlayRow != 3){
 					cartoon.playRow(3);
 				}
 			}else if(down_key){
-				moveChar(0, 1, 0);
-				if(cartoon.currPlayRow != 0){
-					cartoon.playRow(0);
+				if (!roleData.jump && checkDownLadder ()) {
+					climb(1);
+				}
+				//moveChar(0, 1, 0);
+				if(cartoon.currPlayRow != 3){
+					//cartoon.playRow(0);
+					cartoon.playRow(3);
 				}
 			}
 			if (roleData.jump) {
