@@ -267,7 +267,29 @@ package net.an86.tile.role
 			}
 			return false;
 		}
-		private function climb(diry:int):Boolean {
+		
+		private function checkRightPole():Boolean {
+			var rightX:int = Math.floor((roleData.speed+x+width/2)/ATile.tileW);
+			var rightPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+rightX]).pole;
+			if (rightPole) {
+				return true;
+			} else {
+				fall();
+			}
+			return false;
+		}
+		
+		private function climbPole(dirx:int):Boolean {
+			roleData.pole = true;
+			roleData.jump = false;
+			y = (ytile*ATile.tileH)+ATile.tileH/2;
+			x += roleData.speed*dirx;
+			scrollScreen();
+			updateChar(dirx, 0);
+			return true;
+		}
+		
+		private function climbLadder(diry:int):Boolean {
 			roleData.climb = true;
 			roleData.jump = false;
 			y += roleData.speed*diry;
@@ -308,40 +330,65 @@ package net.an86.tile.role
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
 			}else if(right_key){
-				getMyCorners (x - roleData.speed, y);
-				if (!roleData.climb || /*downleft && upleft && */upright && downright) {
-					moveChar(1, 0, 0);
+				var _crp:Boolean = checkRightPole();
+				if(!_crp){
+					getMyCorners (x - roleData.speed, y);
+					if (!roleData.climb || /*downleft && upleft && */upright && downright) {
+						moveChar(1, 0, 0);
+					}
+				}else{
+					climbPole(1);
+				}
+				if(!_crp){
+					if(cartoon.currPlayRow != 2){
+						cartoon.playRow(2);
+					}
+				}else{
+					if(cartoon.currPlayRow != 5){
+						cartoon.playRow(5);
+					}
 				}
 				//moveChar(1, 0, 0);
-				if(cartoon.currPlayRow != 2){
-					cartoon.playRow(2);
-				}
 			}else  if(left_key){
-				getMyCorners (x - roleData.speed, y);
-				if (!roleData.climb || downleft && upleft /*&& upright && downright*/) {
-					moveChar(-1, 0, 0);
+				var _crp:Boolean = checkRightPole();
+				if(!_crp){
+					getMyCorners (x - roleData.speed, y);
+					if (!roleData.climb || downleft && upleft /*&& upright && downright*/) {
+						moveChar(-1, 0, 0);
+					}
+				}else{
+					climbPole(-1);
+				}
+				if(!_crp){
+					if(cartoon.currPlayRow != 1){
+						cartoon.playRow(1);
+					}
+				}else{
+					if(cartoon.currPlayRow != 4){
+						cartoon.playRow(4);
+					}
 				}
 				//moveChar(-1, 0, 0);
-				if(cartoon.currPlayRow != 1){
-					cartoon.playRow(1);
-				}
 			}else if(up_key){
 				if (!roleData.jump && checkUpLadder()) {
-					climb(-1);
+					climbLadder(-1);
+				}
+				if(cartoon.currPlayRow != 3){
+					cartoon.playRow(3);
 				}
 				//moveChar(0, -1, 0);
-				if(cartoon.currPlayRow != 3){
-					cartoon.playRow(3);
-				}
 			}else if(down_key){
 				if (!roleData.jump && checkDownLadder ()) {
-					climb(1);
+					climbLadder(1);
+					if(cartoon.currPlayRow != 3){
+						cartoon.playRow(3);
+					}
+				}else{
+					if(cartoon.currPlayRow != 0){
+						cartoon.playRow(0);
+					}
 				}
 				//moveChar(0, 1, 0);
-				if(cartoon.currPlayRow != 3){
-					//cartoon.playRow(0);
-					cartoon.playRow(3);
-				}
 			}
 			if (roleData.jump) {
 				jump();
