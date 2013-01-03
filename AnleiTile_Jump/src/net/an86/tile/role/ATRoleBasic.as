@@ -395,6 +395,7 @@ package net.an86.tile.role
 				}
 				//moveChar(0, -1, 0);
 			}else if(down_key){
+				roleData.pole = false;
 				if (!roleData.jump && checkDownLadder ()) {
 					climbLadder(1);
 					if(cartoon.currPlayRow != 3){
@@ -404,7 +405,6 @@ package net.an86.tile.role
 					if(cartoon.currPlayRow != 0){
 						cartoon.playRow(0);
 					}
-					roleData.pole = false;
 				}
 				//moveChar(0, 1, 0);
 			}
