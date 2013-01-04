@@ -253,7 +253,7 @@ package net.an86.tile.role
 			if (upLadder || downLadder) {
 				return true;
 			} else {
-				fall();
+				///fall();
 			}
 			return false;
 		}
@@ -263,28 +263,17 @@ package net.an86.tile.role
 			if (downLadder) {
 				return true;
 			} else {
-				fall();
+				///fall();
 			}
 			return false;
 		}
 		
-		private function checkRightPole():Boolean {
+		private function checkPole():Boolean {
 			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileW);
 			var _leftY:int = Math.floor((x-width/2)/ATile.tileW);
 			var leftPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_leftY]).pole;
 			var rightPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_rightY]).pole;
 			if (rightPole || leftPole) {
-				return true;
-			} else {
-				fall();
-			}
-			return false;
-		}
-		
-		private function checkLeftPole():Boolean {
-			var _leftX:int = Math.floor((roleData.speed+x+width/2)/ATile.tileW);
-			var leftPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_leftX]).pole;
-			if (leftPole) {
 				return true;
 			} else {
 				fall();
@@ -332,7 +321,9 @@ package net.an86.tile.role
 			if (!roleData.jump) {
 				getMyCorners(x, y+1);
 				//if (downleft && downright) {
-				if (downleft && downright && !checkIfOnCloud()) {
+				var _cioc:Boolean = checkIfOnCloud();
+				var _cdl:Boolean = checkDownLadder();
+				if (downleft && downright && !_cioc && !_cdl || (_cioc && _cdl)) {
 					roleData.jumpspeed = 0;
 					roleData.jump = true;
 				}
@@ -345,7 +336,7 @@ package net.an86.tile.role
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
 			}else if(right_key){
-				var _crp:Boolean = checkRightPole();
+				var _crp:Boolean = checkPole();
 				if(!_crp){
 					getMyCorners (x - roleData.speed, y);
 					if (!roleData.climb || /*downleft && upleft && */upright && downright) {
@@ -365,8 +356,8 @@ package net.an86.tile.role
 				}
 				//moveChar(1, 0, 0);
 			}else  if(left_key){
-				var _crp:Boolean = checkRightPole();
-				if(!_crp){
+				var _cr:Boolean = checkPole();
+				if(!_cr){
 					getMyCorners (x - roleData.speed, y);
 					if (!roleData.climb || downleft && upleft /*&& upright && downright*/) {
 						moveChar(-1, 0, 0);
@@ -374,7 +365,7 @@ package net.an86.tile.role
 				}else{
 					climbPole(-1);
 				}
-				if(!_crp){
+				if(!_cr){
 					if(cartoon.currPlayRow != 1){
 						cartoon.playRow(1);
 					}
@@ -385,8 +376,9 @@ package net.an86.tile.role
 				}
 				//moveChar(-1, 0, 0);
 			}else if(up_key){
+				roleData.pole = false;
 				if(!roleData.pole){
-					if (!roleData.jump && checkUpLadder()) {
+					if (/*!roleData.jump && */checkUpLadder()) {
 						climbLadder(-1);
 					}
 					if(cartoon.currPlayRow != 3){
@@ -396,7 +388,7 @@ package net.an86.tile.role
 				//moveChar(0, -1, 0);
 			}else if(down_key){
 				roleData.pole = false;
-				if (!roleData.jump && checkDownLadder ()) {
+				if (/*!roleData.jump && */checkDownLadder ()) {
 					climbLadder(1);
 					if(cartoon.currPlayRow != 3){
 						cartoon.playRow(3);

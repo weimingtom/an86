@@ -30,7 +30,7 @@ package net.an86.tile.role.utils
 		public var speed:int = 4;
 		public var jumpstart:int = -18;
 		public var gravity:int = 2;
-		public var jump:Boolean = false;
+		private var _jump:Boolean = false;
 		public var jumpspeed:int = 0;
 		
 		public var xstep:Number = 0;
@@ -42,5 +42,16 @@ package net.an86.tile.role.utils
 		public function RoleData()
 		{
 		}
+
+		public function get jump():Boolean
+		{
+			return _jump;
+		}
+
+		public function set jump(value:Boolean):void
+		{
+			_jump = value;
+		}
+
 	}
 }

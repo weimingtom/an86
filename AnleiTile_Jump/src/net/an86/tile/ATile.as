@@ -13,7 +13,7 @@ package net.an86.tile
 		public static var tileH:Number = 32;
 		
 		/**可行通过走的地砖ID*/
-		public static var walks:Array = [1, 3, 4, 2, 6];
+		public static var walks:Array = [1, 3, 4, 2, 5, 6];
 		/**可行通过走的门ID*/		
 		public static var doors:Array = [[0,4,3,0,1,1], [0,4,3,0,1,1], [0,4,3,0,1,1]];
 		/**可否行走*/
