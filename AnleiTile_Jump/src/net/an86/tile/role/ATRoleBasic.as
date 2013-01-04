@@ -295,7 +295,7 @@ package net.an86.tile.role
 			roleData.climb = true;
 			roleData.jump = false;
 			y += roleData.speed*diry;
-			x = (xtile*ATile.tileW)+ATile.tileW/2;
+			///x = (xtile*ATile.tileW)+ATile.tileW/2;
 			scrollScreen();
 			updateChar(0, diry);
 			return true;
@@ -341,6 +341,8 @@ package net.an86.tile.role
 					getMyCorners (x - roleData.speed, y);
 					if (!roleData.climb || /*downleft && upleft && */upright && downright) {
 						moveChar(1, 0, 0);
+					}else{
+						roleData.jump = false;
 					}
 				}else{
 					climbPole(1);
@@ -376,7 +378,6 @@ package net.an86.tile.role
 				}
 				//moveChar(-1, 0, 0);
 			}else if(up_key){
-				roleData.pole = false;
 				if(!roleData.pole){
 					if (/*!roleData.jump && */checkUpLadder()) {
 						climbLadder(-1);
@@ -384,10 +385,12 @@ package net.an86.tile.role
 					if(cartoon.currPlayRow != 3){
 						cartoon.playRow(3);
 					}
+				}else{
+					roleData.jump = true;
+					roleData.pole = false;
 				}
 				//moveChar(0, -1, 0);
 			}else if(down_key){
-				roleData.pole = false;
 				if (/*!roleData.jump && */checkDownLadder ()) {
 					climbLadder(1);
 					if(cartoon.currPlayRow != 3){
@@ -396,6 +399,10 @@ package net.an86.tile.role
 				}else{
 					if(cartoon.currPlayRow != 0){
 						cartoon.playRow(0);
+					}
+					if(roleData.pole){
+						roleData.jump = true;
+						roleData.pole = false;
 					}
 				}
 				//moveChar(0, 1, 0);
