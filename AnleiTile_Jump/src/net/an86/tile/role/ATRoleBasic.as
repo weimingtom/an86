@@ -86,25 +86,6 @@ package net.an86.tile.role
 			}
 		}
 		
-		private function checkIfOnCloud():Boolean {
-			var _tiles:Object = ATGame.world.tiles;
-			var _tile:ATile = ATile(_tiles[downY + "_" + leftX]);
-			if(!_tile) return true;
-			var leftcloud:Boolean = _tile.cloud;
-			
-			_tile = ATile(_tiles[downY + "_" + rightX]);
-			if(!_tile) return true;
-			var rightcloud:Boolean= _tile.cloud;
-			
-			if ((leftcloud || rightcloud) && ytile != downY) {
-				return true;
-			} else {
-				return false;
-			}
-			
-			return false;
-		}
-		
 		private function getMyCorners($x:int, $y:int):void {
 			downY 	= int(($y+height/2-1)	/ATile.tileH);
 			upY 	= int(($y-height/2)		/ATile.tileH);
@@ -245,6 +226,27 @@ package net.an86.tile.role
 			}*/
 		}
 		
+		/**检测是否在云层上*/
+		private function checkIfOnCloud():Boolean {
+			var _tiles:Object = ATGame.world.tiles;
+			var _tile:ATile = ATile(_tiles[downY + "_" + leftX]);
+			if(!_tile) return true;
+			var leftcloud:Boolean = _tile.cloud;
+			
+			_tile = ATile(_tiles[downY + "_" + rightX]);
+			if(!_tile) return true;
+			var rightcloud:Boolean= _tile.cloud;
+			
+			if ((leftcloud || rightcloud) && ytile != downY) {
+				return true;
+			} else {
+				return false;
+			}
+			
+			return false;
+		}
+		
+		/**检测是否在上楼梯*/
 		private function checkUpLadder():Boolean {
 			var _downY:int = Math.floor((y+height/2-1)/ATile.tileH);
 			var _upY:int = Math.floor((y-height/2)/ATile.tileH);
@@ -257,6 +259,7 @@ package net.an86.tile.role
 			}
 			return false;
 		}
+		/**检测是否在下楼梯*/
 		private function checkDownLadder():Boolean {
 			var _downY:int = Math.floor((roleData.speed+y+height/2)/ATile.tileH);
 			var downLadder:Boolean = ATile(ATGame.world.tiles[_downY+"_"+xtile]).ladder;
@@ -268,6 +271,7 @@ package net.an86.tile.role
 			return false;
 		}
 		
+		/**检测是否在爬杆*/
 		private function checkPole():Boolean {
 			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileW);
 			var _leftY:int = Math.floor((x-width/2)/ATile.tileW);
@@ -281,6 +285,7 @@ package net.an86.tile.role
 			return false;
 		}
 		
+		/**爬杆*/
 		private function climbPole(dirx:int):Boolean {
 			roleData.pole = true;
 			roleData.jump = false;
@@ -291,6 +296,7 @@ package net.an86.tile.role
 			return true;
 		}
 		
+		/**上/下楼梯*/
 		private function climbLadder(diry:int):Boolean {
 			roleData.climb = true;
 			roleData.jump = false;
@@ -300,7 +306,9 @@ package net.an86.tile.role
 			updateChar(0, diry);
 			return true;
 		}
-		private function jump():Boolean {
+		
+		/**跳越移动*/		
+		private function jump():void {
 			roleData.jumpspeed = roleData.jumpspeed + roleData.gravity;
 			/*if (roleData.jumpspeed>ATile.tileH) {
 				roleData.jumpspeed = ATile.tileH;
@@ -312,7 +320,6 @@ package net.an86.tile.role
 			} else if (roleData.jumpspeed>0) {
 				moveChar(0, 1, 1);
 			}
-			return true;
 		}
 		
 		public function fall():void {
@@ -332,26 +339,26 @@ package net.an86.tile.role
 		
 		private function onEnter(event:Event):void {
 			if(!isCtrl) return;
-			if(space_key && !roleData.jump){
+			if(space_key && !roleData.jump){//按下跳键，且不在跳越状态
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
 			}else if(right_key){
-				var _crp:Boolean = checkPole();
-				if(!_crp){
+				var _crp:Boolean = checkPole();//检测是否在爬杆
+				if(!_crp){//如果不在爬杆，正常向右移动
 					getMyCorners (x - roleData.speed, y);
-					if (!roleData.climb || /*downleft && upleft && */upright && downright) {
+					if (!roleData.climb || /*downleft && upleft && */upright && downright) {//如果不在上下梯，或，正常向右行走
 						moveChar(1, 0, 0);
-					}else{
-						roleData.jump = false;
+					}else{//否则不跳
+						//roleData.jump = false;
 					}
-				}else{
+				}else{//否则向右爬杆
 					climbPole(1);
 				}
-				if(!_crp){
+				if(!_crp){//如果不在爬杆，正常向右移动动画
 					if(cartoon.currPlayRow != 2){
 						cartoon.playRow(2);
 					}
-				}else{
+				}else{//否则向右爬杆动画
 					if(cartoon.currPlayRow != 5){
 						cartoon.playRow(5);
 					}
@@ -367,11 +374,11 @@ package net.an86.tile.role
 				}else{
 					climbPole(-1);
 				}
-				if(!_cr){
+				if(!_cr){//如果不在爬杆，正常向左移动动画
 					if(cartoon.currPlayRow != 1){
 						cartoon.playRow(1);
 					}
-				}else{
+				}else{//否则向左爬杆动画
 					if(cartoon.currPlayRow != 4){
 						cartoon.playRow(4);
 					}
@@ -379,35 +386,35 @@ package net.an86.tile.role
 				//moveChar(-1, 0, 0);
 			}else if(up_key){
 				if(!roleData.pole){
-					if (/*!roleData.jump && */checkUpLadder()) {
-						climbLadder(-1);
+					if (/*!roleData.jump && */checkUpLadder()) {//是否在楼梯上
+						climbLadder(-1);//上楼
 					}
-					if(cartoon.currPlayRow != 3){
+					if(cartoon.currPlayRow != 3){//播放背后动画
 						cartoon.playRow(3);
 					}
-				}else{
+				}else{//如果在杆上，按[上键]会处发跳落事件
 					roleData.jump = true;
 					roleData.pole = false;
 				}
 				//moveChar(0, -1, 0);
 			}else if(down_key){
-				if (/*!roleData.jump && */checkDownLadder ()) {
-					climbLadder(1);
-					if(cartoon.currPlayRow != 3){
+				if (/*!roleData.jump && */checkDownLadder ()) {//是否在楼梯上
+					climbLadder(1);//下楼
+					if(cartoon.currPlayRow != 3){//播放背后动画
 						cartoon.playRow(3);
 					}
 				}else{
-					if(cartoon.currPlayRow != 0){
+					if(cartoon.currPlayRow != 0){//下楼梯到低时，播放正面动画
 						cartoon.playRow(0);
 					}
-					if(roleData.pole){
+					if(roleData.pole){//如果在杆上，按[下键]会处发跳落事件
 						roleData.jump = true;
 						roleData.pole = false;
 					}
 				}
 				//moveChar(0, 1, 0);
 			}
-			if (roleData.jump && !roleData.pole) {
+			if (roleData.jump && !roleData.pole) {//不在杆上才可以使用跳越动作
 				jump();
 			}
 		}
