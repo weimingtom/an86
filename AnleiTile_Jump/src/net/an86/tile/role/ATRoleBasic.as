@@ -5,7 +5,6 @@ package net.an86.tile.role
 	import flash.events.Event;
 	
 	import net.an86.tile.ATGame;
-	import net.an86.tile.ATWorld;
 	import net.an86.tile.ATile;
 	import net.an86.tile.role.utils.RoleData;
 	
@@ -273,10 +272,22 @@ package net.an86.tile.role
 		
 		/**检测是否在爬杆*/
 		private function checkPole():Boolean {
-			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileW);
-			var _leftY:int = Math.floor((x-width/2)/ATile.tileW);
-			var leftPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_leftY]).pole;
-			var rightPole:Boolean = ATile(ATGame.world.tiles[ytile+"_"+_rightY]).pole;
+			
+			var _tiles:Object = ATGame.world.tiles;
+			var back_rightY:int = Math.floor((x+width/2)/ATile.tileH);
+			var back_leftY:int = Math.floor(((x-1)-width/2)/ATile.tileH);
+			var _tile:ATile = ATile(_tiles[ytile+"_"+back_rightY]);
+			var back_right:Boolean = _tile.walkable;
+			_tile = ATile(_tiles[ytile+"_"+back_leftY]);
+			var back_left:Boolean = _tile.walkable;
+			if(!back_right || !back_left){
+				return false;
+			}
+			
+			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileH);
+			var _leftY:int = Math.floor((x-width/2)/ATile.tileH);
+			var leftPole:Boolean = ATile(_tiles[ytile+"_"+_leftY]).pole;
+			var rightPole:Boolean = ATile(_tiles[ytile+"_"+_rightY]).pole;
 			if (rightPole || leftPole) {
 				return true;
 			} else {
@@ -354,7 +365,7 @@ package net.an86.tile.role
 				}else{//否则向右爬杆
 					climbPole(1);
 				}
-				if(!_crp){//如果不在爬杆，正常向右移动动画
+				if(!_crp && !roleData.pole){//如果不在爬杆，正常向右移动动画
 					if(cartoon.currPlayRow != 2){
 						cartoon.playRow(2);
 					}
@@ -374,7 +385,7 @@ package net.an86.tile.role
 				}else{
 					climbPole(-1);
 				}
-				if(!_cr){//如果不在爬杆，正常向左移动动画
+				if(!_cr && !roleData.pole){//如果不在爬杆，正常向左移动动画
 					if(cartoon.currPlayRow != 1){
 						cartoon.playRow(1);
 					}
