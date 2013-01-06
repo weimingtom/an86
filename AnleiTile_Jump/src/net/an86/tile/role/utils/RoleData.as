@@ -31,6 +31,7 @@ package net.an86.tile.role.utils
 		public var jumpstart:int = -18;
 		public var gravity:int = 2;
 		private var _jump:Boolean = false;
+		public var jumpGoon:Boolean = false;//连跳
 		public var jumpspeed:int = 0;
 		
 		public var xstep:Number = 0;
@@ -51,6 +52,9 @@ package net.an86.tile.role.utils
 		public function set jump(value:Boolean):void
 		{
 			_jump = value;
+			if(jump == false){
+				jumpGoon = jump;
+			}
 		}
 
 	}
