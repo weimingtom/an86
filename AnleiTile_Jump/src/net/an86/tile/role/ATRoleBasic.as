@@ -323,7 +323,8 @@ package net.an86.tile.role
 			roleData.climb = true;
 			roleData.jump = false;
 			y += roleData.speed*diry;
-			///x = (xtile*ATile.tileW)+ATile.tileW/2;
+//			var _x:int = (xtile*ATile.tileW)+ATile.tileW/2;
+//			TweenLite.to(this, 0.5, {x:_x});
 			scrollScreen();
 			updateChar(0, diry);
 			return true;
@@ -364,6 +365,11 @@ package net.an86.tile.role
 			if(space_key && !roleData.jump){//按下跳键，且不在跳越状态
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
+			}else if(space_key && roleData.jump && !roleData.jumpGoon){
+//				roleData.jump = false;
+				roleData.jumpGoon = true;
+				roleData.jumpspeed = roleData.jumpstart;
+				trace("A");
 			}else if(right_key){
 				var _crp:Boolean = checkPole(2);//检测是否在爬杆
 				if(!_crp){//如果不在爬杆，正常向右移动
@@ -432,13 +438,15 @@ package net.an86.tile.role
 					if(roleData.pole){//如果在杆上，按[下键]会处发跳落事件
 						roleData.pole = false;
 					}
-						roleData.jump = true;
+					fall();
 				}
 				//moveChar(0, 1, 0);
 			}
 			if (roleData.jump && !roleData.pole) {//不在杆上才可以使用跳越动作
 				jump();
 			}
+			
+			space_key = false;
 		}
 		
 	}
