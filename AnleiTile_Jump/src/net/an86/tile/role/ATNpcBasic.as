@@ -19,10 +19,10 @@ package net.an86.tile.role
 			this.cartoon = null;
 		}
 		
-		/**把当前NPC所在格子设成不可行走*/
+		/**把当前NPC所在格子设成不可行走
 		public function setTileNoWalke($walk:Boolean = false):void{
 			ATile(ATGame.world.tiles[ytile+'_'+xtile]).walkable = $walk;
-		}
+		}*/
 		
 	}
 }

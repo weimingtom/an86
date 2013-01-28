@@ -17,7 +17,7 @@ package net.an86.tile.role
 		
 		public var cartoon:MyCartoonContainer;
 		
-		//private var _isCtrl:Boolean = true;
+		private var _isCtrl:Boolean = true;
 		/**是否是NPC*/
 		public var isNpc:Boolean = true;
 		
@@ -47,12 +47,11 @@ package net.an86.tile.role
 		
 		public function ATRoleBasic($isCtrl:Boolean = true, _tileWidth:int = 32, _tileHeight:int = 32)
 		{
-			//isCtrl = $isCtrl;
+			isCtrl = $isCtrl;
 			isNpc = false;
 			cartoon = new MyCartoonContainer(_tileWidth, _tileHeight);
 			cartoon.setGapTime(160);
 			addChild(cartoon);
-			addEventListener(Event.ENTER_FRAME, onEnter);
 		}
 		
 		public function setBitmapData(bd:BitmapData):void{
@@ -69,7 +68,7 @@ package net.an86.tile.role
 			downright = false;
 		}
 		
-		/**是否被玩家控制
+		/**是否被玩家控制*/
 		public function get isCtrl():Boolean { return _isCtrl; }
 		public function set isCtrl(value:Boolean):void {
 			_isCtrl = value;
@@ -84,7 +83,7 @@ package net.an86.tile.role
 				right_key = false;
 				space_key = false;
 			}
-		}*/
+		}
 		
 		private function getMyCorners($x:int, $y:int):void {
 			downY 	= int(($y+height/2-1)	/ATile.tileH);
@@ -272,38 +271,42 @@ package net.an86.tile.role
 		}
 		
 		/**检测是否在爬杆*/
-		private function checkPole(flag:int = 0):Boolean {
+		private function checkLeftPole():Boolean {
+			
+			var _tiles:Object = ATGame.world.tiles;
+			var back_leftY:int = Math.floor(((x-1)-width/2)/ATile.tileH);
+			var _tile:ATile = ATile(_tiles[ytile+"_"+back_leftY]);
+			var back_left:Boolean = _tile.walkable;
+			if(!back_left){
+				return false;
+			}
+			
+			var _leftY:int = Math.floor((x-width/2)/ATile.tileH);
+			var leftPole:Boolean = ATile(_tiles[ytile+"_"+_leftY]).pole;
+			if (leftPole) {
+				return true;
+			} else {
+				//fall();
+			}
+			return false;
+		}
+		
+		private function checkRightPole():Boolean {
 			
 			var _tiles:Object = ATGame.world.tiles;
 			var back_rightY:int = Math.floor((x+width/2)/ATile.tileH);
-			var back_leftY:int = Math.floor(((x-1)-width/2)/ATile.tileH);
 			var _tile:ATile = ATile(_tiles[ytile+"_"+back_rightY]);
 			var back_right:Boolean = _tile.walkable;
-			_tile = ATile(_tiles[ytile+"_"+back_leftY]);
-			var back_left:Boolean = _tile.walkable;
-			
-			if(flag ==  1){
-				if(!back_left){
-					return false;
-				}
-			}else if(flag ==  2){
-				if(!back_right){
-					return false;
-				}
-			}
-			/*
-			if(!back_right || !back_left){
+			if(!back_right){
 				return false;
-			}*/
+			}
 			
 			var _rightY:int = Math.floor((x+width/2-1)/ATile.tileH);
-			var _leftY:int = Math.floor((x-width/2)/ATile.tileH);
-			var leftPole:Boolean = ATile(_tiles[ytile+"_"+_leftY]).pole;
 			var rightPole:Boolean = ATile(_tiles[ytile+"_"+_rightY]).pole;
-			if (rightPole || leftPole) {
+			if (rightPole) {
 				return true;
 			} else {
-				fall();
+				//fall();
 			}
 			return false;
 		}
@@ -324,8 +327,7 @@ package net.an86.tile.role
 			roleData.climb = true;
 			roleData.jump = false;
 			y += roleData.speed*diry;
-//			var _x:int = (xtile*ATile.tileW)+ATile.tileW/2;
-//			TweenLite.to(this, 0.5, {x:_x});
+			///x = (xtile*ATile.tileW)+ATile.tileW/2;
 			scrollScreen();
 			updateChar(0, diry);
 			return true;
@@ -354,6 +356,7 @@ package net.an86.tile.role
 				//if (downleft && downright) {
 				var _cioc:Boolean = checkIfOnCloud();
 				var _cdl:Boolean = checkDownLadder();
+				var _cul:Boolean = checkUpLadder();
 				if (downleft && downright && !_cioc && !_cdl || (_cioc && _cdl)) {
 					roleData.jumpspeed = 0;
 					roleData.jump = true;
@@ -361,27 +364,23 @@ package net.an86.tile.role
 			}
 		}
 		
-		protected function onEnter(event:Event):void {
-			//if(!isCtrl) return;
+		private function onEnter(event:Event):void {
+			if(!isCtrl) return;
 			if(space_key && !roleData.jump){//按下跳键，且不在跳越状态
 				roleData.jump = true;
 				roleData.jumpspeed = roleData.jumpstart;
-			}else if(space_key && roleData.jump && !roleData.jumpGoon){
-//				roleData.jump = false;
-				roleData.jumpGoon = true;
-				roleData.jumpspeed = roleData.jumpstart;
-				cartoon.playRow(7);
 			}else if(right_key){
-				var _crp:Boolean = checkPole(2);//检测是否在爬杆
-				if(!_crp){//如果不在爬杆，正常向右移动
+				var _crp:Boolean = checkRightPole();//检测是否在爬杆
+				if(_crp){//否则向右爬杆
+					climbPole(1);
+				}
+				if(!roleData.climb && !roleData.pole){//如果不在爬杆和上下梯，正常向右移动
 					getMyCorners (x - roleData.speed, y);
-					if (!roleData.climb || /*downleft && upleft && */upright && downright) {//如果不在上下梯，或，正常向右行走
+					if (/*!roleData.climb || downleft && upleft && */upright && downright) {//如果不在上下梯，或，正常向右行走
 						moveChar(1, 0, 0);
 					}else{//否则不跳
 						//roleData.jump = false;
 					}
-				}else{//否则向右爬杆
-					climbPole(1);
 				}
 				if(!_crp && !roleData.pole){//如果不在爬杆，正常向右移动动画
 					if(cartoon.currPlayRow != 2){
@@ -394,14 +393,15 @@ package net.an86.tile.role
 				}
 				//moveChar(1, 0, 0);
 			}else  if(left_key){
-				var _cr:Boolean = checkPole(1);
-				if(!_cr){
+				var _cr:Boolean = checkLeftPole();
+				if(_cr){
+					climbPole(-1);
+				}
+				if(!roleData.climb && !roleData.pole){
 					getMyCorners (x - roleData.speed, y);
-					if (!roleData.climb || downleft && upleft /*&& upright && downright*/) {
+					if (/*!roleData.climb || */downleft && upleft /*&& upright && downright*/) {
 						moveChar(-1, 0, 0);
 					}
-				}else{
-					climbPole(-1);
 				}
 				if(!_cr && !roleData.pole){//如果不在爬杆，正常向左移动动画
 					if(cartoon.currPlayRow != 1){
@@ -437,17 +437,15 @@ package net.an86.tile.role
 						cartoon.playRow(0);
 					}
 					if(roleData.pole){//如果在杆上，按[下键]会处发跳落事件
+						roleData.jump = true;
 						roleData.pole = false;
 					}
-					fall();
 				}
 				//moveChar(0, 1, 0);
 			}
 			if (roleData.jump && !roleData.pole) {//不在杆上才可以使用跳越动作
 				jump();
 			}
-			
-			space_key = false;
 		}
 		
 	}

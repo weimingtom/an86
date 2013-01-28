@@ -74,7 +74,7 @@ package net.an86.tile
 		 * @param $obj	角色类
 		 */
 		public static function addRole($obj:ATRoleBasic):void{
-			if($obj.isCtrl){
+			if(!$obj.isNpc){
 				roleList[0] = $obj;
 				/*roleList[1] = $obj;
 				roleList[2] = $obj;*/
@@ -89,7 +89,7 @@ package net.an86.tile
 			$obj.ytile = $i;
 			if($j != -1) $obj.x = $j * ATile.tileW + $obj.width / 2;
 			if($i != -1) $obj.y = $i * ATile.tileH + $obj.height/ 2;
-			$obj.setTileNoWalke();
+			//$obj.setTileNoWalke();
 			npcList.push($obj);
 		}
 		
