@@ -39,14 +39,17 @@ package anlei.away.d3d
 		private var animationSet:SkeletonAnimationSet;
 		private var animator:SkeletonAnimator;
 		
-		private var stateTransition:CrossfadeTransition = new CrossfadeTransition(0.5);
+		private var stateTransition:CrossfadeTransition = new CrossfadeTransition(.5);
 		private var Parent:ObjectContainer3D;
 		private var onComplete:Function;
+		
+		private var _This:AbsMD5Mesh;
 		
 		public function AbsMD5Mesh($idName:String, $path:String = "assets/role/") {
 			path = $path;
 			id = $idName;
 			key = path + id;
+			_This = this;
 		}
 		
 		public function load($Parent:ObjectContainer3D, $fileNameList:Array, $onComplete:Function):void{
@@ -112,9 +115,14 @@ package anlei.away.d3d
 					var node:SkeletonClipNode = event.asset as SkeletonClipNode;
 					node.name = node.assetNamespace;
 					animationSet.addAnimation(node);
-					if (node.name == AnimActions.run) stop();
+					if (node.name == AnimActions.stand) stop();
+					j++;
+					if(j > animList.length-1){
+						if(onComplete) onComplete(_This);
+					}
 				}
 			}
+			var j:int = 0;
 			for (var i:int = 0; i < animList.length; i++) {
 				var _ku:String = key + "/" + animList[i];
 				var _data:Object = AnleiLoader.getInstance().getData(_ku);
@@ -158,8 +166,8 @@ package anlei.away.d3d
 		private function onAssetsComp(event:AssetEvent):void {
 			if (event.asset.assetType == AssetType.MESH) {//3
 				mesh = event.asset as Mesh;
-				mesh.y = -300;
-				//mesh.scale(0.3);
+				//mesh.y = -300;
+				mesh.scale(0.5);
 				for (var i:int = 0; i < textureList.length; i++) {
 					var _ku:String = key + "/" + textureList[i];
 					var bitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap(_ku).bitmapData);
@@ -168,7 +176,6 @@ package anlei.away.d3d
 				}
 				if(!Parent) Anlei3D.ins().add(mesh);
 				else Parent.addChild(mesh);
-				if(onComplete) onComplete(this);
 			} else if (event.asset.assetType == AssetType.SKELETON) {
 				skeleton = event.asset as Skeleton;
 			} else if (event.asset.assetType == AssetType.ANIMATION_SET) {
@@ -179,13 +186,20 @@ package anlei.away.d3d
 			}
 		}
 		
-		private function stop():void {
+		public function stop():void {
 			if(animator){
 				animator.playbackSpeed = 1;
-				animator.play(AnimActions.run, stateTransition);
+				play(AnimActions.stand);
 			}
 		}
 
+		public function play(action:String):void{
+			if(animator){
+				if(action == AnimActions.walk) animator.playbackSpeed = 0.5;
+				if(animator.getAnimationStateByName(action))
+					animator.play(action, stateTransition);
+			}
+		}
 		
 	}
 }

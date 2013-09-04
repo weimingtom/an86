@@ -30,10 +30,10 @@ package anlei.away
 			view3d = new View3D();
 			layer.addChild(view3d);
 			
-			view3d.camera.x = 100;
-			view3d.camera.y = 100;
-			view3d.camera.z = 100;
-			view3d.camera.lookAt(new Vector3D());
+//			view3d.camera.x = 500;
+//			view3d.camera.y = 1000;
+//			view3d.camera.z = 100;
+			//view3d.camera.lookAt(new Vector3D());
 			
 			if($isStats) layer.addChild(new AwayStats(view3d));
 			layer.addEventListener(Event.ENTER_FRAME, _onEnterFrame);
