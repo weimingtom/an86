@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flex-config>
+	<compiler>
+		<allow-source-path-overlap>true</allow-source-path-overlap>
+		<external-library-path>
+			<path-element>${flexlib}/libs/player/{targetPlayerMajorVersion}.{targetPlayerMinorVersion}/playerglobal.swc</path-element>
+			<path-element>${flexlib}\libs\</path-element>
+		</external-library-path>
+		<locale>
+			<locale-element>en_US</locale-element>
+		</locale>
+		<source-path>
+			<path-element>C:/Users/Administrator/Desktop/cmd_export_swc/as/</path-element>
+		</source-path>
+	</compiler>
+	<include-classes>
+		<class>net.an86.utils.ImportClass</class>
+		<!-- class>com.epgis.flashgis.Map</class -->
+	</include-classes>
+	<include-file>
+		<name>locked.png</name>
+		<path>as/locked.png</path>
+	</include-file>
+	<!-- <include-file>
+		<name>as/locked.png</name>
+		<path>as/locked.png</path>
+	</include-file> -->
+</flex-config>
