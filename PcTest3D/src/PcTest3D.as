@@ -1,5 +1,7 @@
 package
 {
+	import com.hurlant.math.bi_internal;
+	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -11,11 +13,16 @@ package
 	import anlei.away.Anlei3D;
 	import anlei.away.d3d.AbsMD5Mesh;
 	import anlei.away.utils.AnimActions;
+	import anlei.loading.AnleiLoader;
+	import anlei.loading.utils.ALoaderUtil;
 	
 	import away3d.controllers.HoverController;
 	import away3d.entities.Mesh;
+	import away3d.extrusions.Elevation;
 	import away3d.materials.ColorMaterial;
+	import away3d.materials.TextureMaterial;
 	import away3d.primitives.PlaneGeometry;
+	import away3d.textures.BitmapTexture;
 	
 	import multi.MultiDirection;
 	
@@ -28,6 +35,10 @@ package
 		private var role:AbsMD5Mesh;
 		
 		public static const MOVE_SP:Number = 40;
+
+		private var map1:AbsMD5Mesh;
+
+		private var map:Elevation;
 		
 		public function PcTest3D()
 		{
@@ -37,16 +48,27 @@ package
 
 			Anlei3D.ins().inits(this, update);
 			
-			var cm:ColorMaterial = new ColorMaterial(0xFFFFFF);
-			var _bg:Mesh = new Mesh(new PlaneGeometry(300, 300, 1, 1), cm);
-			_bg.y = 10;
-			Anlei3D.ins().add(_bg);
+//			var cm:ColorMaterial = new ColorMaterial(0xFFFFFF);
+//			var _bg:Mesh = new Mesh(new PlaneGeometry(300, 300, 1, 1), cm);
+//			_bg.y = 10;
+//			Anlei3D.ins().add(_bg);
 //			cameraController = new LookAtController(Anlei3D.ins().view3d.camera, _bg);
 			
-			var map1:AbsMD5Mesh = new AbsMD5Mesh("map1", "assets/scene/");
-			map1.load(null, [["map1.jpg"],[], ["map1.AWD"]], function(evt:AbsMD5Mesh):void{
-			});
+			map1 = new AbsMD5Mesh("map1", "assets/scene/");
+//			map1.load(null, [["map1.jpg"],[], ["map1.AWD"]], function(evt:AbsMD5Mesh):void{
+//				var _textm:TextureMaterial = TextureMaterial(evt.mesh.subMeshes[0].material);
+//				map = new Elevation(_textm, BitmapTexture(_textm.texture).bitmapData);
+//				Anlei3D.ins().remove(map1.mesh);
+//				map.addChild(map1.mesh);
+//			});
 			
+			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"]]), function():void{
+				
+				var bitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
+				var _material:TextureMaterial = new TextureMaterial(bitmap);
+				map = new Elevation(_material, BitmapTexture(_material.texture).bitmapData,3000, 1000, 3000);
+				Anlei3D.ins().add(map);
+			}, function():void{});
 			role = new AbsMD5Mesh('1001');
 			role.load(null, [
 				[ "Warrior_3.jpg", "Warrior_4.jpg", "Warrior_2.jpg", "Warrior_1.jpg","Warrior_5.jpg", "Warrior_6.jpg"],
@@ -74,7 +96,7 @@ package
 		}
 		
 		private function onAmmComp(evt:AbsMD5Mesh):void {
-			cameraController = new HoverController(Anlei3D.ins().view3d.camera, evt.mesh, 0, 45, 1000);
+			cameraController = new HoverController(Anlei3D.ins().view3d.camera, evt.mesh, 0, 22, 1000);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			new MultiDirection(stage, null, onMultiMove, onMultiEnd, onClick);
@@ -82,8 +104,9 @@ package
 		
 		private function update():void{
 			if(cameraController) cameraController.update();
-//			if (role && role.mesh)
-//				role.mesh.rotationY += currentRotationInc;
+			if (role && role.mesh && map){
+				role.mesh.y += 0.2*(map.getHeightAt(role.mesh.x, role.mesh.z) + 20 - role.mesh.y);
+			}
 		}
 		
 		private function onMultiMove(rota:Number):void{

@@ -2,9 +2,9 @@
 <actionScriptProperties analytics="false" mainApplicationPath="PcTest3D.as" projectUUID="4def8b90-302a-4866-ac1b-be15d602881d" version="11">
   <compiler additionalCompilerArguments="-locale zh_CN" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="D:/bin-debug" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
+      <compilerSourcePathEntry kind="1" linkType="1" path="F:/360Clound/Probjet/DQbattle/src"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="E:/actionLibrary/away3d/src"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="E:/GoogleCode/AnleiLib3/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/360Clound/Probjet/DQbattle/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
