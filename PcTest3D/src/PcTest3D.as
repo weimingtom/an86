@@ -62,11 +62,12 @@ package
 //				map.addChild(map1.mesh);
 //			});
 			
-			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"]]), function():void{
-				
-				var bitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
-				var _material:TextureMaterial = new TextureMaterial(bitmap);
-				map = new Elevation(_material, BitmapTexture(_material.texture).bitmapData,3000, 1000, 3000);
+			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"],["assets/scene/map1/map1.jpg", "map1texture"]]), function():void{
+				var _textureBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("map1texture").bitmapData);
+				var _textureMaterial:TextureMaterial = new TextureMaterial(_textureBitmap);
+				var _heightBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
+				var _heightMaterial:TextureMaterial = new TextureMaterial(_heightBitmap);
+				map = new Elevation(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData,3000, 1000, 3000);
 				Anlei3D.ins().add(map);
 			}, function():void{});
 			role = new AbsMD5Mesh('1001');
