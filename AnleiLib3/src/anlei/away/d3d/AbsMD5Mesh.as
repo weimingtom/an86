@@ -35,9 +35,9 @@ package anlei.away.d3d
 		private var meshList:Array;
 		
 		public var mesh:Mesh;
-		private var skeleton:Skeleton;
-		private var animationSet:SkeletonAnimationSet;
-		private var animator:SkeletonAnimator;
+		public var skeleton:Skeleton;
+		public var animationSet:SkeletonAnimationSet;
+		public var animator:SkeletonAnimator;
 		
 		private var stateTransition:CrossfadeTransition = new CrossfadeTransition(.5);
 		private var Parent:ObjectContainer3D;
@@ -176,8 +176,15 @@ package anlei.away.d3d
 				}
 				if(!Parent) Anlei3D.ins().add(mesh);
 				else Parent.addChild(mesh);
+				if(!animList || animList.length <= 0){
+					if(onComplete){
+						onComplete(_This);
+						onComplete = null;
+					}
+				}
 			} else if (event.asset.assetType == AssetType.SKELETON) {
 				skeleton = event.asset as Skeleton;
+				var obj1:int = skeleton.jointIndexFromName("Bip001 R Hand");
 			} else if (event.asset.assetType == AssetType.ANIMATION_SET) {
 				animationSet = event.asset as SkeletonAnimationSet;
 				animator = new SkeletonAnimator(animationSet, skeleton);

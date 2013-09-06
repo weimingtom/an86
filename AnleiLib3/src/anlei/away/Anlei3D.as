@@ -58,6 +58,10 @@ package anlei.away
 		public function add(child:ObjectContainer3D):ObjectContainer3D{
 			return view3d.scene.addChild(child);
 		}
+		public function remove(child:ObjectContainer3D):void{
+			if(view3d.scene.contains(child))
+				view3d.scene.removeChild(child);
+		}
 	}
 }
 class Signle{}
