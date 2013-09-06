@@ -7,6 +7,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Matrix3D;
+	import flash.geom.Vector3D;
 	import flash.ui.Keyboard;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -24,8 +25,15 @@ package
 	import away3d.extrusions.Elevation;
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
+	import away3d.primitives.CubeGeometry;
 	import away3d.primitives.PlaneGeometry;
 	import away3d.textures.BitmapTexture;
+	
+	import awayphysics.collision.shapes.AWPBoxShape;
+	import awayphysics.collision.shapes.AWPHeightfieldTerrainShape;
+	import awayphysics.dynamics.AWPDynamicsWorld;
+	import awayphysics.dynamics.AWPRigidBody;
+	import awayphysics.extend.AWPTerrain;
 	
 	import multi.MultiDirection;
 	
@@ -38,10 +46,12 @@ package
 		private var _role:AbsMD5Mesh;
 		
 		public static const MOVE_SP:Number = 40;
-
+		
+		private var physicsWorld : AWPDynamicsWorld;
+		
 		private var map1:AbsMD5Mesh;
 
-		private var map:Elevation;
+		private var map:AWPTerrain;
 
 		private var dun:AbsMD5Mesh;
 
@@ -53,7 +63,10 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT; 
 
-			Anlei3D.ins().inits(this, update);
+			Anlei3D.ins().inits(this, update, true);
+			
+			physicsWorld = AWPDynamicsWorld.getInstance();
+			physicsWorld.initWithDbvtBroadphase();
 			
 //			var cm:ColorMaterial = new ColorMaterial(0xFFFFFF);
 //			var _bg:Mesh = new Mesh(new PlaneGeometry(300, 300, 1, 1), cm);
@@ -61,7 +74,7 @@ package
 //			Anlei3D.ins().add(_bg);
 //			cameraController = new LookAtController(Anlei3D.ins().view3d.camera, _bg);
 			
-			map1 = new AbsMD5Mesh("map1", "assets/scene/");
+//			map1 = new AbsMD5Mesh("map1", "assets/scene/");
 //			map1.load(null, [["map1.jpg"],[], ["map1.AWD"]], function(evt:AbsMD5Mesh):void{
 //				var _textm:TextureMaterial = TextureMaterial(evt.mesh.subMeshes[0].material);
 //				map = new Elevation(_textm, BitmapTexture(_textm.texture).bitmapData);
@@ -70,12 +83,21 @@ package
 //			});
 			
 			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"],["assets/scene/map1/map1.jpg", "map1texture"]]), function():void{
+				
 				var _textureBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("map1texture").bitmapData);
 				var _textureMaterial:TextureMaterial = new TextureMaterial(_textureBitmap);
 				var _heightBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
 				var _heightMaterial:TextureMaterial = new TextureMaterial(_heightBitmap);
-				map = new Elevation(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData,3000, 2000, 3000);
+				//map = new Elevation(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData,3000, 2000, 3000);
+				map = new AWPTerrain(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData, 50000, 1200, 50000, 60, 60, 1200, 0, false);
+				
 				Anlei3D.ins().add(map);
+				
+				var terrainShape : AWPHeightfieldTerrainShape = new AWPHeightfieldTerrainShape(map);
+				var terrainBody : AWPRigidBody = new AWPRigidBody(terrainShape, map, 0);
+				physicsWorld.addRigidBody(terrainBody);
+				
+				
 			}, function():void{});
 			_role = new AbsMD5Mesh('1001');
 			_role.load(null, [
@@ -97,7 +119,7 @@ package
 		}
 		
 		private function onAmmComp(evt:AbsMD5Mesh):void {
-			cameraController = new HoverController(Anlei3D.ins().view3d.camera, evt.mesh, 0, 22, 1000);
+			cameraController = new HoverController(Anlei3D.ins().view3d.camera, evt.mesh, 0, 15, 1000);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			new MultiDirection(stage, null, onMultiMove, onMultiEnd, onClick);
@@ -108,13 +130,29 @@ package
 			
 			jian = new AbsMD5Mesh("jian1", "assets/equip/");
 			jian.load(_role.mesh, [["jian1.jpg"], [], ["jian1.AWD"]], null);
+			//////////////////////
+			
+			var cm:ColorMaterial = new ColorMaterial(0xFFFFFF);
+			var _mesh:Mesh = new Mesh(new CubeGeometry(200, 200, 200), cm);
+			_mesh.y = 1200;
+			Anlei3D.ins().add(_mesh);
+			var boxShape : AWPBoxShape = new AWPBoxShape(200, 200, 200);
+			var body:AWPRigidBody = new AWPRigidBody(boxShape, _mesh, 1);
+			body.position = new Vector3D(0,5000,0);
+			physicsWorld.addRigidBody(body);
+
+			
+			var boxShape : AWPBoxShape = new AWPBoxShape(200, 200, 200);
+			var body:AWPRigidBody = new AWPRigidBody(boxShape, evt.mesh, 1);
+			physicsWorld.addRigidBody(body);
 		}
 		
 		private function update():void{
 			if(cameraController) cameraController.update();
-			if (_role && _role.mesh && map){
+			/*if (_role && _role.mesh && map){
 				_role.mesh.y += 0.2*(map.getHeightAt(_role.mesh.x, _role.mesh.z) + 20 - _role.mesh.y);
-			}
+			}*/
+			physicsWorld.step(1.0/60);
 			if(_role && _role.mesh && _role.animator.globalPose.jointPoses.length > 0){
 				
 				if(dun && dun.mesh){

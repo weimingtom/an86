@@ -29,6 +29,11 @@
 			<location>E:/GoogleCode/AnleiLib3/src</location>
 		</link>
 		<link>
+			<name>[source path] AwayPhysics-src</name>
+			<type>2</type>
+			<location>E:/actionLibrary/awayphysics/AwayPhysics/src</location>
+		</link>
+		<link>
 			<name>[source path] DQbattle-src</name>
 			<type>2</type>
 			<location>F:/360Clound/Probjet/DQbattle/src</location>
