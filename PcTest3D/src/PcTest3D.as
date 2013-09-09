@@ -11,10 +11,12 @@ package
 	import flash.ui.MultitouchInputMode;
 	
 	import anlei.away.Anlei3D;
-	import anlei.away.d3d.AbsMD5Mesh;
+	import anlei.away.d3d.AbsMesh;
+	import anlei.away.d3d.AbsRole;
 	import anlei.away.utils.AnimActions;
 	import anlei.loading.AnleiLoader;
 	import anlei.loading.utils.ALoaderUtil;
+	import anlei.util.EnterFrame;
 	
 	import away3d.animators.data.JointPose;
 	import away3d.controllers.HoverController;
@@ -28,33 +30,30 @@ package
 	
 	public class PcTest3D extends Sprite
 	{
-		private var cameraController:HoverController;
 
-		private var _role:AbsMD5Mesh;
+		private var _role:AbsRole;
 		
 		public static const MOVE_SP:Number = 40;
 		
-		private var map1:AbsMD5Mesh;
+		private var map1:AbsMesh;
 		
 //		private var map:AWPTerrain;
 		private var map:Elevation;
 		
-		private var dun:AbsMD5Mesh;
+		private var dun:AbsMesh;
 
-		private var jian:AbsMD5Mesh;
+		private var jian:AbsMesh;
 		
 		public function PcTest3D()
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT; 
 
-			Anlei3D.ins().inits(this, update, true);
+			Anlei3D.ins().inits(this, true);
+			EnterFrame.enterFrame = update;
 			
-//			var cm:ColorMaterial = new ColorMaterial(0xFFFFFF);
-//			var _bg:Mesh = new Mesh(new PlaneGeometry(300, 300, 1, 1), cm);
-//			_bg.y = 10;
-//			Anlei3D.ins().add(_bg);
 //			cameraController = new LookAtController(Anlei3D.ins().view3d.camera, _bg);
 			
 //			map1 = new AbsMD5Mesh("map1", "assets/scene/");
@@ -66,58 +65,26 @@ package
 //			});
 			
 			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"],["assets/scene/map1/map1.jpg", "map1texture"]]), function():void{
-				
 				var _textureBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("map1texture").bitmapData);
 				var _textureMaterial:TextureMaterial = new TextureMaterial(_textureBitmap);
 				var _heightBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
 				_heightMaterial = new TextureMaterial(_heightBitmap);
 				map = new Elevation(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData,3000, 2000, 3000);
-//				map = new AWPTerrain(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData, 3000, 2000, 3000, 60, 60, 1200, 0, false);
 				Anlei3D.ins().add(map);
-				
-//				var terrainShape : AWPHeightfieldTerrainShape = new AWPHeightfieldTerrainShape(map as AWPTerrain);
-//				var terrainBody : AWPRigidBody = new AWPRigidBody(terrainShape, map, 0);
-//				physicsWorld.addRigidBody(terrainBody);
-				
-				
 			}, function():void{});
-			_role = new AbsMD5Mesh('1001');
-			_role.load(null, [
-				[ "Warrior_3.jpg", "Warrior_4.jpg", "Warrior_2.jpg", "Warrior_1.jpg","Warrior_5.jpg", "Warrior_6.jpg"],
-				["attack1.MD5ANIM", "attack2.MD5ANIM",
-				"battleStand.MD5ANIM", "block.MD5ANIM", "die.MD5ANIM",
-				"hit.MD5ANIM", "run.MD5ANIM", "stand.MD5ANIM",
-				"walk.MD5ANIM"], ["role.MD5MESH"]],
-				onAmmComp
-			);
+			
+			_role = new AbsRole();
+			_role.add("1001", onAmmComp);
 			
 		}
 		
-		private function onClick():void {
-			var _rnd:int = Math.random()*100;
-			var _action:String = AnimActions.attack1;
-			if(_rnd > 50) _action = AnimActions.attack2;
-			_role.play(_action);
-		}
-		
-		private function onAmmComp(evt:AbsMD5Mesh):void {
-			cameraController = new HoverController(Anlei3D.ins().view3d.camera, _role.mesh, 0, 15, 1000);
-			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			new MultiDirection(stage, null, onMultiMove, onMultiEnd, onClick);
-			
-			
-			dun = new AbsMD5Mesh("dun1", "assets/equip/");
+		private function onAmmComp(evt:AbsMesh):void {
+			dun = new AbsMesh("dun1", "assets/equip/");
 			dun.load(_role.mesh, [["dun1.jpg"], [], ["dun1.AWD"]], null);
 			
-			jian = new AbsMD5Mesh("jian1", "assets/equip/");
+			jian = new AbsMesh("jian1", "assets/equip/");
 			jian.load(_role.mesh, [["jian1.jpg"], [], ["jian1.AWD"]], null);
 			//////////////////////
-			
-			
-//			var boxShape:AWPBoxShape = new AWPBoxShape(200, 200, 200);
-//			var body:AWPRigidBody = new AWPRigidBody(boxShape, _role.mesh, 1);
-//			physicsWorld.addRigidBody(body);
 			_role.mesh.position = new Vector3D(0, 1500, 0);
 		}
 		
@@ -126,10 +93,9 @@ package
 		private var _heightMaterial:TextureMaterial;
 		
 		private function update():void{
-			if(cameraController) cameraController.update();
+			
 			if (_role && _role.mesh && map){
 				if(map.material){
-//					var _color:Number = BitmapTexture(_heightMaterial.texture).bitmapData.getPixel(_role.mesh.x, _role.mesh.z);
 					var _hei:Number = map.getHeightAt(_role.mesh.x, _role.mesh.z);
 					if(_hei != 0){
 						_role.mesh.y += 0.2*(_hei + 20 - _role.mesh.y);
@@ -142,7 +108,7 @@ package
 					}
 				}
 			}
-//			physicsWorld.step(1.0/60);
+			
 			if(_role && _role.mesh && _role.animator.globalPose.jointPoses.length > 0){
 				
 				if(dun && dun.mesh){
@@ -162,66 +128,6 @@ package
 			}
 		}
 		
-		private function onMultiMove(rota:Number):void{
-			_role.mesh.rotationY = rota-90;
-			_role.mesh.moveLeft(-MOVE_SP);
-			_role.play(AnimActions.run);
-		}
-		
-		private function onMultiEnd():void{
-			_role.play(AnimActions.stand);
-		}
-		
-		private function onKeyDown(event:KeyboardEvent):void
-		{
-			switch (event.keyCode) {
-				case Keyboard.UP:
-				case Keyboard.W:
-					_role.mesh.moveLeft(-MOVE_SP);
-//					_role.mesh.x += MOVE_SP;
-//					TweenLite.to(_role.mesh, 0.5, {rotationY: -90});
-					_role.play(AnimActions.run);
-					break;
-				case Keyboard.DOWN:
-				case Keyboard.S:
-					_role.mesh.moveLeft(MOVE_SP/2);
-//					_role.mesh.x -= MOVE_SP;
-//					TweenLite.to(_role.mesh, 0.5, {rotationY: 90});
-					_role.play(AnimActions.walk);
-					break;
-				case Keyboard.LEFT:
-				case Keyboard.A:
-					_role.mesh.rotationY -= 3;
-//					_role.mesh.x -= MOVE_SP;
-//					TweenLite.to(_role.mesh, 0.5, {rotationY: -180});
-//					_role.play(AnimActions.run);
-					break;
-				case Keyboard.RIGHT:
-				case Keyboard.D:
-					_role.mesh.rotationY += 3;
-//					_role.mesh.x += MOVE_SP;
-//					TweenLite.to(_role.mesh, 0.5, {rotationY: 0});
-//					_role.play(AnimActions.run);
-					break;
-			}
-		}
-		
-		private function onKeyUp(event:KeyboardEvent):void
-		{
-			switch (event.keyCode) {
-				case Keyboard.UP:
-				case Keyboard.W:
-				case Keyboard.DOWN:
-				case Keyboard.S:
-				case Keyboard.LEFT:
-				case Keyboard.A:
-				case Keyboard.RIGHT:
-				case Keyboard.D:
-					_role.stop();
-					break;
-			}
-		}
-
 	}
 }
 
