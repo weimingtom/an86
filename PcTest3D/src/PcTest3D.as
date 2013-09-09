@@ -74,11 +74,12 @@ package
 			}, function():void{});
 			
 			_role = new AbsRole();
+			_role.isPlayer = true;
 			_role.add("1001", onAmmComp);
 			
 		}
 		
-		private function onAmmComp(evt:AbsMesh):void {
+		private function onAmmComp():void {
 			dun = new AbsMesh("dun1", "assets/equip/");
 			dun.load(_role.mesh, [["dun1.jpg"], [], ["dun1.AWD"]], null);
 			
