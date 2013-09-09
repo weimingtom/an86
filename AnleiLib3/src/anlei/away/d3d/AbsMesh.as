@@ -27,9 +27,9 @@ package anlei.away.d3d
 
 	public class AbsMesh
 	{
-		private var path:String;
+		protected var path:String;
 		protected var fileName:String;
-		private var key:String;
+		protected var key:String;
 		private var textureList:Array;
 		private var animList:Array;
 		private var meshList:Array;

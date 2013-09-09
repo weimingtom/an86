@@ -13,6 +13,7 @@ package anlei.away.d3d
 		public function add($skinId:String, $onComplete:Function):void{
 			skinId = $skinId;
 			fileName = $skinId;
+			key = path + fileName;
 			onComplete = $onComplete;
 			
 			load(null, [
