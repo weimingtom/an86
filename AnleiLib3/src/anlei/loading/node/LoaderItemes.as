@@ -45,6 +45,12 @@ package anlei.loading.node
 			loader = new LoaderContent(this);
 		}
 		
+		public function dispose():void{
+			node = null;
+			loader.dispose();
+			loader = null;
+		}
+		
 		public static function create($url:String, $key:String, $desc:String = ''):LoaderItemes{
 			return new LoaderItemes($url, $key, $desc);
 		}

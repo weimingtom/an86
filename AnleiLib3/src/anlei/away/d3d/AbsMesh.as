@@ -25,14 +25,18 @@ package anlei.away.d3d
 	import away3d.materials.TextureMaterial;
 	import away3d.textures.BitmapTexture;
 
-	public class AbsMD5Mesh
+	public class AbsMesh
 	{
 		private var path:String;
-		private var id:String;
+		protected var fileName:String;
 		private var key:String;
 		private var textureList:Array;
 		private var animList:Array;
 		private var meshList:Array;
+		
+		public var uid:Number;
+		public var skinId:String;
+		public var isPlayer:Boolean = false;
 		
 		public var mesh:Mesh;
 		public var skeleton:Skeleton;
@@ -43,12 +47,15 @@ package anlei.away.d3d
 		private var Parent:ObjectContainer3D;
 		private var onComplete:Function;
 		
-		private var _This:AbsMD5Mesh;
+		private var _This:AbsMesh;
+		private var _x:Number;
+		private var _y:Number;
+		private var _z:Number;
 		
-		public function AbsMD5Mesh($idName:String, $path:String = "assets/role/") {
+		public function AbsMesh($fileName:String, $path:String = "assets/role/") {
+			fileName = $fileName;
 			path = $path;
-			id = $idName;
-			key = path + id;
+			key = path + fileName;
 			_This = this;
 		}
 		
@@ -63,11 +70,7 @@ package anlei.away.d3d
 		
 		private function startLoad():void
 		{
-			//AssetLibrary.enableParser(MD5MeshParser);
-			//AssetLibrary.enableParser(MD5AnimParser);
-			new AWD2Parser();
 			Parsers.enableAllBundled();
-			//AssetLibrary.addEventListener(AssetEvent.ASSET_COMPLETE, onAssetsComp);
 			loadAnim();
 			loadTexture();
 			loadMesh();
@@ -76,8 +79,15 @@ package anlei.away.d3d
 		private function loadAnim():void{//1
 			var arr:Array = [];
 			for (var i:int = 0; i < animList.length; i++) {
-				var _ku:String = key + "/" + animList[i];
-				arr.push([_ku, _ku, '', true]);
+				var _ku:String;
+				var _key:String;
+				if(String(animList[i]).indexOf("/") == -1){
+					_ku = key + "/" + animList[i];
+				}else{
+					_ku = animList[i];
+				}
+				_key = _ku;
+				arr.push([_ku, _key, '', true]);
 			}
 			if(arr.length > 0){
 				AnleiLoader.getInstance().start(ALoaderUtil.c(arr), function():void{}, onAnimProg);
@@ -87,8 +97,15 @@ package anlei.away.d3d
 		private function loadTexture():void{//2
 			var arr:Array = [];
 			for (var i:int = 0; i < textureList.length; i++) {
-				var _ku:String = key + "/" + textureList[i];
-				arr.push([_ku, _ku, '', false]);
+				var _ku:String;
+				var _key:String;
+				if(String(textureList[i]).indexOf("/") == -1){
+					_ku = key + "/" + textureList[i];
+				}else{
+					_ku = textureList[i];
+				}
+				_key = _ku;
+				arr.push([_ku, _key, '', false]);
 			}
 			
 			if(arr.length > 0){
@@ -99,8 +116,15 @@ package anlei.away.d3d
 		private function loadMesh():void{//3
 			var arr:Array = [];
 			for (var i:int = 0; i < meshList.length; i++) {
-				var _ku:String = key + "/" + meshList[i];
-				arr.push([_ku, _ku, '', true]);
+				var _ku:String;
+				var _key:String;
+				if(String(meshList[i]).indexOf("/") == -1){
+					_ku = key + "/" + meshList[i];
+				}else{
+					_ku = meshList[i];
+				}
+				_key = _ku;
+				arr.push([_ku, _key, '', true]);
 			}
 			
 			if(arr.length > 0){
@@ -124,7 +148,12 @@ package anlei.away.d3d
 			}
 			var j:int = 0;
 			for (var i:int = 0; i < animList.length; i++) {
-				var _ku:String = key + "/" + animList[i];
+				var _ku:String;
+				if(String(animList[i]).indexOf("/") == -1){
+					_ku = key + "/" + animList[i];
+				}else{
+					_ku = animList[i];
+				}
 				var _data:Object = AnleiLoader.getInstance().getData(_ku);
 				var _arr:Array = animList[i].split(".");
 				var _n:String = _arr[0];
@@ -139,7 +168,13 @@ package anlei.away.d3d
 		}
 		
 		private function onMeshComp():void {
-			var _ku:String = key + "/" + meshList[0];
+//			var _ku:String = key + "/" + meshList[0];
+			var _ku:String;
+			if(String(meshList[0]).indexOf("/") == -1){
+				_ku = key + "/" + meshList[0];
+			}else{
+				_ku = meshList[0];
+			}
 			var _data:Object = AnleiLoader.getInstance().getData(_ku);
 			var _load3d:Loader3D = new Loader3D(false);
 			_load3d.addEventListener(AssetEvent.ASSET_COMPLETE, onAssetsComp);
@@ -166,10 +201,16 @@ package anlei.away.d3d
 		private function onAssetsComp(event:AssetEvent):void {
 			if (event.asset.assetType == AssetType.MESH) {//3
 				mesh = event.asset as Mesh;
-				//mesh.y = -300;
+				resetCoor();
 				mesh.scale(0.5);
 				for (var i:int = 0; i < textureList.length; i++) {
-					var _ku:String = key + "/" + textureList[i];
+//					var _ku:String = key + "/" + textureList[i];
+					var _ku:String;
+					if(String(textureList[i]).indexOf("/") == -1){
+						_ku = key + "/" + textureList[i];
+					}else{
+						_ku = textureList[i];
+					}
 					var bitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap(_ku).bitmapData);
 					var _material:TextureMaterial = new TextureMaterial(bitmap);//Cast.bitmapTexture(bitmap.bitmapData));
 					mesh.subMeshes[i].material = _material;
@@ -184,7 +225,6 @@ package anlei.away.d3d
 				}
 			} else if (event.asset.assetType == AssetType.SKELETON) {
 				skeleton = event.asset as Skeleton;
-				var obj1:int = skeleton.jointIndexFromName("Bip001 R Hand");
 			} else if (event.asset.assetType == AssetType.ANIMATION_SET) {
 				animationSet = event.asset as SkeletonAnimationSet;
 				animator = new SkeletonAnimator(animationSet, skeleton);
@@ -202,9 +242,24 @@ package anlei.away.d3d
 
 		public function play(action:String):void{
 			if(animator){
-				if(action == AnimActions.walk) animator.playbackSpeed = 0.5;
+				if(action == AnimActions.walk) animator.playbackSpeed = 0.6;
 				if(animator.getAnimationStateByName(action))
 					animator.play(action, stateTransition);
+			}
+		}
+		
+		public function move($x:Number, $y:Number, $z:Number):void{
+			_x = $x;
+			_y = $y;
+			_z = $z;
+			resetCoor();
+		}
+		
+		private function resetCoor():void{
+			if(mesh){
+				mesh.position.x = _x;
+				mesh.position.y = _y;
+				mesh.position.z = _z;
 			}
 		}
 		

@@ -42,6 +42,8 @@ package anlei.loading.utils
 			for (var i:int = 0; i < i_len; i++) {
 				for (var j:int = 0; j < j_len; j++) {
 					if(list[i] && list[i].url == poolList[j].url){
+//						if(list[i].key != poolList[j].key)
+//							throw new Error("开发者注意事项:路径相同,Key不同.请设定好Key");
 						list[i] = null;
 					}
 				}

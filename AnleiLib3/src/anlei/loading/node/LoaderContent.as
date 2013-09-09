@@ -150,6 +150,23 @@ package anlei.loading.node
 			return txt_loader;
 		}
 		
+		public function dispose():void{
+			item = null;
+			quest = null;
+			getTotalExec = null;
+			onComplete_loadNext = null;
+			node = null;
+			proEvent = null;
+			lc = null;
+			
+			swf_loader.unload();
+			swf_loader.unloadAndStop();
+			swf_loader = null;
+			
+			txt_loader.data = null;
+			txt_loader = null;
+			
+		}
 		
 	}
 }

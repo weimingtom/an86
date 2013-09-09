@@ -5,6 +5,8 @@ package anlei.away
 	import flash.events.Event;
 	import flash.geom.Vector3D;
 	
+	import anlei.util.EnterFrame;
+	
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
@@ -21,11 +23,9 @@ package anlei.away
 		
 		private var layer:Sprite;
 		public var view3d:View3D;
-		private var update:Function;
 		
-		public function inits($layer:Sprite, $update:Function = null, $isStats:Boolean = false):void {
+		public function inits($layer:Sprite, $isStats:Boolean = false):void {
 			layer = $layer;
-			update = $update;
 			
 			view3d = new View3D();
 			layer.addChild(view3d);
@@ -35,14 +35,14 @@ package anlei.away
 //			view3d.camera.z = 100;
 			//view3d.camera.lookAt(new Vector3D());
 			
-			if($isStats) layer.addChild(new AwayStats(view3d));
-			layer.addEventListener(Event.ENTER_FRAME, _onEnterFrame);
+			EnterFrame.init(stage);
+			if($isStats) stage.addChild(new AwayStats(view3d));
+			EnterFrame.enterFrame = _onEnterFrame;
 			stage.addEventListener(Event.RESIZE, onResize);
 			onResize();
 		}
 		
-		private function _onEnterFrame(e:Event):void {
-			if(update) update();
+		private function _onEnterFrame():void {
 			view3d.render();
 		}
 		

@@ -2,10 +2,8 @@ package anlei.loading
 {
 	import flash.display.Bitmap;
 	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.net.URLLoader;
 	import flash.system.ApplicationDomain;
-	import flash.utils.Dictionary;
 	
 	import anlei.loading.node.LoaderItemes;
 	import anlei.loading.node.LoaderNode;
@@ -51,6 +49,7 @@ package anlei.loading
 			var _len:int = poolList.length;
 			for (var i:int = 0; i < _len; i++) {
 				if(poolList[i].id == id){
+					poolList[i].dispose();
 					poolList.splice(i, 1);
 					break;
 				}
@@ -80,7 +79,7 @@ package anlei.loading
 		
 		public function getLoader(key:String):* {
 			for each (var _item:LoaderItemes in poolList) {
-				if(_item.key == key) return _item.loader.getLoader();
+				if(_item.key == key || _item.url == key) return _item.loader.getLoader();
 			}
 			return null;
 		}
