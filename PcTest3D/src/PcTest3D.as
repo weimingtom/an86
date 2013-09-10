@@ -3,28 +3,13 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import flash.events.KeyboardEvent;
-	import flash.geom.Matrix3D;
-	import flash.geom.Vector3D;
-	import flash.ui.Keyboard;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	
 	import anlei.away.Anlei3D;
 	import anlei.away.d3d.AbsMesh;
 	import anlei.away.d3d.AbsRole;
-	import anlei.away.utils.AnimActions;
-	import anlei.loading.AnleiLoader;
-	import anlei.loading.utils.ALoaderUtil;
 	import anlei.util.EnterFrame;
-	
-	import away3d.animators.data.JointPose;
-	import away3d.controllers.HoverController;
-	import away3d.extrusions.Elevation;
-	import away3d.materials.TextureMaterial;
-	import away3d.textures.BitmapTexture;
-	
-	import multi.MultiDirection;
 	
 	[SWF(backgroundColor="#000000", frameRate="30", quality="LOW")]
 	
@@ -38,7 +23,7 @@ package
 		private var map1:AbsMesh;
 		
 //		private var map:AWPTerrain;
-		private var map:Elevation;
+//		private var map:Elevation;
 		
 		private var dun:AbsMesh;
 
@@ -64,37 +49,23 @@ package
 //				map.addChild(map1.mesh);
 //			});
 			
-			AnleiLoader.getInstance().start(ALoaderUtil.c([["assets/scene/map1/heightland.png", "heightland"],["assets/scene/map1/map1.jpg", "map1texture"]]), function():void{
-				var _textureBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("map1texture").bitmapData);
-				var _textureMaterial:TextureMaterial = new TextureMaterial(_textureBitmap);
-				var _heightBitmap:BitmapTexture = new BitmapTexture(AnleiLoader.getInstance().getBitmap("heightland").bitmapData);
-				_heightMaterial = new TextureMaterial(_heightBitmap);
-				map = new Elevation(_textureMaterial, BitmapTexture(_heightMaterial.texture).bitmapData,3000, 2000, 3000);
-				Anlei3D.ins().add(map);
-			}, function():void{});
-			
-			_role = new AbsRole();
-			_role.isPlayer = true;
-			_role.add("1001", onAmmComp);
-			
+			Anlei3D.ins().changeMap(1, onCom);
+			function onCom():void{
+				_role = new AbsRole();
+				_role.move(0, 1500, 0);
+				_role.isPlayer = true;
+				Anlei3D.ins().player = _role;
+				_role.add("1001", onAmmComp);
+			};
 		}
 		
 		private function onAmmComp():void {
-			dun = new AbsMesh("dun1", "assets/equip/");
-			dun.load(_role.mesh, [["dun1.jpg"], [], ["dun1.AWD"]], null);
-			
-			jian = new AbsMesh("jian1", "assets/equip/");
-			jian.load(_role.mesh, [["jian1.jpg"], [], ["jian1.AWD"]], null);
-			//////////////////////
-			_role.mesh.position = new Vector3D(0, 1500, 0);
+			_role.equips.addLHandItem("dun1");
+			_role.equips.addRHandItem("jian1");
 		}
 		
-		private var oldPos:Vector3D = new Vector3D();
-
-		private var _heightMaterial:TextureMaterial;
-		
 		private function update():void{
-			
+			/*
 			if (_role && _role.mesh && map){
 				if(map.material){
 					var _hei:Number = map.getHeightAt(_role.mesh.x, _role.mesh.z);
@@ -109,8 +80,8 @@ package
 					}
 				}
 			}
-			
-			if(_role && _role.mesh && _role.animator.globalPose.jointPoses.length > 0){
+			*/
+			/*if(_role && _role.mesh && _role.animator.globalPose.jointPoses.length > 0){
 				
 				if(dun && dun.mesh){
 					var index1:int = _role.skeleton.jointIndexFromName("Bip001 L Hand");
@@ -126,7 +97,7 @@ package
 					jian.mesh.position = mat2.position;
 				}
 				
-			}
+			}*/
 		}
 		
 	}
