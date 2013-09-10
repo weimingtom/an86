@@ -5,6 +5,8 @@ package anlei.away
 	import flash.events.Event;
 	import flash.geom.Vector3D;
 	
+	import anlei.away.d3d.AbsRole;
+	import anlei.away.d3d.AbsScene;
 	import anlei.util.EnterFrame;
 	
 	import away3d.containers.ObjectContainer3D;
@@ -24,6 +26,9 @@ package anlei.away
 		private var layer:Sprite;
 		public var view3d:View3D;
 		
+		public var scene:AbsScene;
+		public var player:AbsRole;
+		
 		public function inits($layer:Sprite, $isStats:Boolean = false):void {
 			layer = $layer;
 			
@@ -40,6 +45,8 @@ package anlei.away
 			EnterFrame.enterFrame = _onEnterFrame;
 			stage.addEventListener(Event.RESIZE, onResize);
 			onResize();
+			
+			scene = new AbsScene();
 		}
 		
 		private function _onEnterFrame():void {
@@ -62,6 +69,12 @@ package anlei.away
 			if(view3d.scene.contains(child))
 				view3d.scene.removeChild(child);
 		}
+		//////////////////////////////////////
+		
+		public function changeMap(mapId:int, $onComplete:Function=null):void{
+			scene.add(mapId, $onComplete);
+		}
+		
 	}
 }
 class Signle{}

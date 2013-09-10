@@ -129,7 +129,7 @@ package anlei.loading.node
 			event.currentTarget.removeEventListener(Event.COMPLETE, onComplete_start);
 			event.currentTarget.removeEventListener(ProgressEvent.PROGRESS, onProgress_start);
 			proEvent.bytesLoaded = node.totalSize;
-			node.onProgress(proEvent);
+			if(node.onProgress) node.onProgress(proEvent);
 			item.finish = true;
 			if(onComplete_loadNext){
 				onComplete_loadNext();
@@ -141,7 +141,7 @@ package anlei.loading.node
 			proEvent.bytesTotal = node.totalSize;
 			proEvent.currentBytesTotal = event.bytesTotal;
 			proEvent.bytesLoaded = event.bytesLoaded;
-			node.onProgress(proEvent);
+			if(node.onProgress) node.onProgress(proEvent);
 		}
 		
 		

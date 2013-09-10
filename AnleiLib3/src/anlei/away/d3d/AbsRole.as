@@ -1,13 +1,22 @@
 package anlei.away.d3d
 {
+	import anlei.util.EnterFrame;
+
 	public class AbsRole extends AbsMesh
 	{
 		private var onComplete:Function;
 		public var ctrl:AbsRoleCtrl;
 		
+		private var _equips:AbsRoleEquips;
+		
 		public function AbsRole($path:String="assets/role/")
 		{
 			super('', $path);
+		}
+		
+		public function get equips():AbsRoleEquips {
+			_equips ||= new AbsRoleEquips(this);
+			return _equips;
 		}
 		
 		public function add($skinId:String, $onComplete:Function):void{
@@ -31,12 +40,15 @@ package anlei.away.d3d
 			if(isPlayer){
 				ctrl = new AbsRoleCtrl(this);
 			}
+			if(!EnterFrame.hasFunction(update)){
+				EnterFrame.enterFrame = update;
+			}
 		}
 		
 		private function update():void{
-			if(ctrl.cameraController) ctrl.cameraController.update();
-			
+			if(ctrl) ctrl.update();
+			if(_equips) _equips.update();
 		}
-		
+
 	}
 }

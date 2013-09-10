@@ -45,10 +45,11 @@ package anlei.loading
 			//t.p("Loader池合并后:", poolList.length);
 		}
 		
-		public function remove(id:int):void{
+		public function remove(key:String):void{
+			if(!poolList) return;
 			var _len:int = poolList.length;
 			for (var i:int = 0; i < _len; i++) {
-				if(poolList[i].id == id){
+				if(poolList[i].key == key){
 					poolList[i].dispose();
 					poolList.splice(i, 1);
 					break;

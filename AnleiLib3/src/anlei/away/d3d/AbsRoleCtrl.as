@@ -2,6 +2,7 @@ package anlei.away.d3d
 {
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
+	import flash.geom.Vector3D;
 	import flash.ui.Keyboard;
 	
 	import anlei.away.Anlei3D;
@@ -9,6 +10,7 @@ package anlei.away.d3d
 	
 	import away3d.controllers.ControllerBase;
 	import away3d.controllers.HoverController;
+	import away3d.extrusions.Elevation;
 	
 	import multi.MultiDirection;
 
@@ -19,6 +21,7 @@ package anlei.away.d3d
 		private var role:AbsRole;
 		public var cameraController:ControllerBase;
 		private var type:String;
+		private var oldPos:Vector3D = new Vector3D();
 		
 		public function AbsRoleCtrl($role:AbsRole)
 		{
@@ -104,6 +107,25 @@ package anlei.away.d3d
 			type = value;
 			if(type == HOVER && role.mesh){
 				cameraController = new HoverController(Anlei3D.ins().view3d.camera, role.mesh, 0, 15, 1000);
+			}
+		}
+		
+		public function update():void{
+			if(cameraController) cameraController.update();
+			var map:Elevation = Anlei3D.ins().scene.terrain
+			if (role.mesh && map){
+				if(map.material){
+					var _hei:Number = map.getHeightAt(role.mesh.x, role.mesh.z);
+					if(_hei != 0){
+						role.mesh.y += 0.2*(_hei + 20 - role.mesh.y);
+						oldPos.x = role.mesh.x;
+						oldPos.y = role.mesh.y;
+						oldPos.z = role.mesh.z;
+					}else{
+						role.mesh.position = oldPos;
+						role.mesh.moveLeft(MOVE_SP);
+					}
+				}
 			}
 		}
 		
