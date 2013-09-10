@@ -36,6 +36,7 @@ package anlei.away.d3d
 		}
 		
 		private function onAmmComp(evt:AbsMesh):void {
+			mesh.scale(0.5);
 			if(onComplete) onComplete();
 			if(isPlayer){
 				ctrl = new AbsRoleCtrl(this);

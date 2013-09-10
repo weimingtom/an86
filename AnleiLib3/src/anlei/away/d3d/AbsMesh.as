@@ -202,7 +202,7 @@ package anlei.away.d3d
 			if (event.asset.assetType == AssetType.MESH) {//3
 				mesh = event.asset as Mesh;
 				resetCoor();
-				mesh.scale(0.5);
+				//mesh.scale(0.5);
 				for (var i:int = 0; i < textureList.length; i++) {
 //					var _ku:String = key + "/" + textureList[i];
 					var _ku:String;
